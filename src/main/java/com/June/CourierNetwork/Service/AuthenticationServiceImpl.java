@@ -2,11 +2,8 @@ package com.June.CourierNetwork.Service;
 
 import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Enum.TokenType;
-import com.June.CourierNetwork.Model.AuthenticationResponse;
-import com.June.CourierNetwork.Model.AuthenticationRequest;
-import com.June.CourierNetwork.Model.RegisterRequest;
-import com.June.CourierNetwork.Model.Token;
-import com.June.CourierNetwork.Model.User;
+import com.June.CourierNetwork.Model.*;
+import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.TokenRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
@@ -28,6 +25,7 @@ import java.io.IOException;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
+    private final CourierRepository courierRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -35,19 +33,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
+        Long savedUserId = null;
         var user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .emailAddress(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
-                .role(Role.USER)
+                .role(request.getRole())
                 .build();
-        userRepository.save(user);
-        var savedUser = userRepository.findUserByEmail(user.getEmailAddress()).orElseThrow();
+
+        if (request.getRole().equals(Role.COURIER)) {
+            var courier = Courier.builder()
+                    .assessmentScore(request.getAssessmentScore())
+                    .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
+                    .user(user)
+                    .build();
+            savedUserId = courierRepository.save(courier);
+        }
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
+        saveUserToken(savedUserId, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
@@ -67,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
+        saveUserToken(user.getId(), jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
@@ -75,9 +81,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void saveUserToken(User user, String jwtToken) {
+    public void saveUserToken(Long userId, String jwtToken) {
         var token = Token.builder()
-                .userId(user.getId())
+                .userId(userId)
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
                 .expired(false)
@@ -114,7 +120,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
-                saveUserToken(user, accessToken);
+                saveUserToken(user.getId(), accessToken);
                 var authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)

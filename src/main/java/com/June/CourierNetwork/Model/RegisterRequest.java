@@ -18,4 +18,10 @@ public class RegisterRequest {
   private String password;
   private String phoneNumber;
   private Role role;
+
+  private Integer assessmentScore;
+  private Integer rating;
+  private Boolean isAvailable;
+  private Boolean acceptedTermsAndConditions;
+
 }

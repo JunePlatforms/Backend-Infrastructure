@@ -1,6 +1,5 @@
 package com.June.CourierNetwork.Repo.Contract;
 
-import com.June.CourierNetwork.DTO.UserDTO;
 import com.June.CourierNetwork.Model.User;
 
 import java.util.Optional;
@@ -13,5 +12,5 @@ public interface UserRepository {
 
     Optional<User> findUserByEmail(String email);
 
-    User save(User user);
+    Long save(User user);
 }
