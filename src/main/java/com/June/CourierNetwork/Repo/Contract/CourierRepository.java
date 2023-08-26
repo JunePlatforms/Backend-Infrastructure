@@ -10,7 +10,7 @@ public interface CourierRepository {
 
     Long updateAvailability(Long id, Courier courier);
 
-    Optional<Courier> findUserId(long userId);
+    Optional<Courier> findByUserId(long userId);
 
     Long save(Courier courier);
 }

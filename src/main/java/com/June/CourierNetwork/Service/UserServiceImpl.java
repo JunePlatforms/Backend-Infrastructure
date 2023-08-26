@@ -1,5 +1,36 @@
 package com.June.CourierNetwork.Service;
 
-public class UserServiceImpl {
+import com.June.CourierNetwork.DTO.UserDTO;
+import com.June.CourierNetwork.Enum.Role;
+import com.June.CourierNetwork.Model.Courier;
+import com.June.CourierNetwork.Repo.Contract.CourierRepository;
+import com.June.CourierNetwork.Repo.Contract.UserRepository;
+import com.June.CourierNetwork.Service.Contract.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    private final CourierRepository courierRepository;
+    @Override
+    public UserDTO findUserById(Long userId) {
+        UserDTO userDTO = new UserDTO();
+        val user = userRepository.findUserById(userId);
+
+        if (user.isPresent()) {
+            if (user.get().getRole().equals(Role.COURIER)) {
+                Optional<Courier> courier = courierRepository.findByUserId(userId);
+                courier.orElseThrow().setUser(user.orElseThrow());
+                userDTO.setCourier(courier.orElseThrow());
+            }
+        }else {
+            return null;
+        }
+        return userDTO;
+    }
 }

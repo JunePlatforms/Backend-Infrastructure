@@ -11,6 +11,7 @@ public interface UserRepository {
     Long updateUser(Long id, User user);
 
     Optional<User> findUserByEmail(String email);
+    Optional<User> findUserById(Long id);
 
     Long save(User user);
 }

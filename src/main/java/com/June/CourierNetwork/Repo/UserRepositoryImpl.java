@@ -60,4 +60,15 @@ public class UserRepositoryImpl implements UserRepository {
 
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new UserMapper()));
     }
+
+    @Override
+    public Optional<User> findUserById(Long userId) {
+        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE id = :userId";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("userId", userId);
+
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new UserMapper()));
+    }
 }

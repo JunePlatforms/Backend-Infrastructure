@@ -1,7 +1,6 @@
 package com.June.CourierNetwork.Model;
 
 import com.June.CourierNetwork.Enum.Role;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
-
-
     private Long id;
     private String firstName;
     private String lastName;

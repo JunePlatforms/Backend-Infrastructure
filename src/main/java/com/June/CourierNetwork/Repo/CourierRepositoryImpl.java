@@ -1,9 +1,7 @@
 package com.June.CourierNetwork.Repo;
 
 import com.June.CourierNetwork.Mapper.CourierMapper;
-import com.June.CourierNetwork.Mapper.UserMapper;
 import com.June.CourierNetwork.Model.Courier;
-import com.June.CourierNetwork.Model.User;
 import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,10 +51,9 @@ public class CourierRepositoryImpl implements CourierRepository {
     }
 
     @Override
-    public Optional<Courier> findUserId(long userId) {
-        val sql = "SELECT * FROM JuneCourierNetwork.user " +
-                "JOIN JuneCourierNetwork.courier_user AS courier ON user.id = courier.user_id " +
-                "WHERE courier.user_id = :user_id";
+    public Optional<Courier> findByUserId(long userId) {
+        val sql = "SELECT * FROM JuneCourierNetwork.courier_user " +
+                "WHERE user_id = :user_id";
 
         val params = new MapSqlParameterSource();
 
