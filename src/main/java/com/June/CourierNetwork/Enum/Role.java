@@ -15,7 +15,9 @@ import static com.June.CourierNetwork.Enum.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-  USER(Collections.emptySet()),
+  COURIER(Collections.emptySet()),
+  CUSTOMER(Collections.emptySet()),
+  WAREHOUSE_CLERK(Collections.emptySet()),
   ADMIN(
           Set.of(
                   ADMIN_READ,
