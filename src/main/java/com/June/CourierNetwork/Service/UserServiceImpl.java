@@ -3,6 +3,8 @@ package com.June.CourierNetwork.Service;
 import com.June.CourierNetwork.DTO.UserDTO;
 import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Model.Courier;
+import com.June.CourierNetwork.Model.UpdatePasswordRequest;
+import com.June.CourierNetwork.Model.UpdateUserRequest;
 import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.UserService;
@@ -32,5 +34,25 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return userDTO;
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    public int updateUser(Long id, UpdateUserRequest userDetails) {
+        return userRepository.updateUser(id, userDetails);
+    }
+
+    @Override
+    public int updateUserPassword(Long id, UpdatePasswordRequest passwordRequest) {
+        val oldPassword = userRepository.getUserPassword(id);
+
+        if (oldPassword.isPresent() && (oldPassword.get().getOldPassword().equals(passwordRequest.getOldPassword()))){
+            return userRepository.updateUserPassword(id, passwordRequest);
+        }
+        return 0;
     }
 }

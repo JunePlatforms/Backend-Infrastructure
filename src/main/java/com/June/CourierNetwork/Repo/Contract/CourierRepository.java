@@ -8,9 +8,12 @@ public interface CourierRepository {
 
     Long updateRating(Long id, Courier courier);
 
-    Long updateAvailability(Long id, Courier courier);
+    int updateAvailability(Long id, Boolean status);
 
     Optional<Courier> findByUserId(long userId);
 
     Long save(Courier courier);
+
+    int updateRate(Long id, Integer rating);
+
 }

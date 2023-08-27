@@ -1,9 +1,9 @@
 package com.June.CourierNetwork.Repo;
 
-import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Mapper.UserMapper;
+import com.June.CourierNetwork.Model.UpdatePasswordRequest;
+import com.June.CourierNetwork.Model.UpdateUserRequest;
 import com.June.CourierNetwork.Model.User;
-import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -44,10 +44,60 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Long updateUser(Long id, User user) {
+    public void deleteById(Long userId) {
+        val sql = "UPDATE JuneCourierNetwork.`user` SET is_active = 0 WHERE id = :userId";
 
-        return null;
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
+        jdbcTemplate.update(sql, params);
     }
+
+    @Override
+    public Optional<User> findActiveUserByEmail(String email) {
+        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE email_address = :email AND is_active = 1";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("email", email);
+
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new UserMapper()));
+    }
+
+    @Override
+    public int updateUserPassword(Long id, UpdatePasswordRequest passwordRequest) {
+        val sql = "UPDATE JuneCourierNetwork.`user` SET password = :password WHERE id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("password", passwordRequest.getNewPassword());
+        params.addValue("userId", id);
+
+        return jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public Optional<UpdatePasswordRequest> getUserPassword(Long id) {
+        val sql = "SELECT password FROM JuneCourierNetwork.user WHERE id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", id);
+
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, UpdatePasswordRequest.class));
+    }
+
+    @Override
+    public int updateUser(Long id, UpdateUserRequest userDetails) {
+        val sql = "UPDATE JuneCourierNetwork.`user` SET " +
+                "first_name = :firstName, last_name = :lastName, email_address = :emailAddress, " +
+                "phone_number = :phoneNumber WHERE id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("firstName", userDetails.getFirstname());
+        params.addValue("lastName", userDetails.getLastname());
+        params.addValue("emailAddress", userDetails.getEmail());
+        params.addValue("phoneNumber", userDetails.getPhoneNumber());
+        params.addValue("userId", id);
+
+        return jdbcTemplate.update(sql, params);}
 
     @Override
     public Optional<User> findUserByEmail(String email) {

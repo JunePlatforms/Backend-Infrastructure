@@ -36,18 +36,16 @@ public class CourierRepositoryImpl implements CourierRepository {
     }
 
     @Override
-    public Long updateAvailability(Long userId, Courier courier) {
+    public int updateAvailability(Long userId, Boolean status) {
         val updateSql = "UPDATE JuneCourierNetwork.courier_user " +
                 "SET is_available = :isAvailable " +
                 "WHERE user_id = :userId";
 
         val params = new MapSqlParameterSource();
         params.addValue("userId", userId);
-        params.addValue("isAvailable", courier.getIsAvailable());
+        params.addValue("isAvailable", status);
 
-        jdbcTemplate.update(updateSql, params);
-
-        return userId;
+        return jdbcTemplate.update(updateSql, params);
     }
 
     @Override
@@ -84,5 +82,17 @@ public class CourierRepositoryImpl implements CourierRepository {
         jdbcTemplate.update(sql, courierParams);
 
         return userId;
+    }
+
+    @Override
+    public int updateRate(Long id, Integer rating) {
+        val sql = "UPDATE JuneCourierNetwork.courier_user SET rating = :rating " +
+                "WHERE user_id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", id);
+        params.addValue("rating", rating);
+
+        return jdbcTemplate.update(sql, params);
     }
 }
