@@ -3,9 +3,11 @@ package com.June.CourierNetwork.Service;
 import com.June.CourierNetwork.DTO.UserDTO;
 import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Model.Courier;
+import com.June.CourierNetwork.Model.Customer;
 import com.June.CourierNetwork.Model.UpdatePasswordRequest;
 import com.June.CourierNetwork.Model.UpdateUserRequest;
 import com.June.CourierNetwork.Repo.Contract.CourierRepository;
+import com.June.CourierNetwork.Repo.Contract.CustomerRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final CourierRepository courierRepository;
+    private final CustomerRepository customerRepository;
     @Override
     public UserDTO findUserById(Long userId) {
         UserDTO userDTO = new UserDTO();
@@ -30,6 +33,11 @@ public class UserServiceImpl implements UserService {
                 courier.orElseThrow().setUser(user.orElseThrow());
                 userDTO.setCourier(courier.orElseThrow());
             }
+            if (user.get().getRole().equals(Role.CUSTOMER)) {
+                    Optional<Customer> courier = customerRepository.findByUserId(userId);
+                    courier.orElseThrow().setUser(user.orElseThrow());
+                    userDTO.setCourier(courier.orElseThrow());
+                }
         }else {
             return null;
         }

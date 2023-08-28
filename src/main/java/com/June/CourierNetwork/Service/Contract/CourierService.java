@@ -5,4 +5,6 @@ public interface CourierService {
 
     int updateAvailability(Long id, Boolean status);
 
+
+
 }
