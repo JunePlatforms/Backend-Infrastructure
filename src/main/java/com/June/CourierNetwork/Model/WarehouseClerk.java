@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WarehouseClerk {
     private Long id;
+    private User user;
 }

@@ -6,6 +6,7 @@ import com.June.CourierNetwork.Model.*;
 import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.TokenRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
+import com.June.CourierNetwork.Repo.Contract.WarehouseClerkRepository;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final CourierRepository courierRepository;
+    private final WarehouseClerkRepository warehouseClerkRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -50,6 +52,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .user(user)
                     .build();
             savedUserId = courierRepository.save(courier);
+        } else if (request.getRole().equals(Role.WAREHOUSE_CLERK)) {
+            var warehouseClerk = WarehouseClerk.builder()
+                    .user(user)
+                    .build();
+            savedUserId = warehouseClerkRepository.save(warehouseClerk);
         }
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
