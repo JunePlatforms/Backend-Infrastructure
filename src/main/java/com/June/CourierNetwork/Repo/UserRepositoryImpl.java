@@ -1,5 +1,6 @@
 package com.June.CourierNetwork.Repo;
 
+import com.June.CourierNetwork.Mapper.PasswordMapper;
 import com.June.CourierNetwork.Mapper.UserMapper;
 import com.June.CourierNetwork.Model.UpdatePasswordRequest;
 import com.June.CourierNetwork.Model.UpdateUserRequest;
@@ -81,7 +82,7 @@ public class UserRepositoryImpl implements UserRepository {
         val params = new MapSqlParameterSource();
         params.addValue("userId", id);
 
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, UpdatePasswordRequest.class));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new PasswordMapper()));
     }
 
     @Override

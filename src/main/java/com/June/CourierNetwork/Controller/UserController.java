@@ -44,7 +44,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("update/password/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest userDetails){
         val userOptional = repository.findUserById(id);
         if (userOptional.isPresent()){
@@ -54,7 +54,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/password/{id}")
     public ResponseEntity<String> updateUserPassword(@PathVariable Long id, @Valid @RequestBody UpdatePasswordRequest passwordRequest){
         val userOptional = repository.findUserById(id);
         if (userOptional.isPresent()){
