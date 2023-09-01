@@ -28,7 +28,6 @@ public class CustomerController {
             if (userOptional.isPresent()){
                 customerService.updateProfilePic(id, profilePic);
                 return new ResponseEntity<>(HttpStatus.OK);
-
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
