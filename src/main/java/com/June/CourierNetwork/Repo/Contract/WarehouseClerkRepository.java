@@ -2,6 +2,7 @@ package com.June.CourierNetwork.Repo.Contract;
 
 import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
+import com.June.CourierNetwork.Model.ShippingLabel;
 import com.June.CourierNetwork.Model.WarehouseClerk;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface WarehouseClerkRepository {
     List<ProductDetails> findProductsByUserId(Long userId);
 
     List<ProductDetails> getAllProducts();
+
+    ShippingLabel generateShippingLabel(Long productId);
 }

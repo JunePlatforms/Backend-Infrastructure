@@ -2,6 +2,7 @@ package com.June.CourierNetwork.Controller;
 
 import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
+import com.June.CourierNetwork.Model.ShippingLabel;
 import com.June.CourierNetwork.Service.Contract.WarehouseClerkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class WarehouseClerkController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }//TODO: handle customer number
+    }
 
     @GetMapping("/get/all/products")
     public ResponseEntity<List<ProductDetails>> getAllProducts(){
@@ -62,6 +63,15 @@ public class WarehouseClerkController {
             return new ResponseEntity<>(warehouseClerkService.getAllProducts(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/generate/shipping/label")
+    public ResponseEntity<ShippingLabel> generateShippingLabel(@RequestParam Long productId){
+        try {
+            return new ResponseEntity<>(warehouseClerkService.generateShippingLabel(productId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

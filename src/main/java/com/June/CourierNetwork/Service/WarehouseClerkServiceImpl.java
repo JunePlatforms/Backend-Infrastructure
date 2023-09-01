@@ -2,6 +2,7 @@ package com.June.CourierNetwork.Service;
 
 import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
+import com.June.CourierNetwork.Model.ShippingLabel;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Repo.Contract.WarehouseClerkRepository;
 import com.June.CourierNetwork.Service.Contract.WarehouseClerkService;
@@ -49,5 +50,10 @@ public class WarehouseClerkServiceImpl implements WarehouseClerkService {
     @Override
     public List<ProductDetails> getAllProducts() {
         return warehouseClerkRepository.getAllProducts();
+    }
+
+    @Override
+    public ShippingLabel generateShippingLabel(Long productId) {
+        return warehouseClerkRepository.generateShippingLabel(productId);
     }
 }
