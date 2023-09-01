@@ -1,9 +1,11 @@
 package com.June.CourierNetwork.Repo;
 
 import com.June.CourierNetwork.Mapper.ProductDetailsMapper;
+import com.June.CourierNetwork.Mapper.ShippingLabelMapper;
 import com.June.CourierNetwork.Mapper.WarehouseClerkMapperMapper;
 import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
+import com.June.CourierNetwork.Model.ShippingLabel;
 import com.June.CourierNetwork.Model.WarehouseClerk;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Repo.Contract.WarehouseClerkRepository;
@@ -121,5 +123,19 @@ public class WarehouseClerkRepositoryImpl implements WarehouseClerkRepository {
         val sql = "SELECT * FROM JuneCourierNetwork.customer_product_details";
 
         return jdbcTemplate.query(sql, new ProductDetailsMapper());
+    }
+
+    @Override
+    public ShippingLabel generateShippingLabel(Long productId) {
+        val sql = "SELECT u.first_name, u.last_name, cpd.weight, cpd.product_description, cu.customer_number " +
+                "FROM JuneCourierNetwork.users u " +
+                "JOIN JuneCourierNetwork.customer_product_details cpd ON u.user_id = cpd.user_id " +
+                "JOIN JuneCourierNetwork.customer_users cu ON u.user_id = cu.user_id " +
+                "WHERE cpd.product_id = :productId;";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("productId", productId);
+
+        return jdbcTemplate.queryForObject(sql, params, new ShippingLabelMapper());
     }
 }
