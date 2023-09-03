@@ -13,7 +13,7 @@ public class ProductDetailsMapper implements RowMapper<ProductDetails> {
     public ProductDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
         return ProductDetails.builder()
                 .id((long) rs.getInt("id"))
-                .weight(rs.getString("product_weight"))
+                .weight(rs.getString("weight"))
                 .description(rs.getString("description"))
                 .supplierName(rs.getString("supplier_name"))
                 .customerNumber(rs.getString("customer_number"))

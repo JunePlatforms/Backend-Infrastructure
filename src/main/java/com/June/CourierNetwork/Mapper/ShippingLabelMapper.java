@@ -11,10 +11,9 @@ public class ShippingLabelMapper implements RowMapper<ShippingLabel> {
     @Override
     public ShippingLabel mapRow(ResultSet rs, int rowNum) throws SQLException {
         return ShippingLabel.builder()
-                .juneAddress("juneAddress")
-                .customerNumber("TEST")
+                .customerNumber(rs.getString("customer_number"))
                 .description(rs.getString("description"))
-                .weight(rs.getString("product_weight"))
+                .weight(rs.getString("weight"))
                 .firstName(rs.getString("first_name"))
                 .lastName(rs.getString("last_name"))
                 .build();

@@ -8,6 +8,7 @@ import com.June.CourierNetwork.Repo.Contract.WarehouseClerkRepository;
 import com.June.CourierNetwork.Service.Contract.WarehouseClerkService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,43 +18,15 @@ import java.util.List;
 public class WarehouseClerkServiceImpl implements WarehouseClerkService {
     private final UserRepository userRepository;
     private final WarehouseClerkRepository warehouseClerkRepository;
+    @Value("${june.address}")
+    private String juneAddress;
 
-
-    @Override
-    public void saveProductDetails(ProductDetailsRequest productDetailsRequest) {
-        val userId = userRepository.findUserByEmail(productDetailsRequest.getCustomerEmail()).get().getId();
-
-        productDetailsRequest.setUserId(userId);
-
-        warehouseClerkRepository.createProduct(productDetailsRequest);
-
-    }
-
-    @Override
-    public void updateProductDetails(Long productId, ProductDetailsRequest productDetailsRequest) {
-        warehouseClerkRepository.updateProduct(productId, productDetailsRequest);
-
-    }
-
-    @Override
-    public void deleteProductDetails(Long productId) {
-        warehouseClerkRepository.deleteProduct(productId);
-
-    }
-
-    @Override
-    public List<ProductDetails> findProductsByEmail(String email) {
-        val userId = userRepository.findUserByEmail(email).get().getId();
-
-        return warehouseClerkRepository.findProductsByUserId(userId);}
-
-    @Override
-    public List<ProductDetails> getAllProducts() {
-        return warehouseClerkRepository.getAllProducts();
-    }
 
     @Override
     public ShippingLabel generateShippingLabel(Long productId) {
-        return warehouseClerkRepository.generateShippingLabel(productId);
+        val shippingLabel = warehouseClerkRepository.generateShippingLabel(productId);
+        shippingLabel.setJuneAddress(juneAddress);
+
+        return shippingLabel;
     }
 }

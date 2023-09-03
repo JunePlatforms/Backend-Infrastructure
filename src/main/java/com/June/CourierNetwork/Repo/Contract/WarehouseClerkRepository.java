@@ -14,15 +14,5 @@ public interface WarehouseClerkRepository {
 
     Long save(WarehouseClerk warehouseClerk);
 
-    void createProduct(ProductDetailsRequest productDetailsRequest);
-
-    void updateProduct(Long productId, ProductDetailsRequest productDetailsRequest);
-
-    void deleteProduct(Long productId);
-
-    List<ProductDetails> findProductsByUserId(Long userId);
-
-    List<ProductDetails> getAllProducts();
-
     ShippingLabel generateShippingLabel(Long productId);
 }
