@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id){
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) throws IOException {
         UserDTO userDTO = service.findUserById(id);
 
         if (userDTO == null){

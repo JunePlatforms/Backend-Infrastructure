@@ -3,10 +3,7 @@ package com.June.CourierNetwork.Service;
 import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Enum.TokenType;
 import com.June.CourierNetwork.Model.*;
-import com.June.CourierNetwork.Repo.Contract.CourierRepository;
-import com.June.CourierNetwork.Repo.Contract.TokenRepository;
-import com.June.CourierNetwork.Repo.Contract.UserRepository;
-import com.June.CourierNetwork.Repo.Contract.WarehouseClerkRepository;
+import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +23,7 @@ import java.io.IOException;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final CourierRepository courierRepository;
     private final WarehouseClerkRepository warehouseClerkRepository;
     private final TokenRepository tokenRepository;
@@ -52,11 +50,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .user(user)
                     .build();
             savedUserId = courierRepository.save(courier);
-        } else if (request.getRole().equals(Role.WAREHOUSE_CLERK)) {
+        }
+        else if (request.getRole().equals(Role.WAREHOUSE_CLERK)) {
             var warehouseClerk = WarehouseClerk.builder()
                     .user(user)
                     .build();
             savedUserId = warehouseClerkRepository.save(warehouseClerk);
+        }
+        else if (request.getRole().equals(Role.CUSTOMER)) {
+            var customer = Customer.builder()
+                    .username(request.getUsername())
+                    .user(user)
+                    .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
+                    .build();
+            savedUserId = customerRepository.save(customer);
         }
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

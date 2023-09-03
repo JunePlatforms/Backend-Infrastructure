@@ -1,9 +1,7 @@
 package com.June.CourierNetwork.Mapper;
 
 
-import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Model.Courier;
-import com.June.CourierNetwork.Model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -14,7 +12,7 @@ public class CourierMapper implements RowMapper<Courier> {
     public Courier mapRow(ResultSet rs, int rowNum) throws SQLException {
 
         return Courier.builder()
-                .id((long) rs.getInt("id"))
+                .courierId((long) rs.getInt("id"))
                 .acceptedTermsAndConditions(rs.getBoolean("accepted_terms_and_conditions"))
                 .assessmentScore(rs.getInt("assessment_score"))
                 .rating(rs.getInt("rating"))

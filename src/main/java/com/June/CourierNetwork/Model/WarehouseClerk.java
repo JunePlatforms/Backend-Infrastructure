@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WarehouseClerk {
-    private Long id;
+    private Long warehouseClerkId;
     private User user;
 }

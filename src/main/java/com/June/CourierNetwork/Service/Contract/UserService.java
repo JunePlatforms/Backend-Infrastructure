@@ -4,9 +4,11 @@ import com.June.CourierNetwork.DTO.UserDTO;
 import com.June.CourierNetwork.Model.UpdatePasswordRequest;
 import com.June.CourierNetwork.Model.UpdateUserRequest;
 
+import java.io.IOException;
+
 public interface UserService {
 
-    UserDTO findUserById(Long userId);
+    UserDTO findUserById(Long userId) throws IOException;
 
     void deleteUser(Long userId);
 

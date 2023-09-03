@@ -1,7 +1,5 @@
 package com.June.CourierNetwork.Mapper;
 
-import com.June.CourierNetwork.Enum.TokenType;
-import com.June.CourierNetwork.Model.Token;
 import com.June.CourierNetwork.Model.WarehouseClerk;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -12,7 +10,7 @@ public class WarehouseClerkMapperMapper implements RowMapper<WarehouseClerk> {
     @Override
     public WarehouseClerk mapRow(ResultSet rs, int rowNum) throws SQLException {
         return WarehouseClerk.builder()
-                .id((long) rs.getInt("id"))
+                .warehouseClerkId((long) rs.getInt("id"))
                 .build();
     }
 }
