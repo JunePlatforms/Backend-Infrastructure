@@ -1,19 +1,19 @@
-package com.June.CourierNetwork.Model;
+package com.June.CourierNetwork.DTO;
 
+import com.June.CourierNetwork.Model.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
-public class Customer {
-    private Long customerId;
+public class CustomerDTO {
+
+    private Long id;
     private String username;
     private String customerNumber;
-    private byte[] profilePicture;
+    private String profilePicture;
     private Boolean acceptedTermsAndConditions;
     private User user;
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Courier{
-    Long id;
+    Long courierId;
     Integer assessmentScore;
     Integer rating;
     Boolean isAvailable;
