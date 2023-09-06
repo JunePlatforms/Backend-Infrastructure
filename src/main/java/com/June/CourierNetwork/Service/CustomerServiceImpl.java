@@ -18,4 +18,9 @@ public class CustomerServiceImpl implements CustomerService {
     public String generateCustomerNumber(long userId) {
         return "June00" + userId;
     }
+
+    @Override
+    public String generateMailBox(long userId) {
+        return "JuneMB00" + userId;
+    }
 }

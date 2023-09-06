@@ -1,5 +1,7 @@
 package com.June.CourierNetwork.Model;
 
+import com.June.CourierNetwork.Enum.PackageStatus;
+import com.June.CourierNetwork.Enum.ShipmentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +19,8 @@ public class ProductDetails {
   private String description;
   private String customerNumber;
   private String trackingNumber;
+  private ShipmentType shipmentType;
+  private PackageStatus packageStatus;
 
 
 }

@@ -4,6 +4,7 @@
 CREATE TABLE customer_user (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     customer_number VARCHAR(20),
+    mail_box VARCHAR(50),
     username VARCHAR(50),
     profile_image VARCHAR(500),
     accepted_terms_and_conditions BOOLEAN NOT NULL,

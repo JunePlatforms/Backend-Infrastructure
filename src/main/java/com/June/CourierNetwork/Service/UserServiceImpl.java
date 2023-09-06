@@ -12,6 +12,7 @@ import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.June.CourierNetwork.Service.Contract.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private final FileUploadService fileUploadService;
     private final WarehouseClerkRepository warehouseClerkRepository;
     private final PasswordEncoder passwordEncoder;
+    @Value("${profile.image.upload.dir}")
+    private String profileImageUploadDirectory;
 
     @Override
     public UserDTO findUserById(Long userId) throws IOException {
@@ -46,7 +49,7 @@ public class UserServiceImpl implements UserService {
                 Optional<CustomerDTO> optionalCustomerDTO = customerRepository.findByUserId(userId);
                 CustomerDTO customerDTO = optionalCustomerDTO.orElseThrow();
                 customerDTO.setUser(user.orElseThrow());
-                byte[] profileImage = fileUploadService.getFile(customerDTO.getProfilePicture());
+                byte[] profileImage = fileUploadService.getFile(customerDTO.getProfilePicture(), profileImageUploadDirectory);
 
                 Customer customer = Customer.builder()
                         .username(customerDTO.getUsername())
@@ -54,6 +57,8 @@ public class UserServiceImpl implements UserService {
                         .customerId(customerDTO.getId())
                         .customerNumber(customerDTO.getCustomerNumber())
                         .profilePicture(profileImage)
+                        .acceptedTermsAndConditions(customerDTO.getAcceptedTermsAndConditions())
+                        .mailBox(customerDTO.getMailBox())
                         .build();
                 userDTO.setCustomer(customer);
             }
