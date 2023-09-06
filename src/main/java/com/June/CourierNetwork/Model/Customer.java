@@ -15,5 +15,6 @@ public class Customer {
     private String customerNumber;
     private byte[] profilePicture;
     private Boolean acceptedTermsAndConditions;
+    private String mailBox;
     private User user;
 }

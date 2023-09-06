@@ -27,21 +27,24 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public Long save(Customer customer) {
         long userId;
         String customerNumber;
+        String mailBox;
         String defaultProfileImage = "default.png";
 
         val sql = "INSERT INTO JuneCourierNetwork.customer_user " +
-                "(username, customer_number, profile_image, accepted_terms_and_conditions, user_id) " +
-                "VALUES(:username, :customerNumber, :profileImage, :acceptedTermsAndConditions, :userId);";
+                "(username, customer_number, mail_box, profile_image, accepted_terms_and_conditions, user_id) " +
+                "VALUES(:username, :customerNumber, :mailBox, :profileImage, :acceptedTermsAndConditions, :userId);";
 
         try {
             userId = userRepository.save(customer.getUser());
             customerNumber = customerService.generateCustomerNumber(userId);
+            mailBox = customerService.generateMailBox(userId);
         }catch (Exception e){
             return null;
         }
 
         val courierParams = new MapSqlParameterSource();
         courierParams.addValue("customerNumber", customerNumber);
+        courierParams.addValue("mailBox", mailBox);
         courierParams.addValue("username", customer.getUsername());
         courierParams.addValue("acceptedTermsAndConditions", customer.getAcceptedTermsAndConditions());
         courierParams.addValue("profileImage", defaultProfileImage);

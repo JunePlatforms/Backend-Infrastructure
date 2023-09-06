@@ -15,5 +15,6 @@ public class CustomerDTO {
     private String customerNumber;
     private String profilePicture;
     private Boolean acceptedTermsAndConditions;
+    private String mailBox;
     private User user;
 }
