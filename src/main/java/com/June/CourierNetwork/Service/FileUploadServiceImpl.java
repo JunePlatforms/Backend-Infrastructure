@@ -1,5 +1,6 @@
 package com.June.CourierNetwork.Service;
 
+import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.CustomerRepository;
 import com.June.CourierNetwork.Repo.Contract.ShipmentRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 public class FileUploadServiceImpl implements FileUploadService {
     private final CustomerRepository customerRepository;
     private final ShipmentRepository shipmentRepository;
+    private final CourierRepository courierRepository;
 
 
 
@@ -83,6 +85,30 @@ public class FileUploadServiceImpl implements FileUploadService {
         } catch (IOException e) {
             e.printStackTrace();
             return new byte[0];
+        }
+    }
+
+    @Override
+    public void uploadPoliceRecord(MultipartFile file, Long userId, String filePath) throws IOException {
+        String oldFileName = courierRepository.getPoliceRecord(userId);
+        try {
+            String newFileName = uploadFile(file, filePath, oldFileName);
+
+            courierRepository.updatePoliceRecord(newFileName, userId);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void uploadDriversLicense(MultipartFile file, Long userId, String filePath) throws IOException {
+        String oldFileName = courierRepository.getDriversLicense(userId);
+        try {
+            String newFileName = uploadFile(file, filePath, oldFileName);
+
+            courierRepository.updateDriversLicense(newFileName, userId);
+        }catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
