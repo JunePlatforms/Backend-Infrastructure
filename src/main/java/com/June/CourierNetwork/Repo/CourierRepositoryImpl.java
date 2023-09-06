@@ -1,6 +1,7 @@
 package com.June.CourierNetwork.Repo;
 
-import com.June.CourierNetwork.Mapper.CourierMapper;
+import com.June.CourierNetwork.DTO.CourierDTO;
+import com.June.CourierNetwork.Mapper.CourierDTOMapper;
 import com.June.CourierNetwork.Model.Courier;
 import com.June.CourierNetwork.Repo.Contract.CourierRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
@@ -49,7 +50,7 @@ public class CourierRepositoryImpl implements CourierRepository {
     }
 
     @Override
-    public Optional<Courier> findByUserId(long userId) {
+    public Optional<CourierDTO> findByUserId(long userId) {
         val sql = "SELECT * FROM JuneCourierNetwork.courier_user " +
                 "WHERE user_id = :user_id";
 
@@ -57,7 +58,7 @@ public class CourierRepositoryImpl implements CourierRepository {
 
         params.addValue("user_id", userId);
 
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new CourierMapper()));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new CourierDTOMapper()));
     }
 
     @Override
@@ -94,5 +95,51 @@ public class CourierRepositoryImpl implements CourierRepository {
         params.addValue("rating", rating);
 
         return jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public String getPoliceRecord(Long userId) {
+        val sql = "SELECT police_record FROM JuneCourierNetwork.courier_user " +
+                "WHERE user_id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
+
+        return jdbcTemplate.queryForObject(sql, params, String.class);
+    }
+
+    @Override
+    public void updatePoliceRecord(String newFileName, Long userId) {
+        val sql = "UPDATE JuneCourierNetwork.courier_user SET police_record = :newFileName " +
+                "WHERE user_id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
+        params.addValue("newFileName", newFileName);
+
+        jdbcTemplate.update(sql, params);
+
+    }
+
+    @Override
+    public String getDriversLicense(Long userId) {
+        val sql = "SELECT drivers_license FROM JuneCourierNetwork.courier_user " +
+                "WHERE user_id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
+
+        return jdbcTemplate.queryForObject(sql, params, String.class);}
+
+    @Override
+    public void updateDriversLicense(String newFileName, Long userId) {
+        val sql = "UPDATE JuneCourierNetwork.courier_user SET drivers_license = :newFileName " +
+                "WHERE user_id = :userId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
+        params.addValue("newFileName", newFileName);
+
+        jdbcTemplate.update(sql, params);
     }
 }

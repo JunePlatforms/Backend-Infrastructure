@@ -1,5 +1,6 @@
 package com.June.CourierNetwork.Service;
 
+import com.June.CourierNetwork.DTO.CourierDTO;
 import com.June.CourierNetwork.DTO.CustomerDTO;
 import com.June.CourierNetwork.DTO.UserDTO;
 import com.June.CourierNetwork.Enum.Role;
@@ -38,9 +39,16 @@ public class UserServiceImpl implements UserService {
 
         if (user.isPresent()) {
             if (user.get().getRole().equals(Role.COURIER)) {
-                Optional<Courier> courier = courierRepository.findByUserId(userId);
-                courier.orElseThrow().setUser(user.orElseThrow());
-                userDTO.setCourier(courier.orElseThrow());
+                Optional<CourierDTO> courierDTO = courierRepository.findByUserId(userId);
+                Courier courier = Courier.builder()
+                        .assessmentScore(courierDTO.orElseThrow().getAssessmentScore())
+                        .acceptedTermsAndConditions(courierDTO.orElseThrow().getAcceptedTermsAndConditions())
+                        .courierId(courierDTO.orElseThrow().getCourierId())
+                        .isAvailable(courierDTO.orElseThrow().getIsAvailable())
+                        .rating(courierDTO.orElseThrow().getRating())
+                        .user(user.orElseThrow())
+                        .build();
+                userDTO.setCourier(courier);
             } else if (user.get().getRole().equals(Role.WAREHOUSE_CLERK)) {
                 Optional<WarehouseClerk> warehouseClerk = warehouseClerkRepository.findByUserId(userId);
                 warehouseClerk.orElseThrow().setUser(user.orElseThrow());

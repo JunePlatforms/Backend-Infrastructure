@@ -5,14 +5,15 @@ import com.June.CourierNetwork.Enum.TokenType;
 import com.June.CourierNetwork.Model.*;
 import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
+import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +31,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final FileUploadService fileUploadService;
+    @Value("${police.record.upload.dir}")
+    private String policeRecordUploadDirectory;
+
+    @Value("${drivers.license.upload.dir}")
+    private String driversLicenseUploadDirectory;
 
     @Override
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request){
         Long savedUserId = null;
         var user = User.builder()
                 .firstName(request.getFirstname())

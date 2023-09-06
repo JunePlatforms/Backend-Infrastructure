@@ -10,4 +10,8 @@ public interface FileUploadService {
     void uploadShipmentManifest(MultipartFile file, Long shipmentId, String filePath) throws IOException;
 
     byte[] getFile(String fileName, String filePath) throws IOException;
+
+    void uploadPoliceRecord(MultipartFile file, Long userId, String policeRecordUploadDirectory) throws IOException;
+
+    void uploadDriversLicense(MultipartFile file, Long userId, String driversLicenseUploadDirectory) throws IOException;
 }

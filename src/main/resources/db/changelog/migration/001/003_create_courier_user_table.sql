@@ -7,6 +7,8 @@ CREATE TABLE courier_user (
     rating INT NOT NULL DEFAULT 0,
     is_available BOOLEAN NOT NULL DEFAULT TRUE,
     accepted_terms_and_conditions BOOLEAN NOT NULL,
+    police_record VARCHAR(150),
+    drivers_license VARCHAR(150),
     user_id BIGINT,
     CONSTRAINT user_id_courier_fk FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 
