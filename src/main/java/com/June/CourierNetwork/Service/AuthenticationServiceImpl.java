@@ -27,6 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final CustomerRepository customerRepository;
     private final CourierRepository courierRepository;
     private final WarehouseClerkRepository warehouseClerkRepository;
+    private final AdministratorRepository administratorRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -72,6 +73,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .build();
             savedUserId = customerRepository.save(customer);
         }
+        else if (request.getRole().equals(Role.ADMIN)) {
+            var admin = Administrator.builder()
+                    .user(user)
+                    .build();
+            savedUserId = administratorRepository.save(admin);
+        }
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUserId, jwtToken);
