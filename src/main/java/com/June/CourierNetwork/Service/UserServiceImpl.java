@@ -5,10 +5,7 @@ import com.June.CourierNetwork.DTO.CustomerDTO;
 import com.June.CourierNetwork.DTO.UserDTO;
 import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Model.*;
-import com.June.CourierNetwork.Repo.Contract.CourierRepository;
-import com.June.CourierNetwork.Repo.Contract.CustomerRepository;
-import com.June.CourierNetwork.Repo.Contract.UserRepository;
-import com.June.CourierNetwork.Repo.Contract.WarehouseClerkRepository;
+import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.June.CourierNetwork.Service.Contract.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final CustomerRepository customerRepository;
     private final FileUploadService fileUploadService;
     private final WarehouseClerkRepository warehouseClerkRepository;
+    private final AdministratorRepository administratorRepository;
     private final PasswordEncoder passwordEncoder;
     @Value("${profile.image.upload.dir}")
     private String profileImageUploadDirectory;
@@ -49,11 +47,18 @@ public class UserServiceImpl implements UserService {
                         .user(user.orElseThrow())
                         .build();
                 userDTO.setCourier(courier);
-            } else if (user.get().getRole().equals(Role.WAREHOUSE_CLERK)) {
+            }
+            else if (user.get().getRole().equals(Role.WAREHOUSE_CLERK)) {
                 Optional<WarehouseClerk> warehouseClerk = warehouseClerkRepository.findByUserId(userId);
                 warehouseClerk.orElseThrow().setUser(user.orElseThrow());
                 userDTO.setWarehouseClerk(warehouseClerk.orElseThrow());
-            } else if (user.get().getRole().equals(Role.CUSTOMER)) {
+            }
+            else if (user.get().getRole().equals(Role.ADMIN)) {
+                Optional<Administrator> administrator = administratorRepository.findByUserId(userId);
+                administrator.orElseThrow().setUser(user.orElseThrow());
+                userDTO.setAdministrator(administrator.orElseThrow());
+            }
+            else if (user.get().getRole().equals(Role.CUSTOMER)) {
                 Optional<CustomerDTO> optionalCustomerDTO = customerRepository.findByUserId(userId);
                 CustomerDTO customerDTO = optionalCustomerDTO.orElseThrow();
                 customerDTO.setUser(user.orElseThrow());

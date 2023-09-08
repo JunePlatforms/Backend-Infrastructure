@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Administrator {
-    private Long id;
+    private Long adminId;
+    private User user;
 }
