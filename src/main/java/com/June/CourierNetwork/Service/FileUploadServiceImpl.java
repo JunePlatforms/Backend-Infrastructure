@@ -1,9 +1,6 @@
 package com.June.CourierNetwork.Service;
 
-import com.June.CourierNetwork.Repo.Contract.CourierRepository;
-import com.June.CourierNetwork.Repo.Contract.CustomerRepository;
-import com.June.CourierNetwork.Repo.Contract.ShipmentRepository;
-import com.June.CourierNetwork.Repo.Contract.UserRepository;
+import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -26,6 +23,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     private final CustomerRepository customerRepository;
     private final ShipmentRepository shipmentRepository;
     private final CourierRepository courierRepository;
+    private final ProductRepository productRepository;
 
 
 
@@ -107,6 +105,18 @@ public class FileUploadServiceImpl implements FileUploadService {
             String newFileName = uploadFile(file, filePath, oldFileName);
 
             courierRepository.updateDriversLicense(newFileName, userId);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void uploadPreAlert(MultipartFile file, Long productId, String filePath) {
+        String oldFileName = productRepository.getPreAlert(productId);
+        try {
+            String newFileName = uploadFile(file, filePath, oldFileName);
+
+            productRepository.uploadPreAlert(newFileName, productId);
         }catch (IOException e) {
             e.printStackTrace();
         }

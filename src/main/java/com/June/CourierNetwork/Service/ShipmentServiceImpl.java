@@ -6,6 +6,7 @@ import com.June.CourierNetwork.Enum.ShipmentType;
 import com.June.CourierNetwork.Model.Shipment;
 import com.June.CourierNetwork.Repo.Contract.ShipmentRepository;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
+import com.June.CourierNetwork.Service.Contract.ProductService;
 import com.June.CourierNetwork.Service.Contract.ShipmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ShipmentServiceImpl implements ShipmentService {
     private final ShipmentRepository shipmentRepository;
     private final FileUploadService fileUploadService;
+    private final ProductService productService;
     @Value("${airway.invoice.upload.dir}")
     private String airWayInvoiceUploadDirectory;
 
@@ -51,6 +53,7 @@ public class ShipmentServiceImpl implements ShipmentService {
         for (ShipmentDTO shipmentDTO : shipmentDTOS) {
             val airwayInvoice = fileUploadService.getFile(shipmentDTO.getAirwayInvoiceFileName(), airWayInvoiceUploadDirectory);
             val shipmentManifest = fileUploadService.getFile(shipmentDTO.getShipmentManifestFileName(), shipmentManifestUploadDirectory);
+            val productDetails = productService.findProductDetailsByShipmentId(shipmentDTO.getId());
 
             shipments.add(Shipment.builder()
                     .id(shipmentDTO.getId())
@@ -60,6 +63,7 @@ public class ShipmentServiceImpl implements ShipmentService {
                     .departureDate(shipmentDTO.getDepartureDate())
                     .arrivalDate(shipmentDTO.getArrivalDate())
                     .status(shipmentDTO.getStatus())
+                    .productDetails(productDetails)
                     .build());
         }
         return shipments;
@@ -71,6 +75,7 @@ public class ShipmentServiceImpl implements ShipmentService {
 
         val shipmentManifest = fileUploadService.getFile(shipmentDTO.getShipmentManifestFileName(), shipmentManifestUploadDirectory);
         val airwayInvoice = fileUploadService.getFile(shipmentDTO.getAirwayInvoiceFileName(), airWayInvoiceUploadDirectory);
+        val productDetails = productService.findProductDetailsByShipmentId(shipmentId);
 
         return Shipment.builder()
                 .id(shipmentDTO.getId())
@@ -80,6 +85,7 @@ public class ShipmentServiceImpl implements ShipmentService {
                 .departureDate(shipmentDTO.getDepartureDate())
                 .arrivalDate(shipmentDTO.getArrivalDate())
                 .status(shipmentDTO.getStatus())
+                .productDetails(productDetails)
                 .build();
     }
 
@@ -97,4 +103,6 @@ public class ShipmentServiceImpl implements ShipmentService {
     public String getAirwayInvoiceFileName(Long shipmentId) {
         return shipmentRepository.getAirwayInvoiceFileName(shipmentId);
     }
+
+
 }

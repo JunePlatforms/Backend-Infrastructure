@@ -28,4 +28,5 @@ public interface ShipmentRepository {
     void updateShipmentManifestFileName(String fileName, Long shipmentId);
 
     void updateAirwayInvoiceFileName(String fileName, Long shipmentId);
+
 }

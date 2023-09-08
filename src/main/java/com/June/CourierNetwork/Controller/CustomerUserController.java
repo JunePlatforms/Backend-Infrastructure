@@ -24,6 +24,8 @@ public class CustomerUserController {
     private final ProductService productService;
     @Value("${profile.image.upload.dir}")
     private String profileImageUploadDirectory;
+    @Value("${pre.alert.upload.dir}")
+    private String preAlertImageUploadDirectory;
 
 
     @PutMapping("/{id}/update/profileImage")
@@ -40,15 +42,18 @@ public class CustomerUserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
-    @PutMapping("/{packageId}/set/shipmentType")
-    public ResponseEntity<String> setShipmentType(@PathVariable Long packageId, @RequestParam ShipmentType shipmentType) {
-        val productDetailsOptional = productService.findProductById(packageId);
-        if (productDetailsOptional.isPresent()) {
-            productService.setShipmentType(packageId, shipmentType);
-            return ResponseEntity.ok("Successfully updated shipment type");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
+    @PutMapping("/{productId}/set/shipmentType")
+    public ResponseEntity<String> setShipmentType(@PathVariable Long productId, @RequestParam ShipmentType shipmentType) throws IOException {
+        productService.findProductById(productId);
+        productService.setShipmentType(productId, shipmentType);
+        return ResponseEntity.ok("Successfully updated shipment type");
     }
 
+    @PutMapping("/{productId}/upload/preAlert")
+    public ResponseEntity<String> uploadPreAlert(@PathVariable Long productId, MultipartFile file) throws IOException {
+        productService.findProductById(productId);
+        fileUploadService.uploadPreAlert(file, productId, preAlertImageUploadDirectory);
+        return ResponseEntity.ok("File uploaded successfully");
+    }
 
 }

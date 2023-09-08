@@ -4,10 +4,9 @@ import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
 import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
-import com.June.CourierNetwork.Model.ShippingLabel;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
     void saveProductDetails(ProductDetailsRequest productDetailsRequest);
@@ -16,13 +15,17 @@ public interface ProductService {
 
     void deleteProductDetails(Long productId);
 
-    List<ProductDetails> findProductsByEmail(String email);
+    List<ProductDetails> findProductsByEmail(String email) throws IOException;
 
-    List<ProductDetails> getAllProducts();
+    List<ProductDetails> getAllProducts() throws IOException;
 
-    Optional<ProductDetails> findProductById(Long packageId);
+    ProductDetails findProductById(Long packageId) throws IOException;
 
     void setShipmentType(Long packageId, ShipmentType shipmentType);
 
     void updateProductStatus(Long productId, PackageStatus status);
+
+    void addProductsToShipment(List<Long> productIds, Long shipmentId);
+
+    List<ProductDetails> findProductDetailsByShipmentId(Long shipmentId) throws IOException;
 }
