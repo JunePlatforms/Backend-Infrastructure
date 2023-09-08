@@ -1,8 +1,9 @@
 package com.June.CourierNetwork.Repo;
 
+import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
-import com.June.CourierNetwork.Mapper.ProductDetailsMapper;
+import com.June.CourierNetwork.Mapper.ProductDetailsDTOMapper;
 import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
 import com.June.CourierNetwork.Repo.Contract.ProductRepository;
@@ -73,7 +74,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<ProductDetails> findProductsByUserId(Long userId) {
+    public List<ProductDetailsDTO> findProductsByUserId(Long userId) {
         val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
                 "WHERE cpd.user_id = :userId AND cpd.was_deleted = false";
@@ -81,19 +82,19 @@ public class ProductRepositoryImpl implements ProductRepository {
         val params = new MapSqlParameterSource();
         params.addValue("userId", userId);
 
-        return jdbcTemplate.query(sql, params, new ProductDetailsMapper());
+        return jdbcTemplate.query(sql, params, new ProductDetailsDTOMapper());
     }
 
     @Override
-    public List<ProductDetails> getAllProducts() {
+    public List<ProductDetailsDTO> getAllProducts() {
         val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id WHERE cpd.was_deleted = false";
 
-        return jdbcTemplate.query(sql, new ProductDetailsMapper());
+        return jdbcTemplate.query(sql, new ProductDetailsDTOMapper());
     }
 
     @Override
-    public Optional<ProductDetails> findProductById(Long packageId) {
+    public Optional<ProductDetailsDTO> findProductById(Long packageId) {
         val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
                 "WHERE cpd.id = :packageId";
@@ -101,7 +102,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         val params = new MapSqlParameterSource();
         params.addValue("packageId", packageId);
 
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new ProductDetailsMapper()));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new ProductDetailsDTOMapper()));
     }
 
     @Override
@@ -128,5 +129,54 @@ public class ProductRepositoryImpl implements ProductRepository {
         params.addValue("status", status.name());
 
         jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public String getPreAlert(Long productId) {
+        val sql = "SELECT pre_alert FROM JuneCourierNetwork.customer_product_details " +
+                "WHERE id = :productId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("productId", productId);
+
+        return jdbcTemplate.queryForObject(sql, params, String.class);
+    }
+
+    @Override
+    public void uploadPreAlert(String newFileName, Long productId) {
+        val sql = "UPDATE JuneCourierNetwork.customer_product_details " +
+                "SET pre_alert = :newFileName " +
+                "WHERE id = :productId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("productId", productId);
+        params.addValue("newFileName", newFileName);
+
+        jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public void addProductsToShipment(List<Long> productIds, Long shipmentId) {
+        val sql = "UPDATE JuneCourierNetwork.customer_product_details " +
+                "SET shipment_id = :shipmentId " +
+                "WHERE id IN (:productIds)";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("productIds", productIds);
+        params.addValue("shipmentId", shipmentId);
+
+        jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public List<ProductDetailsDTO> findProductDetailsByShipmentId(Long shipmentId) {
+        val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
+                "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
+                "WHERE cpd.shipment_id = :shipmentId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("shipmentId", shipmentId);
+
+        return jdbcTemplate.query(sql, params, new ProductDetailsDTOMapper());
     }
 }

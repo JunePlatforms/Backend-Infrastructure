@@ -14,4 +14,6 @@ public interface FileUploadService {
     void uploadPoliceRecord(MultipartFile file, Long userId, String policeRecordUploadDirectory) throws IOException;
 
     void uploadDriversLicense(MultipartFile file, Long userId, String driversLicenseUploadDirectory) throws IOException;
+
+    void uploadPreAlert(MultipartFile file, Long productId, String preAlertImageUploadDirectory);
 }

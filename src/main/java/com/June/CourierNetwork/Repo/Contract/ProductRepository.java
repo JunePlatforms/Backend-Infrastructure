@@ -1,5 +1,6 @@
 package com.June.CourierNetwork.Repo.Contract;
 
+import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
 import com.June.CourierNetwork.Model.ProductDetails;
@@ -16,13 +17,21 @@ public interface ProductRepository {
 
     void deleteProduct(Long productId);
 
-    List<ProductDetails> findProductsByUserId(Long userId);
+    List<ProductDetailsDTO> findProductsByUserId(Long userId);
 
-    List<ProductDetails> getAllProducts();
+    List<ProductDetailsDTO> getAllProducts();
 
-    Optional<ProductDetails> findProductById(Long packageId);
+    Optional<ProductDetailsDTO> findProductById(Long packageId);
 
     void setShipmentType(Long packageId, ShipmentType shipmentType);
 
     void updateProductStatus(Long productId, PackageStatus status);
+
+    String getPreAlert(Long productId);
+
+    void uploadPreAlert(String newFileName, Long productId);
+
+    void addProductsToShipment(List<Long> productIds, Long shipmentId);
+
+    List<ProductDetailsDTO> findProductDetailsByShipmentId(Long shipmentId);
 }

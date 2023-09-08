@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,4 +23,5 @@ public class Shipment {
     private byte[] airwayInvoice;
     private Date departureDate;
     private Date arrivalDate;
+    private List<ProductDetails> productDetails;
 }

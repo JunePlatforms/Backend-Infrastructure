@@ -1,19 +1,18 @@
 package com.June.CourierNetwork.Mapper;
 
+import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
-import com.June.CourierNetwork.Enum.TokenType;
 import com.June.CourierNetwork.Model.ProductDetails;
-import com.June.CourierNetwork.Model.Token;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductDetailsMapper implements RowMapper<ProductDetails> {
+public class ProductDetailsDTOMapper implements RowMapper<ProductDetailsDTO> {
     @Override
-    public ProductDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return ProductDetails.builder()
+    public ProductDetailsDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return ProductDetailsDTO.builder()
                 .id((long) rs.getInt("id"))
                 .weight(rs.getString("weight"))
                 .description(rs.getString("description"))
@@ -22,6 +21,7 @@ public class ProductDetailsMapper implements RowMapper<ProductDetails> {
                 .trackingNumber(rs.getString("tracking_number"))
                 .shipmentType(ShipmentType.valueOf(rs.getString("shipment_type")))
                 .packageStatus(PackageStatus.valueOf(rs.getString("status")))
+                .preAlertFileName(rs.getString("pre_alert"))
                 .build();
     }
 }

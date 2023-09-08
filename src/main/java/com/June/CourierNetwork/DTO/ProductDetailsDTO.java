@@ -1,4 +1,4 @@
-package com.June.CourierNetwork.Model;
+package com.June.CourierNetwork.DTO;
 
 import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDetails {
+public class ProductDetailsDTO {
 
   private Long id;
   private String supplierName;
@@ -21,7 +21,7 @@ public class ProductDetails {
   private String trackingNumber;
   private ShipmentType shipmentType;
   private PackageStatus packageStatus;
-  private byte[] preAlert;
+  private String preAlertFileName;
 
 
 }

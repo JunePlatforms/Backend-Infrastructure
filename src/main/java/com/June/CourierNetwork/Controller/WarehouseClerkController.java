@@ -58,6 +58,17 @@ public class WarehouseClerkController {
         }
     }
 
+    @PutMapping("batch/add/products/to/shipment/{shipmentId}")
+    public ResponseEntity<String> addProductToShipment(@RequestBody List<Long> productIds, @PathVariable Long shipmentId) {
+        try {
+            productService.addProductsToShipment(productIds, shipmentId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @DeleteMapping("/delete/product")
     public ResponseEntity<String> deleteProduct(Long productId) {
         try {
@@ -144,6 +155,7 @@ public class WarehouseClerkController {
         try {
             return new ResponseEntity<>(shipmentService.getAllShipments(), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -153,6 +165,7 @@ public class WarehouseClerkController {
         try {
             return new ResponseEntity<>(shipmentService.findShipmentById(shipmentId), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

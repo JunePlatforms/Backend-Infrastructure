@@ -1,10 +1,7 @@
 package com.June.CourierNetwork.Repo;
 
-import com.June.CourierNetwork.Mapper.ProductDetailsMapper;
 import com.June.CourierNetwork.Mapper.ShippingLabelMapper;
 import com.June.CourierNetwork.Mapper.WarehouseClerkMapperMapper;
-import com.June.CourierNetwork.Model.ProductDetails;
-import com.June.CourierNetwork.Model.ProductDetailsRequest;
 import com.June.CourierNetwork.Model.ShippingLabel;
 import com.June.CourierNetwork.Model.WarehouseClerk;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
@@ -15,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
