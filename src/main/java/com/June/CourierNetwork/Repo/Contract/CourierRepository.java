@@ -1,8 +1,11 @@
 package com.June.CourierNetwork.Repo.Contract;
 
 import com.June.CourierNetwork.DTO.CourierDTO;
+import com.June.CourierNetwork.Enum.ApplicationStatus;
+import com.June.CourierNetwork.Enum.VehicleType;
 import com.June.CourierNetwork.Model.Courier;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CourierRepository {
@@ -24,4 +27,10 @@ public interface CourierRepository {
     String getDriversLicense(Long userId);
 
     void updateDriversLicense(String newFileName, Long userId);
+
+    List<CourierDTO> getAllCourierAccountsByStatus(ApplicationStatus status);
+
+    List<CourierDTO> getAllCouriersByVehicleType(VehicleType vehicleType);
+
+    void updateApplicationStatus(Long id, ApplicationStatus status);
 }

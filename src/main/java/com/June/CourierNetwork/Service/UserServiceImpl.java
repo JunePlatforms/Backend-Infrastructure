@@ -30,6 +30,12 @@ public class UserServiceImpl implements UserService {
     @Value("${profile.image.upload.dir}")
     private String profileImageUploadDirectory;
 
+    @Value("${police.record.upload.dir}")
+    private String policeRecordUploadDirectory;
+
+    @Value("${drivers.license.upload.dir}")
+    private String driversLicenseUploadDirectory;
+
     @Override
     public UserDTO findUserById(Long userId) throws IOException {
         UserDTO userDTO = new UserDTO();
@@ -38,12 +44,23 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             if (user.get().getRole().equals(Role.COURIER)) {
                 Optional<CourierDTO> courierDTO = courierRepository.findByUserId(userId);
+                byte[] policeRecord = fileUploadService.getFile(courierDTO.orElseThrow().getPoliceRecord(), policeRecordUploadDirectory);
+                byte[] driversLicense = fileUploadService.getFile(courierDTO.orElseThrow().getDriversLicense(), driversLicenseUploadDirectory);
+
                 Courier courier = Courier.builder()
                         .assessmentScore(courierDTO.orElseThrow().getAssessmentScore())
                         .acceptedTermsAndConditions(courierDTO.orElseThrow().getAcceptedTermsAndConditions())
                         .courierId(courierDTO.orElseThrow().getCourierId())
                         .isAvailable(courierDTO.orElseThrow().getIsAvailable())
                         .rating(courierDTO.orElseThrow().getRating())
+                        .reason(courierDTO.orElseThrow().getReason())
+                        .driversLicense(driversLicense)
+                        .policeRecord(policeRecord)
+                        .applicationStatus(courierDTO.orElseThrow().getApplicationStatus())
+                        .licensePlateNumber(courierDTO.orElseThrow().getLicensePlateNumber())
+                        .vehicleMake(courierDTO.orElseThrow().getVehicleMake())
+                        .vehicleModel(courierDTO.orElseThrow().getVehicleModel())
+                        .vehicleType(courierDTO.orElseThrow().getVehicleType())
                         .user(user.orElseThrow())
                         .build();
                 userDTO.setCourier(courier);
