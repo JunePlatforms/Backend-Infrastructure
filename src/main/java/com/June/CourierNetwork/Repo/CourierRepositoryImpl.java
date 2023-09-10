@@ -86,7 +86,7 @@ public class CourierRepositoryImpl implements CourierRepository {
         courierParams.addValue("licensePlateNumber", courier.getLicensePlateNumber());
         courierParams.addValue("vehicleMake", courier.getVehicleMake());
         courierParams.addValue("vehicleModel", courier.getVehicleModel());
-        courierParams.addValue("vehicleType", courier.getVehicleType());
+        courierParams.addValue("vehicleType", courier.getVehicleType().name());
         courierParams.addValue("userId", userId);
 
         jdbcTemplate.update(sql, courierParams);

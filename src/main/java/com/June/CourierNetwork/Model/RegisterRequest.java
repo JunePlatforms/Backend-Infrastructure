@@ -1,6 +1,7 @@
 package com.June.CourierNetwork.Model;
 
 import com.June.CourierNetwork.Enum.Role;
+import com.June.CourierNetwork.Enum.VehicleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,10 @@ public class RegisterRequest {
   private Integer rating;
   private Boolean isAvailable;
   private Boolean acceptedTermsAndConditions;
+  private String vehicleMake;
+  private String vehicleModel;
+  private String licensePlateNumber;
+  private VehicleType vehicleType;
 
   private String username;
   private String customerNumber;
