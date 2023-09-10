@@ -55,6 +55,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             var courier = Courier.builder()
                     .assessmentScore(request.getAssessmentScore())
                     .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
+                    .vehicleMake(request.getVehicleMake())
+                    .vehicleModel(request.getVehicleModel())
+                    .vehicleType(request.getVehicleType())
+                    .licensePlateNumber(request.getLicensePlateNumber())
                     .user(user)
                     .build();
             savedUserId = courierRepository.save(courier);

@@ -1,12 +1,11 @@
 package com.June.CourierNetwork.Controller;
 
-import com.June.CourierNetwork.DTO.UserDTO;
-import com.June.CourierNetwork.Model.UpdateUserRequest;
-import com.June.CourierNetwork.Repo.Contract.CourierRepository;
+import com.June.CourierNetwork.Enum.ApplicationStatus;
+import com.June.CourierNetwork.Enum.VehicleType;
+import com.June.CourierNetwork.Model.Courier;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.CourierService;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
-import com.June.CourierNetwork.Service.Contract.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -108,6 +107,37 @@ public class CourierUserController {
             }
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new byte[0]);
+    }
+
+    @GetMapping("/get/all/courier/accounts/by/status")
+    public ResponseEntity<List<Courier>> getAllCourierAccountsByStatus(ApplicationStatus status){
+        try {
+            return ResponseEntity.ok(courierService.getAllCourierAccountsByStatus(status));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/get/all/couriers/by/vehicle/type")
+    public ResponseEntity<List<Courier>> getAllCouriersByVehicleType(@RequestParam VehicleType vehicleType){
+        try {
+            return ResponseEntity.ok(courierService.getAllCouriersByVehicleType(vehicleType));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PutMapping("{userId}/update/application/status")
+    public ResponseEntity<String> updateApplicationStatus(@PathVariable Long userId, ApplicationStatus status){
+        try {
+            courierService.updateApplicationStatus(userId, status);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
