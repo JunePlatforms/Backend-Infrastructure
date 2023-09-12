@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset junecourieradmin.com:005_create_customer_package_details_table
+--changeset junecourieradmin.com:008_create_customer_package_details_table
 
 CREATE TABLE customer_product_details (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
