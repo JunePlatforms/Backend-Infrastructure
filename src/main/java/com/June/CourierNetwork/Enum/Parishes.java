@@ -1,14 +1,14 @@
 package com.June.CourierNetwork.Enum;
 
 public enum Parishes {
-    ST_CATHERINE("St. Catherine"),
-    ST_JAMES("St. James"),
-    ST_MARY("St. Mary"),
-    ST_THOMAS("St. Thomas"),
-    ST_ANDREW("St. Andrew"),
-    ST_ANN("St. Ann"),
+    STCATHERINE("St. Catherine"),
+    STJAMES("St. James"),
+    STMARY("St. Mary"),
+    STTHOMAS("St. Thomas"),
+    STANDREW("St. Andrew"),
+    STANN("St. Ann"),
     WESTMORELAND("Westmoreland"),
-    ST_ELIZABETH("St. Elizabeth"),
+    STELIZABETH("St. Elizabeth"),
     PORTLAND("Portland"),
     MANCHESTER("Manchester"),
     KINGSTON("Kingston"),
@@ -23,8 +23,8 @@ public enum Parishes {
         this.parishName = parishName;
     }
 
-    // Getter method to retrieve the parish name
     public String getParishName() {
         return parishName;
     }
+
 }

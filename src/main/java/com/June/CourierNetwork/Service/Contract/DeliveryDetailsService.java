@@ -1,17 +1,24 @@
 package com.June.CourierNetwork.Service.Contract;
 
-import com.June.CourierNetwork.Enum.PackageStatus;
-import com.June.CourierNetwork.Enum.ShipmentType;
-import com.June.CourierNetwork.Model.DeliveryDetailsRequest;
-import com.June.CourierNetwork.Model.ProductDetails;
-import com.June.CourierNetwork.Model.ProductDetailsRequest;
+import com.June.CourierNetwork.DTO.DeliveryDetailsDTO;
+import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
+import com.June.CourierNetwork.Enum.DeliveryStatus;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface DeliveryDetailsService {
 
-    void saveDeliveryDetails(DeliveryDetailsRequest deliveryDetailsRequest);
+    void saveDeliveryDetails(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO);
 
-    List<DeliveryDetailsRequest> getAllDeliveryDetails();
+    List<DeliveryDetailsDTO> getAllDeliveryDetails(DeliveryStatus status);
+
+    DeliveryDetailsDTO getDeliveryDetailsByPackageId(Long packageId);
+
+    List<DeliveryDetailsDTO> getAllDeliveryDetailsByCustomerId(Long customerId);
+
+    List<DeliveryDetailsDTO> getAllDeliveryDetailsByCourierId(Long courierId);
+
+    void assignCourier(Long deliveryId, Long courierId);
+
+    void updateDeliveryStatus(Long deliveryId, DeliveryStatus status);
 }

@@ -1,5 +1,6 @@
-package com.June.CourierNetwork.Model;
+package com.June.CourierNetwork.DTO;
 
+import com.June.CourierNetwork.POJO.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryDetailsRequest {
+public class DeliveryDetailsRequestDTO {
 
   private Address pickUpLocation;
   private Address dropOffLocation;
