@@ -1,9 +1,10 @@
 package com.June.CourierNetwork.Repo;
 
 import com.June.CourierNetwork.Enum.DeliveryStatus;
-import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
 import com.June.CourierNetwork.Mapper.DeliveryDetailsMapper;
 import com.June.CourierNetwork.Model.DeliveryDetails;
+import com.June.CourierNetwork.Model.DeliveryDetailsRequest;
+import com.June.CourierNetwork.POJO.Address;
 import com.June.CourierNetwork.Repo.Contract.DeliveryDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -23,6 +24,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
     private static final String sqlJoinClause = "SELECT " +
             "dd.pick_up_location, " +
             "dd.drop_off_location, " +
+            "dd.delivery_date_time, " +
             "cpd.description, " +
             "dd.special_instructions, " +
             "cu.first_name AS customerFirstName, " +
@@ -38,31 +40,25 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
             "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id ";
 
     @Override
-    public void save(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
+    public void save(DeliveryDetailsRequest deliveryDetails) {
         val sql = "INSERT INTO delivery_details " +
-                "(pick_up_location, drop_off_location, package_description, special_instructions, " +
-                "customer_id, status, package_id) " +
-                "VALUES (:pickUpLocation, :dropOffLocation, :packageDescription, :specialInstructions, " +
-                ":customerId, :status, :packageId)";
+                "(pick_up_location, drop_off_location, special_instructions, " +
+                "customer_id, status, package_id, delivery_date_time) " +
+                "VALUES (:pickUpLocation, :dropOffLocation, :specialInstructions, " +
+                ":customerId, :status, :packageId, :deliveryDateTime);";
 
-        String pickUpLocation = deliveryDetailsRequestDTO.getPickUpLocation().getLine1() + "_" +
-                deliveryDetailsRequestDTO.getPickUpLocation().getLine2() + "_" +
-                deliveryDetailsRequestDTO.getPickUpLocation().getCity() + "_" +
-                deliveryDetailsRequestDTO.getPickUpLocation().getParish();
+        String pickUpLocation = locationHelper(deliveryDetails.getPickUpLocation());
 
-        String dropOffLocation = deliveryDetailsRequestDTO.getDropOffLocation().getLine1() + "_" +
-                deliveryDetailsRequestDTO.getDropOffLocation().getLine2() + "_" +
-                deliveryDetailsRequestDTO.getDropOffLocation().getCity() + "_" +
-                deliveryDetailsRequestDTO.getDropOffLocation().getParish();
+        String dropOffLocation = locationHelper(deliveryDetails.getDropOffLocation());
 
         val params = new MapSqlParameterSource();
         params.addValue("pickUpLocation", pickUpLocation);
         params.addValue("dropOffLocation", dropOffLocation);
-        params.addValue("packageDescription", deliveryDetailsRequestDTO.getPackageDescription());
-        params.addValue("specialInstructions", deliveryDetailsRequestDTO.getSpecialInstructions());
-        params.addValue("customerId", deliveryDetailsRequestDTO.getCustomerId());
+        params.addValue("specialInstructions", deliveryDetails.getSpecialInstructions());
+        params.addValue("customerId", deliveryDetails.getCustomerId());
         params.addValue("status", DeliveryStatus.PENDING.name());
-        params.addValue("packageId", deliveryDetailsRequestDTO.getPackageId());
+        params.addValue("packageId", deliveryDetails.getPackageId());
+        params.addValue("deliveryDateTime", deliveryDetails.getDeliveryDateTime());
 
         jdbcTemplate.update(sql, params);
     }
@@ -127,5 +123,33 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
         params.addValue("status", status.name());
 
         jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public void updateDeliveryDetails(Long deliveryId, DeliveryDetailsRequest deliveryDetailsRequest) {
+        val sql = "UPDATE delivery_details SET " +
+                "pick_up_location = :pickUpLocation, " +
+                "drop_off_location = :dropOffLocation, " +
+                "special_instructions = :specialInstructions, " +
+                "delivery_date_time = :deliveryDateTime " +
+                "WHERE id = :deliveryId";
+
+        String pickUpLocation = locationHelper(deliveryDetailsRequest.getPickUpLocation());
+
+        String dropOffLocation = locationHelper(deliveryDetailsRequest.getDropOffLocation());
+
+        val params = new MapSqlParameterSource();
+        params.addValue("pickUpLocation", pickUpLocation);
+        params.addValue("dropOffLocation", dropOffLocation);
+        params.addValue("specialInstructions", deliveryDetailsRequest.getSpecialInstructions());
+        params.addValue("deliveryDateTime", deliveryDetailsRequest.getDeliveryDateTime());
+        params.addValue("deliveryId", deliveryId);
+
+        jdbcTemplate.update(sql, params);
+    }
+
+    private String locationHelper(Address address) {
+        return address.getLine1() + "_" + address.getLine2() + "_"
+                + address.getCity() + "_" + address.getParish();
     }
 }

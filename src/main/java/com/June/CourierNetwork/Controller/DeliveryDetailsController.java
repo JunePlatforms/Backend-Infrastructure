@@ -91,4 +91,17 @@ public class DeliveryDetailsController {
         }
     }
 
+    @PutMapping("/{deliveryId}/update/delivery")
+    public ResponseEntity<String> updateDeliveryDetails(@PathVariable Long deliveryId,
+                                                       @RequestBody DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
+        try {
+            deliveryDetailsService.updateDeliveryDetails(deliveryId, deliveryDetailsRequestDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 }

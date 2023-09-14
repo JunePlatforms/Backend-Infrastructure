@@ -4,6 +4,7 @@ import com.June.CourierNetwork.DTO.DeliveryDetailsDTO;
 import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
 import com.June.CourierNetwork.Enum.DeliveryStatus;
 import com.June.CourierNetwork.Model.DeliveryDetails;
+import com.June.CourierNetwork.Model.DeliveryDetailsRequest;
 import com.June.CourierNetwork.Repo.Contract.DeliveryDetailsRepository;
 import com.June.CourierNetwork.Service.Contract.DeliveryDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.sql.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,9 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
 
     @Override
     public void saveDeliveryDetails(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
-        deliveryDetailsRepository.save(deliveryDetailsRequestDTO);
+        val deliveryDetailsRequest = deliveryRequestBuilder(deliveryDetailsRequestDTO);
+
+        deliveryDetailsRepository.save(deliveryDetailsRequest);
     }
 
     @Override
@@ -44,6 +48,7 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                     .courierLastName(deliveryDetails.getCourierLastName())
                     .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                     .status(deliveryDetails.getStatus())
+                    .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
                     .build());
         }
         return deliveryDetailsDTO;
@@ -65,6 +70,7 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                 .courierLastName(deliveryDetails.getCourierLastName())
                 .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                 .status(deliveryDetails.getStatus())
+                .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
                 .build();
     }
 
@@ -87,6 +93,7 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                     .courierLastName(deliveryDetails.getCourierLastName())
                     .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                     .status(deliveryDetails.getStatus())
+                    .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
                     .build());
         }
         return deliveryDetailsDTO;
@@ -111,6 +118,7 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                     .courierLastName(deliveryDetails.getCourierLastName())
                     .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                     .status(deliveryDetails.getStatus())
+                    .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
                     .build());
         }
         return deliveryDetailsDTO;
@@ -125,4 +133,25 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
     public void updateDeliveryStatus(Long deliveryId, DeliveryStatus status) {
         deliveryDetailsRepository.updateDeliveryStatus(deliveryId, status);
     }
+
+    @Override
+    public void updateDeliveryDetails(Long deliveryId, DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
+        val deliveryDetailsRequest = deliveryRequestBuilder(deliveryDetailsRequestDTO);
+
+        deliveryDetailsRepository.updateDeliveryDetails(deliveryId, deliveryDetailsRequest);
+    }
+
+    private DeliveryDetailsRequest deliveryRequestBuilder(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
+        LocalDateTime parsedDateTime = LocalDateTime.parse(deliveryDetailsRequestDTO.getDeliveryDateTime());
+
+        return DeliveryDetailsRequest.builder()
+                .pickUpLocation(deliveryDetailsRequestDTO.getPickUpLocation())
+                .dropOffLocation(deliveryDetailsRequestDTO.getDropOffLocation())
+                .specialInstructions(deliveryDetailsRequestDTO.getSpecialInstructions())
+                .customerId(deliveryDetailsRequestDTO.getCustomerId())
+                .packageId(deliveryDetailsRequestDTO.getPackageId())
+                .deliveryDateTime(parsedDateTime)
+                .build();
+    }
+
 }

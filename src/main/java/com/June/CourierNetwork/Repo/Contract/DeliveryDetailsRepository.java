@@ -1,8 +1,8 @@
 package com.June.CourierNetwork.Repo.Contract;
 
-import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
 import com.June.CourierNetwork.Enum.DeliveryStatus;
 import com.June.CourierNetwork.Model.DeliveryDetails;
+import com.June.CourierNetwork.Model.DeliveryDetailsRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface DeliveryDetailsRepository {
 
 
-    void save(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO);
+    void save(DeliveryDetailsRequest deliveryDetails);
 
     Optional<List<DeliveryDetails>> getAllDeliveryDetails(DeliveryStatus status);
 
@@ -23,4 +23,6 @@ public interface DeliveryDetailsRepository {
     void assignCourier(Long deliveryId, Long courierId);
 
     void updateDeliveryStatus(Long deliveryId, DeliveryStatus status);
+
+    void updateDeliveryDetails(Long deliveryId, DeliveryDetailsRequest deliveryDetailsRequest);
 }

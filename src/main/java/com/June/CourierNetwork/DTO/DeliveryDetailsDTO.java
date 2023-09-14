@@ -24,5 +24,6 @@ public class DeliveryDetailsDTO {
   private String courierFirstName;
   private String courierLastName;
   private String courierPhoneNumber;
+  private String deliveryDateTime;
 
 }

@@ -21,4 +21,6 @@ public interface DeliveryDetailsService {
     void assignCourier(Long deliveryId, Long courierId);
 
     void updateDeliveryStatus(Long deliveryId, DeliveryStatus status);
+
+    void updateDeliveryDetails(Long deliveryId, DeliveryDetailsRequestDTO deliveryDetailsRequestDTO);
 }
