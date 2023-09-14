@@ -1,6 +1,5 @@
 package com.June.CourierNetwork.POJO;
 
-import com.June.CourierNetwork.Enum.Parishes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +18,5 @@ public class Address {
 
     public String city;
 
-    public Parishes parish;
+    public String parish;
 }

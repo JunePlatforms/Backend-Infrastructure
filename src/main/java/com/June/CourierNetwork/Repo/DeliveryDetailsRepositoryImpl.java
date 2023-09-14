@@ -20,6 +20,23 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
+    private static final String sqlJoinClause = "SELECT " +
+            "dd.pick_up_location, " +
+            "dd.drop_off_location, " +
+            "cpd.description, " +
+            "dd.special_instructions, " +
+            "cu.first_name AS customerFirstName, " +
+            "cu.last_name AS customerLastName, " +
+            "cu.phone_number AS customerPhoneNumber, " +
+            "dd.status, " +
+            "co.first_name AS courierFirstName, " +
+            "co.last_name AS courierLastName, " +
+            "co.phone_number AS courierPhoneNumber " +
+            "FROM delivery_details AS dd " +
+            "INNER JOIN user AS cu ON dd.customer_id = cu.id " +
+            "LEFT JOIN user AS co ON dd.courier_id = co.id " +
+            "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id ";
+
     @Override
     public void save(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
         val sql = "INSERT INTO delivery_details " +
@@ -31,12 +48,12 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
         String pickUpLocation = deliveryDetailsRequestDTO.getPickUpLocation().getLine1() + "_" +
                 deliveryDetailsRequestDTO.getPickUpLocation().getLine2() + "_" +
                 deliveryDetailsRequestDTO.getPickUpLocation().getCity() + "_" +
-                deliveryDetailsRequestDTO.getPickUpLocation().getParish().name();
+                deliveryDetailsRequestDTO.getPickUpLocation().getParish();
 
         String dropOffLocation = deliveryDetailsRequestDTO.getDropOffLocation().getLine1() + "_" +
                 deliveryDetailsRequestDTO.getDropOffLocation().getLine2() + "_" +
                 deliveryDetailsRequestDTO.getDropOffLocation().getCity() + "_" +
-                deliveryDetailsRequestDTO.getDropOffLocation().getParish().name();
+                deliveryDetailsRequestDTO.getDropOffLocation().getParish();
 
         val params = new MapSqlParameterSource();
         params.addValue("pickUpLocation", pickUpLocation);
@@ -52,23 +69,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
 
     @Override
     public Optional<List<DeliveryDetails>> getAllDeliveryDetails(DeliveryStatus status) {
-        val sql = "SELECT " +
-                "dd.pick_up_location, " +
-                "dd.drop_off_location, " +
-                "cpd.description, " +
-                "dd.special_instructions, " +
-                "cu.first_name AS customerFirstName, " +
-                "cu.last_name AS customerLastName, " +
-                "cu.phone_number AS customerPhoneNumber, " +
-                "dd.status, " +
-                "co.first_name AS courierFirstName, " +
-                "co.last_name AS courierLastName, " +
-                "co.phone_number AS courierPhoneNumber " +
-                "FROM delivery_details AS dd " +
-                "INNER JOIN user AS cu ON dd.customer_id = cu.id " +
-                "LEFT JOIN user AS co ON dd.courier_id = co.id " +
-                "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id " +
-                "WHERE dd.status = :status";
+        val sql = sqlJoinClause + "WHERE dd.status = :status";
 
         val params = new MapSqlParameterSource();
         params.addValue("status", status.name());
@@ -78,23 +79,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
 
     @Override
     public Optional<DeliveryDetails> getDeliveryDetailsByPackageId(Long packageId) {
-        val sql = "SELECT " +
-                "dd.pick_up_location, " +
-                "dd.drop_off_location, " +
-                "cpd.description, " +
-                "dd.special_instructions, " +
-                "cu.first_name AS customerFirstName, " +
-                "cu.last_name AS customerLastName, " +
-                "cu.phone_number AS customerPhoneNumber, " +
-                "dd.status, " +
-                "co.first_name AS courierFirstName, " +
-                "co.last_name AS courierLastName, " +
-                "co.phone_number AS courierPhoneNumber " +
-                "FROM delivery_details AS dd " +
-                "INNER JOIN user AS cu ON dd.customer_id = cu.id " +
-                "LEFT JOIN user AS co ON dd.courier_id = co.id " +
-                "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id " +
-                "WHERE dd.package_id = :packageId";
+        val sql = sqlJoinClause + "WHERE dd.package_id = :packageId";
 
         val params = new MapSqlParameterSource();
         params.addValue("packageId", packageId);
@@ -104,23 +89,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
 
     @Override
     public Optional<List<DeliveryDetails>> getAllDeliveryDetailsByCustomerId(Long customerId) {
-        val sql = "SELECT " +
-                "dd.pick_up_location, " +
-                "dd.drop_off_location, " +
-                "cpd.description, " +
-                "dd.special_instructions, " +
-                "cu.first_name AS customerFirstName, " +
-                "cu.last_name AS customerLastName, " +
-                "cu.phone_number AS customerPhoneNumber, " +
-                "dd.status, " +
-                "co.first_name AS courierFirstName, " +
-                "co.last_name AS courierLastName, " +
-                "co.phone_number AS courierPhoneNumber " +
-                "FROM delivery_details AS dd " +
-                "INNER JOIN user AS cu ON dd.customer_id = cu.id " +
-                "LEFT JOIN user AS co ON dd.courier_id = co.id " +
-                "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id " +
-                "WHERE dd.customer_id = :customerId";
+        val sql = sqlJoinClause + "WHERE dd.customer_id = :customerId";
 
         val params = new MapSqlParameterSource();
         params.addValue("customerId", customerId);
@@ -130,23 +99,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
 
     @Override
     public Optional<List<DeliveryDetails>> getAllDeliveryDetailsByCourierId(Long courierId) {
-        val sql = "SELECT " +
-                "dd.pick_up_location, " +
-                "dd.drop_off_location, " +
-                "cpd.description, " +
-                "dd.special_instructions, " +
-                "cu.first_name AS customerFirstName, " +
-                "cu.last_name AS customerLastName, " +
-                "cu.phone_number AS customerPhoneNumber, " +
-                "dd.status, " +
-                "co.first_name AS courierFirstName, " +
-                "co.last_name AS courierLastName, " +
-                "co.phone_number AS courierPhoneNumber " +
-                "FROM delivery_details AS dd " +
-                "INNER JOIN user AS cu ON dd.customer_id = cu.id " +
-                "LEFT JOIN user AS co ON dd.courier_id = co.id " +
-                "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id " +
-                "WHERE dd.courier_id = :courierId";
+        val sql = sqlJoinClause + "WHERE dd.courier_id = :courierId";
 
         val params = new MapSqlParameterSource();
         params.addValue("courierId", courierId);

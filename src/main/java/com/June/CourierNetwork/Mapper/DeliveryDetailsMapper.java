@@ -1,7 +1,6 @@
 package com.June.CourierNetwork.Mapper;
 
 import com.June.CourierNetwork.Enum.DeliveryStatus;
-import com.June.CourierNetwork.Enum.Parishes;
 import com.June.CourierNetwork.POJO.Address;
 import com.June.CourierNetwork.Model.DeliveryDetails;
 import lombok.val;
@@ -23,14 +22,14 @@ public class DeliveryDetailsMapper implements RowMapper<DeliveryDetails> {
                 .line1(deliveryAddressParts[0])
                 .line2(deliveryAddressParts[1])
                 .city(deliveryAddressParts[2])
-                .parish(Parishes.valueOf(deliveryAddressParts[3]))
+                .parish(deliveryAddressParts[3])
                 .build();
 
         Address pickupAddress = Address.builder()
                 .line1(pickupAddressParts[0])
                 .line2(pickupAddressParts[1])
                 .city(pickupAddressParts[2])
-                .parish(Parishes.valueOf(pickupAddressParts[3]))
+                .parish(pickupAddressParts[3])
                 .build();
 
         return DeliveryDetails.builder()
