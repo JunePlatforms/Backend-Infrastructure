@@ -19,6 +19,7 @@ public class CustomerDTOMapper implements RowMapper<CustomerDTO> {
                 .profilePicture(rs.getString("profile_image"))
                 .acceptedTermsAndConditions(rs.getBoolean("accepted_terms_and_conditions"))
                 .mailBox(rs.getString("mail_box"))
+                .userId(rs.getLong("user_id"))
                 .build();
     }
 }

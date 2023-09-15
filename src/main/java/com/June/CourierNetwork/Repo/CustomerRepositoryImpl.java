@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,31 +20,19 @@ import java.util.Optional;
 public class CustomerRepositoryImpl implements CustomerRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final UserRepository userRepository;
-    private final CustomerService customerService;
-
     @Override
-    public Long save(Customer customer) {
-        long userId;
-        String customerNumber;
-        String mailBox;
+    public Long save(Customer customer, Long userId) {
         String defaultProfileImage = "default.png";
 
         val sql = "INSERT INTO JuneCourierNetwork.customer_user " +
                 "(username, customer_number, mail_box, profile_image, accepted_terms_and_conditions, user_id) " +
                 "VALUES(:username, :customerNumber, :mailBox, :profileImage, :acceptedTermsAndConditions, :userId);";
 
-        try {
-            userId = userRepository.save(customer.getUser());
-            customerNumber = customerService.generateCustomerNumber(userId);
-            mailBox = customerService.generateMailBox(userId);
-        }catch (Exception e){
-            return null;
-        }
+
 
         val courierParams = new MapSqlParameterSource();
-        courierParams.addValue("customerNumber", customerNumber);
-        courierParams.addValue("mailBox", mailBox);
+        courierParams.addValue("customerNumber", customer.getCustomerNumber());
+        courierParams.addValue("mailBox", customer.getMailBox());
         courierParams.addValue("username", customer.getUsername());
         courierParams.addValue("acceptedTermsAndConditions", customer.getAcceptedTermsAndConditions());
         courierParams.addValue("profileImage", defaultProfileImage);
@@ -87,6 +75,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         params.addValue("userId", userId);
 
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new CustomerDTOMapper()));
+    }
+
+    @Override
+    public List<CustomerDTO> findAll() {
+        val sql = "SELECT * FROM JuneCourierNetwork.customer_user";
+
+        return jdbcTemplate.query(sql, new CustomerDTOMapper());
     }
 
 

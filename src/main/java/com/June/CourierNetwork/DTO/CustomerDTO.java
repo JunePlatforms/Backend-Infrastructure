@@ -17,4 +17,5 @@ public class CustomerDTO {
     private Boolean acceptedTermsAndConditions;
     private String mailBox;
     private User user;
+    private Long userId;
 }
