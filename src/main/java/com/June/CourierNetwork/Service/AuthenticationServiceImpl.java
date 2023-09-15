@@ -5,6 +5,7 @@ import com.June.CourierNetwork.Enum.TokenType;
 import com.June.CourierNetwork.Model.*;
 import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
+import com.June.CourierNetwork.Service.Contract.CustomerService;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
     private final CourierRepository courierRepository;
+    private final CustomerService customerService;
     private final WarehouseClerkRepository warehouseClerkRepository;
     private final AdministratorRepository administratorRepository;
     private final TokenRepository tokenRepository;
@@ -75,7 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .user(user)
                     .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
                     .build();
-            savedUserId = customerRepository.save(customer);
+            savedUserId = customerService.save(customer);
         }
         else if (request.getRole().equals(Role.ADMIN)) {
             var admin = Administrator.builder()

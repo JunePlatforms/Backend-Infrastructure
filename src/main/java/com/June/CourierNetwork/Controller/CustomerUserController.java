@@ -1,7 +1,9 @@
 package com.June.CourierNetwork.Controller;
 
 import com.June.CourierNetwork.Enum.ShipmentType;
+import com.June.CourierNetwork.Model.Customer;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
+import com.June.CourierNetwork.Service.Contract.CustomerService;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.June.CourierNetwork.Service.Contract.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -21,6 +24,7 @@ import java.io.IOException;
 public class CustomerUserController {
 
     private final UserRepository repository;
+    private final CustomerService customerService;
     private final FileUploadService fileUploadService;
     private final ProductService productService;
     @Value("${profile.image.upload.dir}")
@@ -55,6 +59,17 @@ public class CustomerUserController {
         productService.findProductById(productId);
         fileUploadService.uploadPreAlert(file, productId, preAlertImageUploadDirectory);
         return ResponseEntity.ok("File uploaded successfully");
+    }
+
+    @GetMapping("/get/all")
+    public List<Customer> getAllCustomers(){
+        try {
+            return customerService.getAllCustomers();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }
