@@ -60,9 +60,8 @@ public class ProductServiceImpl implements ProductService {
         byte[] preAlertImage = new byte[0];
 
         for (ProductDetailsDTO productDTO : productDTOList) {
-            if (productDTO.getPreAlertFileName().equalsIgnoreCase("null")){
-                preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
-            }
+            preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
+
             productDetailsList.add(ProductDetails.builder()
                     .id(productDTO.getId())
                     .supplierName(productDTO.getSupplierName())
@@ -88,9 +87,8 @@ public class ProductServiceImpl implements ProductService {
 
 
         for (ProductDetailsDTO productDTO : productDTOList) {
-            if (productDTO.getPreAlertFileName().equalsIgnoreCase("null")){
-                preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
-            }
+            preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
+
             productDetailsList.add(ProductDetails.builder()
                     .id(productDTO.getId())
                     .supplierName(productDTO.getSupplierName())

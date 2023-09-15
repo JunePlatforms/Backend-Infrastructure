@@ -85,6 +85,7 @@ public class WarehouseClerkController {
         try {
             return new ResponseEntity<>(productService.findProductsByEmail(email), HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
