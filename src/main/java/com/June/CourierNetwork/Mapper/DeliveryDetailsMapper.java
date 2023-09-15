@@ -44,6 +44,7 @@ public class DeliveryDetailsMapper implements RowMapper<DeliveryDetails> {
                 .courierFirstName(rs.getString("courierFirstName"))
                 .courierLastName(rs.getString("courierLastName"))
                 .courierPhoneNumber(rs.getString("courierPhoneNumber"))
+                .deliveryDateTime(rs.getTimestamp("delivery_date_time").toLocalDateTime())
                 .build();
     }
 }

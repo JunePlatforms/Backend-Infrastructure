@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,6 +19,7 @@ public class DeliveryDetails {
   private Address pickUpLocation;
   private Address dropOffLocation;
   private String packageDescription;
+  private LocalDateTime deliveryDateTime;
   private String specialInstructions;
   private String customerFirstName;
   private String customerLastName;
