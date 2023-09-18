@@ -10,11 +10,15 @@ import java.util.Optional;
 public interface DeliveryDetailsRepository {
 
 
-    void save(DeliveryDetailsRequest deliveryDetails);
+    Long save(DeliveryDetailsRequest deliveryDetails);
+
+    void addProduct(Long deliveryId, Long productId);
 
     Optional<List<DeliveryDetails>> getAllDeliveryDetails(DeliveryStatus status);
 
     Optional<DeliveryDetails> getDeliveryDetailsByPackageId(Long packageId);
+
+    Optional<DeliveryDetails> getDeliveryDetailsById(Long deliveryId);
 
     Optional<List<DeliveryDetails>> getAllDeliveryDetailsByCustomerId(Long customerId);
 
@@ -22,7 +26,7 @@ public interface DeliveryDetailsRepository {
 
     void assignCourier(Long deliveryId, Long courierId);
 
-    void updateDeliveryStatus(Long deliveryId, DeliveryStatus status);
+    DeliveryDetails updateDeliveryStatus(Long deliveryId, DeliveryStatus status);
 
     void updateDeliveryDetails(Long deliveryId, DeliveryDetailsRequest deliveryDetailsRequest);
 }

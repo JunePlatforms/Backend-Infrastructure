@@ -2,16 +2,19 @@ package com.June.CourierNetwork.Service;
 
 import com.June.CourierNetwork.DTO.DeliveryDetailsDTO;
 import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
+import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.DeliveryStatus;
+import com.June.CourierNetwork.Enum.PaymentType;
 import com.June.CourierNetwork.Model.DeliveryDetails;
 import com.June.CourierNetwork.Model.DeliveryDetailsRequest;
 import com.June.CourierNetwork.Repo.Contract.DeliveryDetailsRepository;
+import com.June.CourierNetwork.Repo.Contract.ProductRepository;
 import com.June.CourierNetwork.Service.Contract.DeliveryDetailsService;
+import com.June.CourierNetwork.Service.Contract.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +24,26 @@ import java.util.List;
 public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
 
     private final DeliveryDetailsRepository deliveryDetailsRepository;
+    private final ProductRepository productRepository;
+    private final TransactionService transactionService;
 
     @Override
     public void saveDeliveryDetails(DeliveryDetailsRequestDTO deliveryDetailsRequestDTO) {
         val deliveryDetailsRequest = deliveryRequestBuilder(deliveryDetailsRequestDTO);
 
-        deliveryDetailsRepository.save(deliveryDetailsRequest);
+        try {
+            List<ProductDetailsDTO> customerProducts = productRepository.findProductsByUserId
+                    (deliveryDetailsRequestDTO.getCustomerId());
+
+            long deliveryId = deliveryDetailsRepository.save(deliveryDetailsRequest);
+
+            for (ProductDetailsDTO product : customerProducts) {
+                deliveryDetailsRepository.addProduct(deliveryId, product.getId());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -39,7 +56,6 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
             deliveryDetailsDTO.add(DeliveryDetailsDTO.builder()
                     .pickUpLocation(deliveryDetails.getPickUpLocation())
                     .dropOffLocation(deliveryDetails.getDropOffLocation())
-                    .packageDescription(deliveryDetails.getPackageDescription())
                     .specialInstructions(deliveryDetails.getSpecialInstructions())
                     .customerFirstName(deliveryDetails.getCustomerFirstName())
                     .customerLastName(deliveryDetails.getCustomerLastName())
@@ -49,6 +65,9 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                     .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                     .status(deliveryDetails.getStatus())
                     .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
+                    .packageDescription(deliveryDetails.getPackageDescription())
+                    .courierId(deliveryDetails.getCourierId())
+                    .customerId(deliveryDetails.getCustomerId())
                     .build());
         }
         return deliveryDetailsDTO;
@@ -71,6 +90,8 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                 .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                 .status(deliveryDetails.getStatus())
                 .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
+                .courierId(deliveryDetails.getCourierId())
+                .customerId(deliveryDetails.getCustomerId())
                 .build();
     }
 
@@ -94,6 +115,8 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                     .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                     .status(deliveryDetails.getStatus())
                     .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
+                    .courierId(deliveryDetails.getCourierId())
+                    .customerId(deliveryDetails.getCustomerId())
                     .build());
         }
         return deliveryDetailsDTO;
@@ -119,6 +142,8 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                     .courierPhoneNumber(deliveryDetails.getCourierPhoneNumber())
                     .status(deliveryDetails.getStatus())
                     .deliveryDateTime(deliveryDetails.getDeliveryDateTime().toString())
+                    .courierId(deliveryDetails.getCourierId())
+                    .customerId(deliveryDetails.getCustomerId())
                     .build());
         }
         return deliveryDetailsDTO;
@@ -130,8 +155,12 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
     }
 
     @Override
-    public void updateDeliveryStatus(Long deliveryId, DeliveryStatus status) {
-        deliveryDetailsRepository.updateDeliveryStatus(deliveryId, status);
+    public void updateDeliveryStatus(Long deliveryId, DeliveryStatus status, PaymentType paymentType) {
+        val deliveryDetails = deliveryDetailsRepository.updateDeliveryStatus(deliveryId, status);
+
+        if (deliveryDetails != null) {
+            transactionService.transactionHelper(deliveryDetails, paymentType);
+        }
     }
 
     @Override
@@ -149,7 +178,6 @@ public class DeliveryDetailsServiceImpl implements DeliveryDetailsService {
                 .dropOffLocation(deliveryDetailsRequestDTO.getDropOffLocation())
                 .specialInstructions(deliveryDetailsRequestDTO.getSpecialInstructions())
                 .customerId(deliveryDetailsRequestDTO.getCustomerId())
-                .packageId(deliveryDetailsRequestDTO.getPackageId())
                 .deliveryDateTime(parsedDateTime)
                 .build();
     }

@@ -3,6 +3,7 @@ package com.June.CourierNetwork.Controller;
 import com.June.CourierNetwork.DTO.DeliveryDetailsDTO;
 import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
 import com.June.CourierNetwork.Enum.DeliveryStatus;
+import com.June.CourierNetwork.Enum.PaymentType;
 import com.June.CourierNetwork.Service.Contract.DeliveryDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -81,9 +82,11 @@ public class DeliveryDetailsController {
     }
 
     @PutMapping("/{deliveryId}/update/status")
-    public ResponseEntity<String> updateDeliveryStatus(@PathVariable Long deliveryId, @RequestParam DeliveryStatus status) {
+    public ResponseEntity<String> updateDeliveryStatus
+            (@PathVariable Long deliveryId, @RequestParam DeliveryStatus status,
+             @RequestParam(required = false) PaymentType paymentType) {
         try {
-            deliveryDetailsService.updateDeliveryStatus(deliveryId, status);
+            deliveryDetailsService.updateDeliveryStatus(deliveryId, status, paymentType);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

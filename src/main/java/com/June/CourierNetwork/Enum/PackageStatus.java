@@ -5,5 +5,6 @@ public enum PackageStatus {
     SHIPPED,
     READY_FOR_PICKUP,
     DELIVERED,
-    OUT_FOR_DELIVERY
+    OUT_FOR_DELIVERY,
+    PICKED_UP
 }

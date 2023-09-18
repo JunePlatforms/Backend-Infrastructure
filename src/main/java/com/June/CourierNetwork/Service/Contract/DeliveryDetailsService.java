@@ -3,6 +3,7 @@ package com.June.CourierNetwork.Service.Contract;
 import com.June.CourierNetwork.DTO.DeliveryDetailsDTO;
 import com.June.CourierNetwork.DTO.DeliveryDetailsRequestDTO;
 import com.June.CourierNetwork.Enum.DeliveryStatus;
+import com.June.CourierNetwork.Enum.PaymentType;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface DeliveryDetailsService {
 
     void assignCourier(Long deliveryId, Long courierId);
 
-    void updateDeliveryStatus(Long deliveryId, DeliveryStatus status);
+    void updateDeliveryStatus(Long deliveryId, DeliveryStatus status, PaymentType paymentType);
 
     void updateDeliveryDetails(Long deliveryId, DeliveryDetailsRequestDTO deliveryDetailsRequestDTO);
 }
