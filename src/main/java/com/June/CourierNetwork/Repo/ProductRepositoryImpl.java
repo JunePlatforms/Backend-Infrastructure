@@ -4,7 +4,6 @@ import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
 import com.June.CourierNetwork.Mapper.ProductDetailsDTOMapper;
-import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
 import com.June.CourierNetwork.Repo.Contract.ProductRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
@@ -14,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -178,5 +178,28 @@ public class ProductRepositoryImpl implements ProductRepository {
         params.addValue("shipmentId", shipmentId);
 
         return jdbcTemplate.query(sql, params, new ProductDetailsDTOMapper());
+    }
+
+    @Override
+    public Long findProductOwnerIdByProductId(Long productId) {
+        val sql = "SELECT user_id FROM JuneCourierNetwork.customer_product_details " +
+                "WHERE id = :productId";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("productId", productId);
+
+        return jdbcTemplate.queryForObject(sql, params, Long.class);
+    }
+
+    @Override
+    public BigDecimal calculateTotalSpent(List<Long> productIds) {
+        val sql = "SELECT SUM(shipping_fee) FROM JuneCourierNetwork.customer_product_details " +
+                "WHERE id IN (:productIds)";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("productIds", productIds);
+
+        return jdbcTemplate.queryForObject(sql, params, BigDecimal.class);
+
     }
 }

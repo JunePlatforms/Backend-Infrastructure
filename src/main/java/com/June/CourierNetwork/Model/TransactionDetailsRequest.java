@@ -1,6 +1,6 @@
 package com.June.CourierNetwork.Model;
 
-import com.June.CourierNetwork.POJO.Address;
+import com.June.CourierNetwork.Enum.PaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +12,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryDetailsRequest {
+public class TransactionDetailsRequest {
 
-  private Address pickUpLocation;
-  private Address dropOffLocation;
-  private String specialInstructions;
-  private LocalDateTime deliveryDateTime;
+  private Long courierId;
   private Long customerId;
+  private Boolean wasDelivered;
+  private LocalDateTime createdOn;
+  private int totalSpent;
+  private PaymentType paymentType;
+
 }

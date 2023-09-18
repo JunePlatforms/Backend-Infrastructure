@@ -19,6 +19,4 @@ public class DeliveryDetailsRequestDTO {
   private String specialInstructions;
   private String deliveryDateTime;
   private Long customerId;
-  private Long packageId;
-
 }

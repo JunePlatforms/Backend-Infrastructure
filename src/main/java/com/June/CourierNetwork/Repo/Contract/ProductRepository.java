@@ -3,9 +3,9 @@ package com.June.CourierNetwork.Repo.Contract;
 import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
-import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,4 +34,8 @@ public interface ProductRepository {
     void addProductsToShipment(List<Long> productIds, Long shipmentId);
 
     List<ProductDetailsDTO> findProductDetailsByShipmentId(Long shipmentId);
+
+    Long findProductOwnerIdByProductId(Long productId);
+
+    BigDecimal calculateTotalSpent(List<Long> productIds);
 }

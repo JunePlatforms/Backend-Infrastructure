@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,27 +27,33 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
             "dd.pick_up_location, " +
             "dd.drop_off_location, " +
             "dd.delivery_date_time, " +
-            "cpd.description, " +
             "dd.special_instructions, " +
             "cu.first_name AS customerFirstName, " +
             "cu.last_name AS customerLastName, " +
             "cu.phone_number AS customerPhoneNumber, " +
+            "cu.id AS customerId, " +
             "dd.status, " +
             "co.first_name AS courierFirstName, " +
             "co.last_name AS courierLastName, " +
-            "co.phone_number AS courierPhoneNumber " +
+            "co.phone_number AS courierPhoneNumber, " +
+            "co.id AS courierId, " +
+            "COUNT(cpd.tracking_number) AS totalPackages, " +
+            "GROUP_CONCAT(DISTINCT cpd.tracking_number SEPARATOR '~') AS trackingNumbers," +
+            "GROUP_CONCAT(cpd.description SEPARATOR '~') AS descriptions, " +
+            "GROUP_CONCAT(cpd.id SEPARATOR '~') AS productIds " +
             "FROM delivery_details AS dd " +
             "INNER JOIN user AS cu ON dd.customer_id = cu.id " +
             "LEFT JOIN user AS co ON dd.courier_id = co.id " +
-            "LEFT JOIN customer_product_details AS cpd ON dd.package_id = cpd.id ";
+            "INNER JOIN delivery_products AS dp ON dd.id = dp.delivery_id " +
+            "LEFT JOIN customer_product_details AS cpd ON dp.product_id = cpd.id ";
 
     @Override
-    public void save(DeliveryDetailsRequest deliveryDetails) {
+    public Long save(DeliveryDetailsRequest deliveryDetails) {
         val sql = "INSERT INTO delivery_details " +
                 "(pick_up_location, drop_off_location, special_instructions, " +
-                "customer_id, status, package_id, delivery_date_time) " +
+                "customer_id, status, delivery_date_time) " +
                 "VALUES (:pickUpLocation, :dropOffLocation, :specialInstructions, " +
-                ":customerId, :status, :packageId, :deliveryDateTime);";
+                ":customerId, :status, :deliveryDateTime);";
 
         String pickUpLocation = locationHelper(deliveryDetails.getPickUpLocation());
 
@@ -57,15 +65,31 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
         params.addValue("specialInstructions", deliveryDetails.getSpecialInstructions());
         params.addValue("customerId", deliveryDetails.getCustomerId());
         params.addValue("status", DeliveryStatus.PENDING.name());
-        params.addValue("packageId", deliveryDetails.getPackageId());
         params.addValue("deliveryDateTime", deliveryDetails.getDeliveryDateTime());
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"});
+
+        return keyHolder.getKey().longValue();
+    }
+
+    @Override
+    public void addProduct(Long deliveryId, Long productId) {
+        val sql = "INSERT INTO delivery_products " +
+                "(delivery_id, product_id) " +
+                "VALUES (:deliveryId, :productId)";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("deliveryId", deliveryId);
+        params.addValue("productId", productId);
 
         jdbcTemplate.update(sql, params);
     }
 
     @Override
     public Optional<List<DeliveryDetails>> getAllDeliveryDetails(DeliveryStatus status) {
-        val sql = sqlJoinClause + "WHERE dd.status = :status";
+        val sql = sqlJoinClause + "WHERE dd.status = :status " + "GROUP BY dd.id";
 
         val params = new MapSqlParameterSource();
         params.addValue("status", status.name());
@@ -74,18 +98,28 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
     }
 
     @Override
-    public Optional<DeliveryDetails> getDeliveryDetailsByPackageId(Long packageId) {
-        val sql = sqlJoinClause + "WHERE dd.package_id = :packageId";
+    public Optional<DeliveryDetails> getDeliveryDetailsByPackageId(Long productId) {
+        val sql = sqlJoinClause + "WHERE dp.product_id = :productId " + "GROUP BY dd.id";
 
         val params = new MapSqlParameterSource();
-        params.addValue("packageId", packageId);
+        params.addValue("productId", productId);
+
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new DeliveryDetailsMapper()));
+    }
+
+    @Override
+    public Optional<DeliveryDetails> getDeliveryDetailsById(Long deliveryId) {
+        val sql = sqlJoinClause + "WHERE dd.id = :deliveryId " + "GROUP BY dd.id";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("deliveryId", deliveryId);
 
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new DeliveryDetailsMapper()));
     }
 
     @Override
     public Optional<List<DeliveryDetails>> getAllDeliveryDetailsByCustomerId(Long customerId) {
-        val sql = sqlJoinClause + "WHERE dd.customer_id = :customerId";
+        val sql = sqlJoinClause + "WHERE dd.customer_id = :customerId " + "GROUP BY dd.id";
 
         val params = new MapSqlParameterSource();
         params.addValue("customerId", customerId);
@@ -95,7 +129,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
 
     @Override
     public Optional<List<DeliveryDetails>> getAllDeliveryDetailsByCourierId(Long courierId) {
-        val sql = sqlJoinClause + "WHERE dd.courier_id = :courierId";
+        val sql = sqlJoinClause + "WHERE dd.courier_id = :courierId " + "GROUP BY dd.id";
 
         val params = new MapSqlParameterSource();
         params.addValue("courierId", courierId);
@@ -115,7 +149,7 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
     }
 
     @Override
-    public void updateDeliveryStatus(Long deliveryId, DeliveryStatus status) {
+    public DeliveryDetails updateDeliveryStatus(Long deliveryId, DeliveryStatus status) {
         val sql = "UPDATE delivery_details SET status = :status WHERE id = :deliveryId";
 
         val params = new MapSqlParameterSource();
@@ -123,6 +157,11 @@ public class DeliveryDetailsRepositoryImpl implements DeliveryDetailsRepository 
         params.addValue("status", status.name());
 
         jdbcTemplate.update(sql, params);
+
+        if (status == DeliveryStatus.COMPLETED) {
+            return getDeliveryDetailsById(deliveryId).orElse(null);
+        }
+        return null;
     }
 
     @Override
