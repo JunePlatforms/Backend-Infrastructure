@@ -22,7 +22,7 @@ import org.thymeleaf.context.Context;
 import java.io.File;
 import java.util.Map;
 
-import static com.June.CourierNetwork.Utils.EmailUtils.getEmailMessage;
+import static com.June.CourierNetwork.Utils.EmailUtils.getEmailVerificationMessage;
 import static com.June.CourierNetwork.Utils.EmailUtils.getVerificationUrl;
 
 @Service
@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
             message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
             message.setFrom(fromEmail);
             message.setTo(to);
-            message.setText(getEmailMessage(name, host, token));
+            message.setText(getEmailVerificationMessage(name, host, token));
             emailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
             helper.setFrom(fromEmail);
             helper.setTo(to);
-            helper.setText(getEmailMessage(name, host, token));
+            helper.setText(getEmailVerificationMessage(name, host, token));
             //Add attachments
             FileSystemResource fort = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/fort.jpg"));
             FileSystemResource dog = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/dog.jpg"));
@@ -90,7 +90,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
             helper.setFrom(fromEmail);
             helper.setTo(to);
-            helper.setText(getEmailMessage(name, host, token));
+            helper.setText(getEmailVerificationMessage(name, host, token));
             //Add attachments
             FileSystemResource fort = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/fort.jpg"));
             FileSystemResource dog = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/dog.jpg"));
