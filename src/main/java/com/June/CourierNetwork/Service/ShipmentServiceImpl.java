@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +32,10 @@ public class ShipmentServiceImpl implements ShipmentService {
 
 
     @Override
-    public void createShipment(ShipmentDTO shipmentDTO) {
-        shipmentRepository.createShipment(shipmentDTO);
+    public void createShipment(ShipmentDTO shipmentDTO, MultipartFile airwayInvoice, MultipartFile shipmentManifest) throws IOException {
+        val shipmentId = shipmentRepository.createShipment(shipmentDTO);
+        fileUploadService.uploadShipmentManifest(shipmentManifest, shipmentId,shipmentManifestUploadDirectory);
+        fileUploadService.uploadAirWayInvoice(airwayInvoice, shipmentId, airWayInvoiceUploadDirectory);
     }
 
     @Override

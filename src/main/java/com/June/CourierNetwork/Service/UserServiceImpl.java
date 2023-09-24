@@ -84,7 +84,6 @@ public class UserServiceImpl implements UserService {
                 Customer customer = Customer.builder()
                         .username(customerDTO.getUsername())
                         .user(user.orElseThrow())
-                        .customerId(customerDTO.getId())
                         .customerNumber(customerDTO.getCustomerNumber())
                         .profilePicture(profileImage)
                         .acceptedTermsAndConditions(customerDTO.getAcceptedTermsAndConditions())

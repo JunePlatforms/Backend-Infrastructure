@@ -11,7 +11,6 @@ import com.June.CourierNetwork.Service.Contract.ProductService;
 import com.June.CourierNetwork.Service.Contract.ShipmentService;
 import com.June.CourierNetwork.Service.Contract.WarehouseClerkService;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,9 +141,13 @@ public class WarehouseClerkController {
     }
 
     @PostMapping("/create/shipment")
-    public ResponseEntity<String> createShipment(@RequestBody ShipmentDTO shipmentDTO) {
+    public ResponseEntity<String> createShipment
+            (@RequestPart ShipmentDTO shipmentDTO,
+             @RequestPart MultipartFile airwayInvoice,
+             @RequestPart MultipartFile shipmentManifest)
+    {
         try {
-            shipmentService.createShipment(shipmentDTO);
+            shipmentService.createShipment(shipmentDTO, airwayInvoice, shipmentManifest);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

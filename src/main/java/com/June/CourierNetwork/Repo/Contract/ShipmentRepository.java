@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ShipmentRepository {
 
-    void createShipment(ShipmentDTO shipmentDTO);
+    Long createShipment(ShipmentDTO shipmentDTO);
 
     void updateShipment(Long shipmentId, ShipmentDTO shipmentDTO);
 

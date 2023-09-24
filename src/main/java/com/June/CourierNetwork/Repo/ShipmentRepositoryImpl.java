@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
 
 
     @Override
-    public void createShipment(ShipmentDTO shipmentDTO) {
+    public Long createShipment(ShipmentDTO shipmentDTO) {
         val sql = "INSERT INTO JuneCourierNetwork.shipment " +
                 "(shipment_type, status, departure_date, arrival_date) " +
                 "VALUES(:shipmentType, :status, :departureDate, :arrivalDate);";
@@ -35,7 +37,11 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
         params.addValue("departureDate", shipmentDTO.getDepartureDate());
         params.addValue("arrivalDate", shipmentDTO.getArrivalDate());
 
-        jdbcTemplate.update(sql, params);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"});
+
+        return keyHolder.getKey().longValue();
 
 
     }

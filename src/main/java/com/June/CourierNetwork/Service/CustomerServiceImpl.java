@@ -44,7 +44,6 @@ public class CustomerServiceImpl implements CustomerService {
            byte[] profileImage = fileUploadService.getFile(customerDTO.getProfilePicture(), profileImageUploadDirectory);
 
            customers.add(Customer.builder()
-                   .customerId(customerDTO.getId())
                    .username(customerDTO.getUsername())
                    .customerNumber(customerDTO.getCustomerNumber())
                    .mailBox(customerDTO.getMailBox())

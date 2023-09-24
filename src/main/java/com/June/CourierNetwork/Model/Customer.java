@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
-    private Long customerId;
     private String username;
     private String customerNumber;
     private byte[] profilePicture;
