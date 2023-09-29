@@ -37,13 +37,14 @@ public class UserServiceImpl implements UserService {
     private String driversLicenseUploadDirectory;
 
     @Override
-    public UserDTO findUserById(Long userId) throws IOException {
+    public UserDTO findUserByEmail(String email) throws IOException {
         UserDTO userDTO = new UserDTO();
-        val user = userRepository.findUserById(userId);
+        val user = userRepository.findUserByEmail(email);
+        val id = user.get().getId();
 
         if (user.isPresent()) {
             if (user.get().getRole().equals(Role.COURIER)) {
-                Optional<CourierDTO> courierDTO = courierRepository.findByUserId(userId);
+                Optional<CourierDTO> courierDTO = courierRepository.findByUserId(id);
                 byte[] policeRecord = fileUploadService.getFile(courierDTO.orElseThrow().getPoliceRecord(), policeRecordUploadDirectory);
                 byte[] driversLicense = fileUploadService.getFile(courierDTO.orElseThrow().getDriversLicense(), driversLicenseUploadDirectory);
 
@@ -66,17 +67,17 @@ public class UserServiceImpl implements UserService {
                 userDTO.setCourier(courier);
             }
             else if (user.get().getRole().equals(Role.WAREHOUSE_CLERK)) {
-                Optional<WarehouseClerk> warehouseClerk = warehouseClerkRepository.findByUserId(userId);
+                Optional<WarehouseClerk> warehouseClerk = warehouseClerkRepository.findByUserId(id);
                 warehouseClerk.orElseThrow().setUser(user.orElseThrow());
                 userDTO.setWarehouseClerk(warehouseClerk.orElseThrow());
             }
             else if (user.get().getRole().equals(Role.ADMIN)) {
-                Optional<Administrator> administrator = administratorRepository.findByUserId(userId);
+                Optional<Administrator> administrator = administratorRepository.findByUserId(id);
                 administrator.orElseThrow().setUser(user.orElseThrow());
                 userDTO.setAdministrator(administrator.orElseThrow());
             }
             else if (user.get().getRole().equals(Role.CUSTOMER)) {
-                Optional<CustomerDTO> optionalCustomerDTO = customerRepository.findByUserId(userId);
+                Optional<CustomerDTO> optionalCustomerDTO = customerRepository.findByUserId(id);
                 CustomerDTO customerDTO = optionalCustomerDTO.orElseThrow();
                 customerDTO.setUser(user.orElseThrow());
                 byte[] profileImage = fileUploadService.getFile(customerDTO.getProfilePicture(), profileImageUploadDirectory);

@@ -15,4 +15,6 @@ public interface TokenRepository {
     void save(Token token);
 
     void saveAll(List<Token> validUserTokens);
+
+    void deleteAllRevokedTokens();
 }

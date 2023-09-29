@@ -164,4 +164,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             }
         }
     }
+
+    private boolean emailExists(String email){
+        return userRepository.findActiveUserByEmail(email).isPresent();
+    }
 }
