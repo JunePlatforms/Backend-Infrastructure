@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
   private final String secretKey = "ccb8e445588d6081e587f22cd79879f06d37c2fc702c667af8b93437a11f06b0";
-  private final long jwtExpiration = 86400000;
+  private final long jwtExpiration = 3600000;
   private final long refreshExpiration = 604800000;
 
   public String extractUsername(String token) {
@@ -37,6 +37,7 @@ public class JwtService {
 
   public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
     extraClaims.put("role", userDetails.getAuthorities());
+    extraClaims.put("userEmail", userDetails.getUsername());
     return buildToken(extraClaims, userDetails, jwtExpiration);
   }
 

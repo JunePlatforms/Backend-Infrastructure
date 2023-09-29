@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -61,7 +62,9 @@ public class UserRepositoryImpl implements UserRepository {
 
         params.addValue("email", email);
 
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new UserMapper()));
+        List<User> user = jdbcTemplate.query(sql, params, new UserMapper());
+
+        return user.isEmpty() ? Optional.empty() : Optional.of(user.get(0));
     }
 
     @Override

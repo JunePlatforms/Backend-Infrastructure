@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public interface UserService {
 
-    UserDTO findUserById(Long userId) throws IOException;
+    UserDTO findUserByEmail(String email) throws IOException;
 
     void deleteUser(Long userId);
 
