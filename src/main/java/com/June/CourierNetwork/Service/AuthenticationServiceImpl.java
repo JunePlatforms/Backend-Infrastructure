@@ -3,18 +3,18 @@ package com.June.CourierNetwork.Service;
 import com.June.CourierNetwork.Enum.Role;
 import com.June.CourierNetwork.Enum.TokenType;
 import com.June.CourierNetwork.Model.*;
-import com.June.CourierNetwork.Repo.Contract.CourierRepository;
-import com.June.CourierNetwork.Repo.Contract.TokenRepository;
-import com.June.CourierNetwork.Repo.Contract.UserRepository;
+import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
+import com.June.CourierNetwork.Service.Contract.CustomerService;
+import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +25,24 @@ import java.io.IOException;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final CourierRepository courierRepository;
+    private final CustomerService customerService;
+    private final WarehouseClerkRepository warehouseClerkRepository;
+    private final AdministratorRepository administratorRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final FileUploadService fileUploadService;
+    @Value("${police.record.upload.dir}")
+    private String policeRecordUploadDirectory;
+
+    @Value("${drivers.license.upload.dir}")
+    private String driversLicenseUploadDirectory;
 
     @Override
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request){
         Long savedUserId = null;
         var user = User.builder()
                 .firstName(request.getFirstname())
@@ -47,10 +57,35 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             var courier = Courier.builder()
                     .assessmentScore(request.getAssessmentScore())
                     .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
+                    .vehicleMake(request.getVehicleMake())
+                    .vehicleModel(request.getVehicleModel())
+                    .vehicleType(request.getVehicleType())
+                    .licensePlateNumber(request.getLicensePlateNumber())
                     .user(user)
                     .build();
             savedUserId = courierRepository.save(courier);
         }
+        else if (request.getRole().equals(Role.WAREHOUSE_CLERK)) {
+            var warehouseClerk = WarehouseClerk.builder()
+                    .user(user)
+                    .build();
+            savedUserId = warehouseClerkRepository.save(warehouseClerk);
+        }
+        else if (request.getRole().equals(Role.CUSTOMER)) {
+            var customer = Customer.builder()
+                    .username(request.getUsername())
+                    .user(user)
+                    .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
+                    .build();
+            savedUserId = customerService.save(customer);
+        }
+        else if (request.getRole().equals(Role.ADMIN)) {
+            var admin = Administrator.builder()
+                    .user(user)
+                    .build();
+            savedUserId = administratorRepository.save(admin);
+        }
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUserId, jwtToken);
@@ -128,5 +163,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    private boolean emailExists(String email){
+        return userRepository.findActiveUserByEmail(email).isPresent();
     }
 }

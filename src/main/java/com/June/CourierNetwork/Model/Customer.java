@@ -10,5 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
-    private Long id;
+    private String username;
+    private String customerNumber;
+    private byte[] profilePicture;
+    private Boolean acceptedTermsAndConditions;
+    private String mailBox;
+    private User user;
 }
