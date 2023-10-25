@@ -5,10 +5,10 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Copy the JAR file from the 'target' directory of your project into the container
-COPY target/*.jar app.jar
+COPY ./target/CourierNetwork-0.0.1-SNAPSHOT.jar CourierNetwork-0.0.1-SNAPSHOT.jar
 
 # Expose the port that your Spring Boot application listens on (if applicable)
 EXPOSE 8080
 
 # Define the command to run your Spring Boot application when the container starts
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "CourierNetwork-0.0.1-SNAPSHOT.jar"]
