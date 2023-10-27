@@ -89,6 +89,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findUserByCustomerNumber(String customerNumber) {
+        val sql = "SELECT * FROM JuneCourierNetwork.user " +
+                "JOIN JuneCourierNetwork.customer_user cu ON cu.user_id = user.id " +
+                "WHERE customer_number = :customerNumber";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("customerNumber", customerNumber);
+
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new UserMapper()));
+    }
+
+    @Override
     public int updateUser(Long id, UpdateUserRequest userDetails) {
         val sql = "UPDATE JuneCourierNetwork.`user` SET " +
                 "first_name = :firstName, last_name = :lastName, email_address = :emailAddress, " +

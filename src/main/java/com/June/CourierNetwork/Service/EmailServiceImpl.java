@@ -1,5 +1,7 @@
 package com.June.CourierNetwork.Service;
 
+import com.June.CourierNetwork.Repo.Contract.ProductRepository;
+import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.EmailService;
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
@@ -22,8 +24,7 @@ import org.thymeleaf.context.Context;
 import java.io.File;
 import java.util.Map;
 
-import static com.June.CourierNetwork.Utils.EmailUtils.getEmailVerificationMessage;
-import static com.June.CourierNetwork.Utils.EmailUtils.getVerificationUrl;
+import static com.June.CourierNetwork.Utils.EmailUtils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,16 +35,18 @@ public class EmailServiceImpl implements EmailService {
     public static final String TEXT_HTML_ENCODING = "text/html";
     private final JavaMailSender emailSender;
     private final TemplateEngine templateEngine;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
-    @Value("${police.record.upload.dir}")
-    private String policeRecordUploadDirectory;
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
-    @Value("${drivers.license.upload.dir}")
-    private String driversLicenseUploadDirectory;
+    @Value("${spring.mail.verify.email.host}")
+    private String host;
 
     @Override
     @Async
-    public void sendSimpleMailMessage(String name, String to, String token) {
+    public void sendVerificationMail(String name, String to, String token) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
@@ -54,6 +57,25 @@ public class EmailServiceImpl implements EmailService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    @Async
+    public void sendProductUpdateEmail(long productId) {
+        productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
+                userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
+            try {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+                message.setFrom(fromEmail);
+                message.setTo();
+                message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
+                emailSender.send(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
+
     }
 
     @Override

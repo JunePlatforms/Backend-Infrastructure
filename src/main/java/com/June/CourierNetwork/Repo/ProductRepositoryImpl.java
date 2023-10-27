@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -25,7 +27,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     private final UserRepository userRepository;
 
     @Override
-    public void createProduct(ProductDetailsRequest productDetailsRequest) {
+    public Long createProduct(ProductDetailsRequest productDetailsRequest) {
         val sql = "INSERT INTO JuneCourierNetwork.customer_product_details " +
                 "(weight, shipment_type, status, description, supplier_name, tracking_number, was_deleted, user_id) " +
                 "VALUES(:weight, :shipmentType, :status, :description, :supplierName, :trackingNumber, 0, :userId);";
@@ -39,7 +41,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         params.addValue("trackingNumber", productDetailsRequest.getTrackingNumber());
         params.addValue("userId", productDetailsRequest.getUserId());
 
-        jdbcTemplate.update(sql, params);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"});
+
+        return keyHolder.getKey().longValue();
     }
 
     @Override

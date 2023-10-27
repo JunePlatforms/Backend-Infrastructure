@@ -22,13 +22,13 @@ public class EmailUtils {
             case CREATED -> "Hello " + name + ",\n\nWe have received your package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
                     " at our warehouse in Florida. It is scheduled to arrive in " +
-                    "Jamaica on our next available flight. Please create a prealert and upload your invoice to aid in a " +
+                    "Jamaica on our next available flight. Please create a pre-alert and upload your invoice to aid in a " +
                     "speedy customs process." + ".\n\nThe support Team";
 
             case SHIPPED -> "Hello " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
                     " has been shipped to " +
-                    "Jamaica. Please create a prealert and upload your invoice to aid in a " +
+                    "Jamaica. Please create a pre-alert and upload your invoice to aid in a " +
                     "speedy customs process." + ".\n\nThe support Team";
 
             case READY_FOR_PICKUP -> "Hello " + name + ",\n\nWe have received your package with tracking number "
