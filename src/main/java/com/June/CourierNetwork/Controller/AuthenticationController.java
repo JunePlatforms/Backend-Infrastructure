@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@CrossOrigin(origins = "http://june-platforms.web.app")
+@CrossOrigin(origins = "https://june-platforms.web.app")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
