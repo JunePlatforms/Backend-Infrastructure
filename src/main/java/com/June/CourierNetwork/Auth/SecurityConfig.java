@@ -12,6 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static com.June.CourierNetwork.Enum.Permission.*;
 import static com.June.CourierNetwork.Enum.Role.ADMIN;
@@ -86,4 +89,18 @@ public class SecurityConfig  {
 
         return http.build();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("https://june-platforms.web.app"); // Specify your allowed origin
+        configuration.addAllowedMethod("*"); // You can specify the HTTP methods you want to allow
+        configuration.addAllowedHeader("*"); // You can specify the allowed headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Apply this to all paths
+
+        return source;
+    }
+
 }
