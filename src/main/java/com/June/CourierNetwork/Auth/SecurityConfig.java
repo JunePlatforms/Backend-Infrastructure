@@ -38,7 +38,7 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors.disable())
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
@@ -100,7 +100,7 @@ public class SecurityConfig  {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://june-platforms.web.app"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*")); // You can specify the HTTP methods you want to allow
         configuration.setAllowedHeaders(Arrays.asList("*")); // You can specify the allowed headers
 
