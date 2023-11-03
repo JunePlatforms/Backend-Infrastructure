@@ -24,6 +24,7 @@ import static com.June.CourierNetwork.Enum.Permission.*;
 import static com.June.CourierNetwork.Enum.Role.ADMIN;
 import static com.June.CourierNetwork.Enum.Role.MANAGER;
 import static org.springframework.http.HttpMethod.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +39,7 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.disable())
+                .cors(withDefaults())
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
@@ -100,9 +101,10 @@ public class SecurityConfig  {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*")); // You can specify the HTTP methods you want to allow
-        configuration.setAllowedHeaders(Arrays.asList("*")); // You can specify the allowed headers
+
+        configuration.setAllowedOrigins(Arrays.asList("https://june-platforms.web.app"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // Apply this to all paths

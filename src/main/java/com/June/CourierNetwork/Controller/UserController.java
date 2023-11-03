@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@CrossOrigin(origins = "*")
-@RestController
+ @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
 public class UserController {
