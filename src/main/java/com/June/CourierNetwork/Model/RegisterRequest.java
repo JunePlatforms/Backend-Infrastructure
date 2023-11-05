@@ -29,6 +29,8 @@ public class RegisterRequest {
   private String vehicleModel;
   private String licensePlateNumber;
   private VehicleType vehicleType;
+  private byte[] policeRecord;
+  private byte[] driversLicense;
 
   private String username;
   private String customerNumber;
