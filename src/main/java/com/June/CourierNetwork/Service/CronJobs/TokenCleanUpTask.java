@@ -2,6 +2,8 @@ package com.June.CourierNetwork.Service.CronJobs;
 
 import com.June.CourierNetwork.Repo.Contract.TokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +11,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TokenCleanUpTask {
     private final TokenRepository tokenRepository;
-    @Scheduled(cron = "0 0 * * *") // Cron expression for daily execution at midnight
+    private static final Logger logger = LoggerFactory.getLogger(TokenCleanUpTask.class);
+
+    @Scheduled(cron = "0 */30 * * * *")
     public void cleanupExpiredTokens() {
-        tokenRepository.deleteAllRevokedTokens();
+        tokenRepository.deleteAllExpiredTokens();
+        logger.info("Token cleanup initiated successfully.");
     }
 }

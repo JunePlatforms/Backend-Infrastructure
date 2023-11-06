@@ -16,5 +16,7 @@ public interface TokenRepository {
 
     void saveAll(List<Token> validUserTokens);
 
-    void deleteAllRevokedTokens();
+    void deleteAllExpiredTokens();
+
+    void deleteRevokedToken(Integer id);
 }

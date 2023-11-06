@@ -67,10 +67,21 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public void deleteAllRevokedTokens() {
-        val sql = "DELETE FROM JuneCourierNetwork.token WHERE revoked = true";
+    public void deleteAllExpiredTokens() {
+        val sql = "DELETE FROM JuneCourierNetwork.token WHERE expired = true";
 
         val params = new MapSqlParameterSource();
+
+        jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public void deleteRevokedToken(Integer id) {
+        val sql = "DELETE FROM JuneCourierNetwork.token WHERE user_id = :id AND revoked = true";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("id", id);
 
         jdbcTemplate.update(sql, params);
     }
