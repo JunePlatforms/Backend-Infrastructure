@@ -4,28 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="removed class level cors">
+    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="added https://june-platforms.web.app to cors">
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CourierNetwork.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Auth/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Auth/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdministratorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdministratorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CourierUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CourierUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CustomerUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CustomerUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/WarehouseClerkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/WarehouseClerkController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CourierNetwork-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/CourierNetwork-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CourierNetwork-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/CourierNetwork-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Auth/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Auth/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/Contract/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/Contract/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.June.CourierNetwork.CourierNetworkApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.June.CourierNetwork.CourierNetworkApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.June.CourierNetwork.CourierNetworkApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.June.CourierNetwork.CourierNetworkApplicationTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/RegisterRequest$RegisterRequestBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/RegisterRequest$RegisterRequestBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/RegisterRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/Contract/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/Contract/AuthenticationService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hosting-setup" />
+        <entry key="$PROJECT_DIR$" value="june-24-email-notification" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,6 +48,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "aws-hosting",
@@ -65,7 +59,20 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CourierNetworkApplication">
+    <configuration name="CourierNetworkApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.June.CourierNetwork.CourierNetworkApplication" />
+      <module name="CourierNetwork" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.June.CourierNetwork.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CourierNetworkApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="CourierNetwork" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.June.CourierNetwork.CourierNetworkApplication" />
@@ -73,6 +80,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.CourierNetworkApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -133,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699068647240</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added https://june-platforms.web.app to cors">
+      <created>1699070089646</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699070089646</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +174,7 @@
     <MESSAGE value="updated jar file" />
     <MESSAGE value="added cors to spring security" />
     <MESSAGE value="removed class level cors" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed class level cors" />
+    <MESSAGE value="added https://june-platforms.web.app to cors" />
+    <option name="LAST_COMMIT_MESSAGE" value="added https://june-platforms.web.app to cors" />
   </component>
 </project>
