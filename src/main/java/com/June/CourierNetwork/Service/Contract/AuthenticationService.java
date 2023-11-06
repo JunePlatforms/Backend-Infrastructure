@@ -20,6 +20,8 @@ public interface AuthenticationService {
 
     void revokeAllUserTokens(User user);
 
+    void deleteAllRevokedTokens(User user);
+
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
 
