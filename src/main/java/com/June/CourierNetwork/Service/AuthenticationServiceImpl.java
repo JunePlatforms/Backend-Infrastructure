@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -42,7 +43,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private String driversLicenseUploadDirectory;
 
     @Override
-    public AuthenticationResponse register(RegisterRequest request){
+    public AuthenticationResponse register(RegisterRequest request, MultipartFile policeRecord,
+                                           MultipartFile driversLicense) throws IOException {
         Long savedUserId = null;
         var user = User.builder()
                 .firstName(request.getFirstname())
@@ -64,6 +66,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .user(user)
                     .build();
             savedUserId = courierRepository.save(courier);
+            fileUploadService.uploadPoliceRecord(policeRecord, savedUserId, policeRecordUploadDirectory);
+            fileUploadService.uploadDriversLicense(driversLicense, savedUserId, driversLicenseUploadDirectory);
         }
         else if (request.getRole().equals(Role.WAREHOUSE_CLERK)) {
             var warehouseClerk = WarehouseClerk.builder()

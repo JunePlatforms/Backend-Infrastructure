@@ -6,12 +6,13 @@ import com.June.CourierNetwork.Model.RegisterRequest;
 import com.June.CourierNetwork.Model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 public interface AuthenticationService {
 
-    AuthenticationResponse register(RegisterRequest request);
+    AuthenticationResponse register(RegisterRequest request, MultipartFile policeRecord, MultipartFile driversLicense) throws IOException;
 
     AuthenticationResponse authenticate(AuthenticationRequest request);
 
