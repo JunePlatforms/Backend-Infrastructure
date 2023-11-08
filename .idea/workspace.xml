@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="new dev space">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Auth/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Auth/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699048782902</updated>
       <workItem from="1699048784341" duration="581000" />
-      <workItem from="1699468537340" duration="1365000" />
+      <workItem from="1699468537340" duration="2015000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <created>1699055303625</created>
