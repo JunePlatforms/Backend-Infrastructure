@@ -24,8 +24,8 @@ public class AuthenticationController {
   private final AuthenticationService service;
   private final UserRepository userRepository;
 
-  @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
+  @PostMapping("/register/courier")
+  public ResponseEntity<AuthenticationResponse> registerCourier(
           @RequestPart RegisterRequest request,
           @RequestPart MultipartFile policeRecord,
           @RequestPart MultipartFile driversLicense
@@ -37,6 +37,21 @@ public class AuthenticationController {
           e.printStackTrace();
           return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+  }
+
+  @PostMapping("/register")
+  public ResponseEntity<AuthenticationResponse> register(
+          @RequestBody RegisterRequest request
+  ) {
+    if (userRepository.findActiveUserByEmail(request.getEmail()).isEmpty()){
+      try {
+        return ResponseEntity.ok(service.register(request, null, null));
+      }catch (Exception e){
+        e.printStackTrace();
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
     return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
   }

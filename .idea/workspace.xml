@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="new dev space">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/Contract/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/Contract/TokenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/TokenRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/TokenRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/Contract/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/Contract/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/CronJobs/TokenCleanUpTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/CronJobs/TokenCleanUpTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/TokenRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/TokenRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/TokenRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/TokenRepositoryImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/Contract/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/Contract/AuthenticationService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/CronJobs/TokenCleanUpTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/CronJobs/TokenCleanUpTask.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +38,12 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;aws-hosting&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -87,6 +71,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CourierNetworkApplication" />
+        <item itemvalue="Application.CourierNetworkApplication" />
+        <item itemvalue="Application.CourierNetworkApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -99,6 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699048782902</updated>
       <workItem from="1699048784341" duration="581000" />
+      <workItem from="1699468537340" duration="2015000" />
     </task>
     <task id="LOCAL-00001" summary="push">
       <created>1699055303625</created>
