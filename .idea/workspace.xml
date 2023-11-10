@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="new dev space">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" afterDir="false" />
-    </list>
+    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="packaged" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
