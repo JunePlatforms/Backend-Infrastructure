@@ -86,4 +86,16 @@ public class TokenRepositoryImpl implements TokenRepository {
 
         jdbcTemplate.update(sql, params);
     }
+
+    @Override
+    public void revokeAllActiveUserTokens(Integer id) {
+        val sql = "UPDATE JuneCourierNetwork.token SET revoked = true, expired = true " +
+                "WHERE user_id = :id";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("id", id);
+
+        jdbcTemplate.update(sql, params);
+    }
 }

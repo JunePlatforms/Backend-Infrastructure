@@ -134,14 +134,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void revokeAllUserTokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(Math.toIntExact(user.getId()));
-        if (validUserTokens.isEmpty())
-            return;
-        validUserTokens.forEach(token -> {
-            token.setExpired(true);
-            token.setRevoked(true);
-        });
-        tokenRepository.saveAll(validUserTokens);
+//        var validUserTokens = tokenRepository.findAllValidTokenByUser(Math.toIntExact(user.getId()));
+//        if (validUserTokens.isEmpty())
+//            return;
+//        validUserTokens.forEach(token -> {
+//            token.setExpired(true);
+//            token.setRevoked(true);
+//        });
+//        tokenRepository.saveAll(validUserTokens);
+
+        tokenRepository.revokeAllActiveUserTokens(Math.toIntExact(user.getId()));
     }
 
     @Override
