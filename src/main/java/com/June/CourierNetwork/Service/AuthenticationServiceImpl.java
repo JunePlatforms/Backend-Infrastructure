@@ -112,7 +112,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
-        deleteAllRevokedTokens(user);
+//        deleteAllRevokedTokens(user);
         saveUserToken(user.getId(), jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
@@ -165,7 +165,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
-                deleteAllRevokedTokens(user);
+//                deleteAllRevokedTokens(user);
                 saveUserToken(user.getId(), accessToken);
                 var authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
