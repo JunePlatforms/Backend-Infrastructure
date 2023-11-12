@@ -19,4 +19,7 @@ public interface TokenRepository {
     void deleteAllExpiredTokens();
 
     void deleteRevokedToken(Integer id);
+
+    void revokeAllActiveUserTokens(Integer id);
+
 }
