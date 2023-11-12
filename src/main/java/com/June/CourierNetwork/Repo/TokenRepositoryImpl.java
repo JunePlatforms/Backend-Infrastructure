@@ -21,7 +21,8 @@ public class TokenRepositoryImpl implements TokenRepository {
 
     @Override
     public List<Token> findAllValidTokenByUser(Integer user_id) {
-        val sql = "SELECT * FROM JuneCourierNetwork.token WHERE user_id = :user_id";
+        val sql = "SELECT * FROM JuneCourierNetwork.token WHERE user_id = :user_id " +
+                "AND revoked = 0 AND expired = 0";
 
         val params = new MapSqlParameterSource();
 
