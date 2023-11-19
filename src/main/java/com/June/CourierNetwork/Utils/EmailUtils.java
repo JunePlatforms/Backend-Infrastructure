@@ -20,24 +20,25 @@ public class EmailUtils {
     public static String getProductUpdateEmail(String name, ProductDetailsDTO productDetailsDTO, PackageStatus status) {
         return switch (status) {
             case CREATED -> "Hello " + name + ",\n\nWe have received your package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " at our warehouse in Florida. It is scheduled to arrive in " +
-                    "Jamaica on our next available flight. Please create a pre-alert and upload your invoice to aid in a " +
-                    "speedy customs process." + ".\n\nThe support Team";
+                    + productDetailsDTO.getTrackingNumber() + ", from " + productDetailsDTO.getSupplierName() +
+                    ", at our Florida warehouse. It is scheduled to arrive in " +
+                    "Jamaica on our next available shipment. Please upload your invoice to aid in a " +
+                    "speedy customs process." + "\n\nThe support Team";
 
             case SHIPPED -> "Hello " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
                     " has been shipped to " +
-                    "Jamaica. Please create a pre-alert and upload your invoice to aid in a " +
-                    "speedy customs process." + ".\n\nThe support Team";
+                    "Jamaica. Please upload your invoice to aid in a " +
+                    "speedy customs process." + "\n\nThe support Team";
 
             case READY_FOR_PICKUP -> "Hello " + name + ",\n\nWe have received your package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " at our warehouse in Jamaica. Please visit our website to schedule delivery." + ".\n\nThe support Team";
+                    ", at our warehouse in Jamaica. Please visit our website to schedule delivery." +
+                    "\n\nThe support Team";
 
             case DELIVERED -> "Hello " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been delivered to <insert destination>" + ". We would love to hear your feedback. " +
+                    ", has been delivered" + ". We would love to hear your feedback. " +
                     "Please use the link below to rate your experience" + ".\n\nThe support Team";
 
             case OUT_FOR_DELIVERY -> "Hello " + name + ",\n\nYour package with tracking number "
@@ -46,7 +47,7 @@ public class EmailUtils {
 
             case PICKED_UP -> "Hello " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been picked up by " + productDetailsDTO.getSupplierName() + ".\n\nThe support Team";
+                    " has been picked up.\n\nThe support Team";
         };
     }
 

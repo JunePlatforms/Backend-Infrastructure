@@ -30,6 +30,7 @@ import static com.June.CourierNetwork.Utils.EmailUtils.*;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     public static final String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
+    public static final String CUSTOMER_PACKAGE_UPDATE = "Your Package Has Been Updated";
     public static final String UTF_8_ENCODING = "UTF-8";
     public static final String EMAIL_TEMPLATE = "emailtemplate";
     public static final String TEXT_HTML_ENCODING = "text/html";
@@ -66,9 +67,9 @@ public class EmailServiceImpl implements EmailService {
                 userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+                message.setSubject(CUSTOMER_PACKAGE_UPDATE);
                 message.setFrom(fromEmail);
-                message.setTo();
+                message.setTo(user.getEmailAddress());
                 message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
                 emailSender.send(message);
             } catch (Exception e) {

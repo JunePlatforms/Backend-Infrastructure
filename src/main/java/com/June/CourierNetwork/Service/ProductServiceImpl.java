@@ -140,6 +140,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProductStatus(Long productId, PackageStatus status) {
         productRepository.updateProductStatus(productId, status);
+        emailService.sendProductUpdateEmail(productId);
     }
 
     @Override
