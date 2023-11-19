@@ -22,6 +22,7 @@
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Repo/Contract/TransactionRepository.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/CourierNetworkApplication.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Repo/Contract/WarehouseClerkRepository.java
+/Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/MailConfig.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/DTO/DeliveryDetailsDTO.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Model/AuthenticationRequest.java
@@ -35,6 +36,7 @@
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Mapper/ShipmentDTOMapper.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Model/TransactionDetails.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Service/Contract/CustomerService.java
+/Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Service/Contract/EmailService.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Model/Token.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/DTO/ShipmentDTO.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Repo/ShipmentRepositoryImpl.java
@@ -42,6 +44,8 @@
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/DTO/TransactionRequestDTO.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Service/UserServiceImpl.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Repo/CustomerRepositoryImpl.java
+/Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java
+/Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Utils/EmailUtils.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/SpringDocConfig.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Repo/Contract/AdministratorRepository.java
 /Users/shemarlundy/Desktop/Backend-Infrastructure/src/main/java/com/June/CourierNetwork/Controller/UserController.java

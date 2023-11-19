@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="optimized token table">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CourierNetwork.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Utils/EmailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Utils/EmailUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/DeliveryDetailsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/DeliveryDetailsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/TransactionDetailsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/TransactionDetailsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/ProductRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/ProductRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/TokenRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/TokenRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/Contract/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/ProductRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/ProductRepositoryImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/UserRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/UserRepositoryImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/Contract/ShipmentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/Contract/ShipmentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/ProductServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/ProductServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/ShipmentServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/ShipmentServiceImpl.class" afterDir="false" />
-    </list>
+    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="tested and working email notification" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +13,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="new_branch_email_notification" />
+        <entry key="$PROJECT_DIR$" value="june-24-email-notification" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,8 +50,6 @@
 }]]></component>
   <component name="RunManager" selected="Application.CourierNetworkApplication">
     <configuration name="CourierNetworkApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.June.CourierNetwork.CourierNetworkApplication" />
       <module name="CourierNetwork" />
       <extension name="coverage">
@@ -210,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699798889568</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="tested and working email notification">
+      <created>1700409730051</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1700409730051</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,47 +214,7 @@
     <MESSAGE value="new dev space" />
     <MESSAGE value="revereted changes" />
     <MESSAGE value="optimized token table" />
-    <option name="LAST_COMMIT_MESSAGE" value="optimized token table" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/UserRepositoryImpl.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/UserServiceImpl.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/ProductRepositoryImpl.java</url>
-          <line>149</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/CourierRepositoryImpl.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/WarehouseClerkController.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/ProductServiceImpl.java</url>
-          <line>59</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="tested and working email notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="tested and working email notification" />
   </component>
 </project>
