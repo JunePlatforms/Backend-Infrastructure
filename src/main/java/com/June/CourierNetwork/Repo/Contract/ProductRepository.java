@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ProductRepository {
 
-    void createProduct(ProductDetailsRequest productDetailsRequest);
+    Long createProduct(ProductDetailsRequest productDetailsRequest);
 
     void updateProduct(Long productId, ProductDetailsRequest productDetailsRequest);
 

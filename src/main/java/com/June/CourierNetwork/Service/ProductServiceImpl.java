@@ -7,6 +7,7 @@ import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
 import com.June.CourierNetwork.Repo.Contract.ProductRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
+import com.June.CourierNetwork.Service.Contract.EmailService;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.June.CourierNetwork.Service.Contract.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final FileUploadService fileUploadService;
+    private final EmailService emailService;
+
     @Value("${pre.alert.upload.dir}")
     private String preAlertImageUploadDirectory;
 
@@ -34,7 +37,9 @@ public class ProductServiceImpl implements ProductService {
 
         productDetailsRequest.setUserId(userId);
 
-        productRepository.createProduct(productDetailsRequest);
+        val productId = productRepository.createProduct(productDetailsRequest);
+
+        emailService.sendProductUpdateEmail(productId);
 
     }
 
@@ -135,6 +140,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProductStatus(Long productId, PackageStatus status) {
         productRepository.updateProductStatus(productId, status);
+        emailService.sendProductUpdateEmail(productId);
     }
 
     @Override

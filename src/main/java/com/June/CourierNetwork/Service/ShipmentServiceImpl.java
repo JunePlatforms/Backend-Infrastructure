@@ -3,8 +3,10 @@ package com.June.CourierNetwork.Service;
 import com.June.CourierNetwork.DTO.ShipmentDTO;
 import com.June.CourierNetwork.Enum.ShipmentStatus;
 import com.June.CourierNetwork.Enum.ShipmentType;
+import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.Shipment;
 import com.June.CourierNetwork.Repo.Contract.ShipmentRepository;
+import com.June.CourierNetwork.Service.Contract.EmailService;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.June.CourierNetwork.Service.Contract.ProductService;
 import com.June.CourierNetwork.Service.Contract.ShipmentService;
@@ -24,6 +26,8 @@ public class ShipmentServiceImpl implements ShipmentService {
     private final ShipmentRepository shipmentRepository;
     private final FileUploadService fileUploadService;
     private final ProductService productService;
+    private final EmailService emailService;
+
     @Value("${airway.invoice.upload.dir}")
     private String airWayInvoiceUploadDirectory;
 
@@ -98,8 +102,13 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
-    public void updateShipmentStatus(Long shipmentId, ShipmentStatus status) {
+    public void updateShipmentStatus(Long shipmentId, ShipmentStatus status) throws IOException {
         shipmentRepository.updateShipmentStatus(shipmentId, status);
+
+        if (status.equals(ShipmentStatus.ARRIVED) || status.equals(ShipmentStatus.SHIPPED)) {
+            List<ProductDetails> productDetails = productService.findProductDetailsByShipmentId(shipmentId);
+            productDetails.forEach(productDetail -> emailService.sendProductUpdateEmail(productDetail.getId()));
+        }
     }
 
     @Override

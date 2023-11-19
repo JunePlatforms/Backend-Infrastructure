@@ -25,4 +25,5 @@ public interface UserRepository {
 
     Optional<UpdatePasswordRequest> getUserPassword(Long id);
 
+    Optional<User> findUserByCustomerNumber(String customerNumber);
 }
