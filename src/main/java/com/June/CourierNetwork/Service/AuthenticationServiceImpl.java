@@ -6,6 +6,7 @@ import com.June.CourierNetwork.Model.*;
 import com.June.CourierNetwork.Repo.Contract.*;
 import com.June.CourierNetwork.Service.Contract.AuthenticationService;
 import com.June.CourierNetwork.Service.Contract.CustomerService;
+import com.June.CourierNetwork.Service.Contract.EmailService;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -36,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final FileUploadService fileUploadService;
+    private final EmailService emailService;
     @Value("${police.record.upload.dir}")
     private String policeRecordUploadDirectory;
 
@@ -93,6 +96,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUserId, jwtToken);
+        emailService.sendVerificationMail(user.getFirstName(), user.getEmailAddress(), jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)

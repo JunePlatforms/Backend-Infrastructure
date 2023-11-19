@@ -22,7 +22,7 @@ public interface ShipmentService {
 
     void setShipmentType(Long shipmentId, ShipmentType shipmentType);
 
-    void updateShipmentStatus(Long shipmentId, ShipmentStatus status);
+    void updateShipmentStatus(Long shipmentId, ShipmentStatus status) throws IOException;
     String getAirwayInvoiceFileName(Long shipmentId);
 
 }
