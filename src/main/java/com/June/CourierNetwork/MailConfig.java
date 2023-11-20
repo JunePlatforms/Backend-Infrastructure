@@ -29,6 +29,9 @@ public class MailConfig {
     @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
     private String starttlsEnable;
 
+    @Value("${spring.mail.properties.mail.smtp.from}")
+    private String from;
+
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -40,6 +43,7 @@ public class MailConfig {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", smtpAuth);
         props.put("mail.smtp.starttls.enable", starttlsEnable);
+        props.put("mail.smtp.from", from);
         return mailSender;
     }
 }
