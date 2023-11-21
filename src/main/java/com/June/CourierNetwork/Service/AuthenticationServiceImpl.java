@@ -96,7 +96,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUserId, jwtToken);
-        emailService.sendVerificationMail(user.getFirstName(), user.getEmailAddress(), jwtToken);
+        emailService.sendWelcomeMail(user.getFirstName(), user.getEmailAddress());
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
