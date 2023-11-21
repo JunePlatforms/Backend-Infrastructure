@@ -31,6 +31,7 @@ import static com.June.CourierNetwork.Utils.EmailUtils.*;
 public class EmailServiceImpl implements EmailService {
     public static final String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
     public static final String CUSTOMER_PACKAGE_UPDATE = "Your Package Has Been Updated";
+    public static final String WELCOME_NEW_USER = "Welcome To The June Family";
     public static final String UTF_8_ENCODING = "UTF-8";
     public static final String EMAIL_TEMPLATE = "emailtemplate";
     public static final String TEXT_HTML_ENCODING = "text/html";
@@ -59,6 +60,22 @@ public class EmailServiceImpl implements EmailService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    @Async
+    public void sendWelcomeMail(String name, String to) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setSubject(WELCOME_NEW_USER);
+            message.setFrom(fromEmail);
+            message.setTo(to);
+            message.setText(getWelcomeMessage(name));
+            emailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     @Async

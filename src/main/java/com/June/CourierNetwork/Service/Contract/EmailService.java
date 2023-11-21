@@ -3,6 +3,8 @@ package com.June.CourierNetwork.Service.Contract;
 public interface EmailService {
     void sendVerificationMail(String name, String to, String token);
 
+    void sendWelcomeMail(String name, String to);
+
     void sendProductUpdateEmail(long productId);
 
     void sendMimeMessageWithAttachments(String name, String to, String token);
