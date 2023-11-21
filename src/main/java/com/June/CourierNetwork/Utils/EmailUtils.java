@@ -17,6 +17,33 @@ public class EmailUtils {
         return host + "/api/users?token=" + token;
     }
 
+    public static String getWelcomeMessage(String name) {
+        return "Hello " + name + ",\n\nWelcome to June Logistics! We're thrilled to have you on board " +
+                "and want to express our gratitude for choosing us to handle your shipping needs. " +
+                "Whether you're shipping personal items, business packages, or gifts to loved ones, " +
+                "we're here to make the process seamless and stress-free.\n" +
+                "\n" +
+                "Here's a quick overview of what you can expect as a valued member of the June Logistics family:\n" +
+                "\n" +
+                "1. Simple and Efficient Shipping:\n" +
+                "Our user-friendly platform is designed to make shipping a breeze. " +
+                "Easily schedule pickups, track your shipments in real-time, and enjoy transparent pricing.\n" +
+                "\n" +
+                "2. Reliable Delivery Services:\n" +
+                "Rest assured that your packages are in safe hands. Our reliable and efficient delivery " +
+                "network ensures that your shipments reach their destination on time and in excellent " +
+                "condition. \n" +
+                "\n" +
+                "Thank you once again for choosing June Logistics. We're committed to providing " +
+                "you with top-notch shipping services, and we look forward to serving you for all your " +
+                "shipping needs.\n" +
+                "\n" +
+                "Safe shipping and happy travels!\n" +
+                "\n" +
+                "Best regards," +
+                "\nThe June Logistics Team";
+    }
+
     public static String getProductUpdateEmail(String name, ProductDetailsDTO productDetailsDTO, PackageStatus status) {
         return switch (status) {
             case CREATED -> "Hello " + name + ",\n\nWe have received your package with tracking number "
