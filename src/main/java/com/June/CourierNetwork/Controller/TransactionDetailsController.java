@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://june-platforms.web.app")
+@CrossOrigin(origins = "https://app.junelogistics.com")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transaction/details")
