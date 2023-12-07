@@ -24,5 +24,5 @@ public interface AuthenticationService {
 
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
-
+    void forgotPassword(String email, String Password, String retypePassword);
 }

@@ -19,7 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -180,6 +179,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    @Override
+    public void forgotPassword(String email, String Password, String retypePassword) {
+        var user = userRepository.findUserByEmail(email)
+                .orElseThrow();
+        if (!Password.equals(retypePassword)) {
+            throw new IllegalStateException("Passwords do not match");
+        }
+        UpdatePasswordRequest updatePasswordRequest = new UpdatePasswordRequest();
+        updatePasswordRequest.setNewPassword(passwordEncoder.encode(Password));
+        userRepository.updateUserPassword(user.getId(), updatePasswordRequest);
     }
 
     private boolean emailExists(String email){

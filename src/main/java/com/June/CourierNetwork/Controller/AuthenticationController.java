@@ -70,5 +70,18 @@ public class AuthenticationController {
     service.refreshToken(request, response);
   }
 
+  @PutMapping("/forgot/password")
+  public ResponseEntity<String> forgotPassword(@RequestParam String email, @RequestParam String password,
+                                               @RequestParam String retypePassword) {
+    try{
+      service.forgotPassword(email, password, retypePassword);
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch (Exception e){
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
 
 }
