@@ -1,8 +1,6 @@
 
 e
 5src/main/java/com/June/CourierNetwork/MailConfig.java,c/8/c84d2bdb1224b177f30ea829b7b68d6abf5344a6
-~
-Nsrc/main/java/com/June/CourierNetwork/Controller/WarehouseClerkController.java,1/c/1c4e63d52e69d725abe310c6556be94bf1577954
 u
 Esrc/main/java/com/June/CourierNetwork/Controller/AdminController.java,a/0/a0cb5d9e0eb0b3c03f19686b97041b30b08234a1
 }
