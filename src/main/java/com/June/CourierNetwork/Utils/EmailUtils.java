@@ -2,23 +2,22 @@ package com.June.CourierNetwork.Utils;
 
 import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
-import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.User;
-import lombok.val;
 
 public class EmailUtils {
-    public static String getEmailVerificationMessage(String name, String host, String token) {
-        return "Hello " + name + ",\n\nYour new June Courier account has been created. Please click the link below to " +
-                "verify your account. \n\n" +
-                getVerificationUrl(host, token) + "\n\nThe support Team";
+    public static String getEmailVerificationMessage(User user, String token) {
+        return "Hi " + user.getFirstName() + ",\n\nYour new June "+ user.getRole().name()+" account has been created. " +
+                "Please click the link below to " +
+                "verify your account. This must be done before you are able to access your account. \n\n" +
+                getVerificationUrl(token) + "\n\nBest regards,\nJUNE";
     }
 
-    public static String getVerificationUrl(String host, String token) {
-        return host + "/api/users?token=" + token;
+    public static String getVerificationUrl(String token) {
+        return "https://app.junelogistics.com/api/v1/auth/email/verification?token=" + token;
     }
 
     public static String getWelcomeMessage(String name) {
-        return "Hello " + name + ",\n\nWelcome to June Logistics! We're thrilled to have you on board " +
+        return "Hi " + name + ",\n\nWelcome to June Logistics! We're thrilled to have you on board " +
                 "and want to express our gratitude for choosing us to handle your shipping needs. " +
                 "Whether you're shipping personal items, business packages, or gifts to loved ones, " +
                 "we're here to make the process seamless and stress-free.\n" +
@@ -41,57 +40,57 @@ public class EmailUtils {
                 "Safe shipping and happy travels!\n" +
                 "\n" +
                 "Best regards," +
-                "\nThe June Logistics Team";
+                "\nJUNE";
     }
 
     public static String getProductUpdateEmail(String name, ProductDetailsDTO productDetailsDTO, PackageStatus status) {
         return switch (status) {
-            case CREATED -> "Hello " + name + ",\n\nWe have received your package with tracking number "
+            case CREATED -> "Hi " + name + ",\n\nWe have received your package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + ", from " + productDetailsDTO.getSupplierName() +
                     ", at our Florida warehouse. It is scheduled to arrive in " +
                     "Jamaica on our next available shipment. Please upload your invoice to aid in a " +
-                    "speedy customs process." + "\n\nThe support Team";
+                    "speedy customs process." + "\n\nBest regards,\nJUNE";
 
-            case SHIPPED -> "Hello " + name + ",\n\nYour package with tracking number "
+            case SHIPPED -> "Hi " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
                     " has been shipped to " +
                     "Jamaica. Please upload your invoice to aid in a " +
-                    "speedy customs process." + "\n\nThe support Team";
+                    "speedy customs process." + "\n\nBest regards,\nJUNE";
 
-            case READY_FOR_PICKUP -> "Hello " + name + ",\n\nWe have received your package with tracking number "
+            case READY_FOR_PICKUP -> "Hi " + name + ",\n\nWe have received your package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
                     ", at our warehouse in Jamaica. Please visit our website to schedule delivery." +
-                    "\n\nThe support Team";
+                    "\n\nBest regards,\nJUNE";
 
-            case DELIVERED -> "Hello " + name + ",\n\nYour package with tracking number "
+            case DELIVERED -> "Hi " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
                     ", has been delivered" + ". We would love to hear your feedback. " +
-                    "Please use the link below to rate your experience" + ".\n\nThe support Team";
+                    "Please use the link below to rate your experience" + ".\n\nBest regards,\nJUNE";
 
-            case OUT_FOR_DELIVERY -> "Hello " + name + ",\n\nYour package with tracking number "
+            case OUT_FOR_DELIVERY -> "Hi " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been delivered to " + productDetailsDTO.getSupplierName() + ".\n\nThe support Team";
+                    " has been delivered to " + productDetailsDTO.getSupplierName() + ".\n\nBest regards,\nJUNE";
 
-            case PICKED_UP -> "Hello " + name + ",\n\nYour package with tracking number "
+            case PICKED_UP -> "Hi " + name + ",\n\nYour package with tracking number "
                     + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been picked up.\n\nThe support Team";
+                    " has been picked up.\n\nBest regards,\nJUNE";
         };
     }
 
-    public static String getForgetPasswordEmail(String name, String host, String token) {
-        return "Hello " + name + ",\n\nFollow the link below to reset your customer account password at Fashion Nova. " +
-                "\nIf you did not request a new password, you can safely delete this email. " +
-                getVerificationUrl(host, token) + "\n\nThe support Team";
+    public static String getForgetPasswordEmail(String name, String token) {
+        return "Hi " + name + ",\n\nFollow the link below to reset your account password at June Logistics. " +
+                "\nIf you did not request a new password, you can safely delete this email.\n\n" +
+                getVerificationUrl(token) + "\n\nBest regards,\nJUNE";
     }
 
     public static String getNewCourierAdminEmail(String name, User user) {
-        return "Hello " + name + ",\n\nYou have been added to the " + user.getRole() + " role." +
-                "\n\nThe support Team";
+        return "Hi " + name + ",\n\nYou have been added to the " + user.getRole() + " role." +
+                "\n\nBest regards,\nJUNE";
 
     }
 
     public static String getNewCourierEmail(String name, User user) {
-        return "Hello " + name + ",\n\nYour application for courier with June Courier has been approved." +
-                "\n\nThe support Team";
+        return "Hi " + name + ",\n\nYour application for courier with June Courier has been approved." +
+                "\n\nBest regards,\nJUNE";
     }
 }

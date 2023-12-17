@@ -21,9 +21,13 @@ public interface UserRepository {
 
     Optional<User> findActiveUserByEmail(String email);
 
+    Optional<User> findVerifiedUserByEmail(String email);
+
     int updateUserPassword(Long id, UpdatePasswordRequest passwordRequest);
 
     Optional<UpdatePasswordRequest> getUserPassword(Long id);
 
     Optional<User> findUserByCustomerNumber(String customerNumber);
+
+    void verifyUser(String token);
 }

@@ -95,6 +95,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUserId, jwtToken);
+        emailService.sendVerificationMail(user, jwtToken);
         emailService.sendWelcomeMail(user.getFirstName(), user.getEmailAddress());
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
@@ -110,8 +111,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = userRepository.findActiveUserByEmail(request.getEmail())
-                .orElseThrow();
+        var user = userRepository.findVerifiedUserByEmail(request.getEmail())
+                .orElseThrow( () -> new RuntimeException("Account Not Verified"));
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
@@ -191,6 +192,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UpdatePasswordRequest updatePasswordRequest = new UpdatePasswordRequest();
         updatePasswordRequest.setNewPassword(passwordEncoder.encode(Password));
         userRepository.updateUserPassword(user.getId(), updatePasswordRequest);
+    }
+
+    @Override
+    public void verifyEmailAddress(String token) {
+        userRepository.verifyUser(token);
     }
 
     private boolean emailExists(String email){
