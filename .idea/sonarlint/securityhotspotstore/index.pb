@@ -1,12 +1,6 @@
 
 e
 5src/main/java/com/June/CourierNetwork/MailConfig.java,c/8/c84d2bdb1224b177f30ea829b7b68d6abf5344a6
-t
-Dsrc/main/java/com/June/CourierNetwork/Controller/UserController.java,0/7/07559970025b0b280d437bcb6f735b3192a425ec
-u
-Esrc/main/java/com/June/CourierNetwork/Controller/AdminController.java,a/0/a0cb5d9e0eb0b3c03f19686b97041b30b08234a1
-}
-Msrc/main/java/com/June/CourierNetwork/Controller/AdministratorController.java,4/4/44d2d3865f78db28961372d8903c8522d33c0c56
 w
 Gsrc/main/java/com/June/CourierNetwork/Repo/Contract/UserRepository.java,3/9/39eb33f8af4bbc601404c4a597020145e1718db1
 p
