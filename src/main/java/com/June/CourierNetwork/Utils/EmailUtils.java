@@ -5,14 +5,15 @@ import com.June.CourierNetwork.Enum.PackageStatus;
 import com.June.CourierNetwork.Model.User;
 
 public class EmailUtils {
-    public static String getEmailVerificationMessage(String name, String host, String token) {
-        return "Hello " + name + ",\n\nYour new June Courier account has been created. Please click the link below to " +
-                "verify your account. \n\n" +
-                getVerificationUrl(host, token) + "\n\nThe support Team";
+    public static String getEmailVerificationMessage(User user, String token) {
+        return "Hi " + user.getFirstName() + ",\n\nYour new June "+ user.getRole().name()+" account has been created. " +
+                "Please click the link below to " +
+                "verify your account. This must be done before you are able to access your account. \n\n" +
+                getVerificationUrl(token) + "\n\nBest regards,\nJUNE";
     }
 
-    public static String getVerificationUrl(String host, String token) {
-        return host + "/api/users?token=" + token;
+    public static String getVerificationUrl(String token) {
+        return "https://app.junelogistics.com/api/v1/auth/email/verification?token=" + token;
     }
 
     public static String getCustomerWelcomeMessage(String name, String customerNumber) {

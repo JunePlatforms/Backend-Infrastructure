@@ -83,5 +83,17 @@ public class AuthenticationController {
     }
   }
 
+  @PutMapping("email/verification")
+  public ResponseEntity<String> verifyEmail(@RequestParam String token) {
+    try{
+      service.verifyEmailAddress(token);
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch (Exception e){
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
 
 }
