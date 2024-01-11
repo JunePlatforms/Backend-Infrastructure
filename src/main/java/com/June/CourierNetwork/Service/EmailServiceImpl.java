@@ -55,13 +55,29 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Async
     public void sendVerificationMail(User user, String token) {
+//        try {
+//            SimpleMailMessage message = new SimpleMailMessage();
+//            message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+//            message.setFrom(fromEmail);
+//            message.setTo(user.getEmailAddress());
+//            message.setText(getEmailVerificationMessage(user, token));
+//            emailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            message.setFrom(fromEmail);
-            message.setTo(user.getEmailAddress());
-            message.setText(getEmailVerificationMessage(user, token));
+            String content = getEmailVerificationMessage(user, token);
+
+            MimeMessage message = getMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+            helper.setPriority(1);
+            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+            helper.setFrom(fromEmail);
+            helper.setTo(user.getEmailAddress());
+            helper.setText(content, true);  // Set the second parameter to true for HTML content
             emailSender.send(message);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -193,7 +209,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Async
     public void sendHtmlEmail(String name, String to, String token) {
-        try {
+//        try {
 //            Context context = new Context();
 //            context.setVariables(Map.of("name", name, "url", getVerificationUrl(host, token)));
 //            String text = templateEngine.process(EMAIL_TEMPLATE, context);
@@ -205,9 +221,9 @@ public class EmailServiceImpl implements EmailService {
 //            helper.setTo(to);
 //            helper.setText(text, true);
 //            emailSender.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
