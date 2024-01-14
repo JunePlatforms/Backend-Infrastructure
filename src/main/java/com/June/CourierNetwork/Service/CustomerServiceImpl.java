@@ -26,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String generateCustomerNumber(long userId) {
-        return "June00" + userId;
+        return "JUNE00" + userId;
     }
 
     @Override

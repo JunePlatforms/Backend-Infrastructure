@@ -2,9 +2,7 @@ package com.June.CourierNetwork.Utils;
 
 import com.June.CourierNetwork.DTO.ProductDetailsDTO;
 import com.June.CourierNetwork.Enum.PackageStatus;
-import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.User;
-import lombok.val;
 
 public class EmailUtils {
     public static String getEmailVerificationMessage(String name, String host, String token) {
@@ -17,64 +15,86 @@ public class EmailUtils {
         return host + "/api/users?token=" + token;
     }
 
-    public static String getWelcomeMessage(String name) {
-        return "Hi " + name + ",\n\nWelcome to June Logistics! We're thrilled to have you on board " +
-                "and want to express our gratitude for choosing us to handle your shipping needs. " +
-                "Whether you're shipping personal items, business packages, or gifts to loved ones, " +
-                "we're here to make the process seamless and stress-free.\n" +
-                "\n" +
-                "Here's a quick overview of what you can expect as a valued member of the June Logistics family:\n" +
-                "\n" +
-                "1. Simple and Efficient Shipping:\n" +
-                "Our user-friendly platform is designed to make shipping a breeze. " +
-                "Easily schedule pickups, track your shipments in real-time, and enjoy transparent pricing.\n" +
-                "\n" +
-                "2. Reliable Delivery Services:\n" +
-                "Rest assured that your packages are in safe hands. Our reliable and efficient delivery " +
-                "network ensures that your shipments reach their destination on time and in excellent " +
-                "condition. \n" +
-                "\n" +
-                "Thank you once again for choosing June Logistics. We're committed to providing " +
-                "you with top-notch shipping services, and we look forward to serving you for all your " +
-                "shipping needs.\n" +
-                "\n" +
-                "Safe shipping and happy travels!\n" +
-                "\n" +
-                "Best regards," +
-                "\nJUNE";
+    public static String getCustomerWelcomeMessage(String name, String customerNumber) {
+        return "Hey " + name + ",<br><br>" +
+                "Welcome to JUNE!<br><br>" +
+                "At JUNE, shipping isn't just about packages—it's about shipping your lifestyle, your essence, your vibe. " +
+                "Here's your shipping address:<br><br>" +
+                "<span class='bold'>6858 NW 75th Street, "+customerNumber+" Miami, FL, 33166</span><br><br>" +
+                "Plug this address in at your favorite online checkout, and voila! Your packages are sent straight to us. " +
+                "Shop globally, ship effortlessly.<br><br>" +
+                "<span class='bold'>Why ship with JUNE?</span><br><br>" +
+                "<ul class='bullet-points'>" +
+                "<li>4x per week shipping</li>" +
+                "<li>Next day expedited shipping</li>" +
+                "<li>Sea freight shipping</li>" +
+                "<li>Door-to-door delivery</li>" +
+                "<li>Real-time package tracking</li>" +
+                "</ul><br><br>" +
+                "Whether it's your personal favorites, business essentials, or heartfelt gifts for your tribe, " +
+                "we're here to ensure what matters to you gets to where it needs to be, hassle-free.<br><br>" +
+                "Curious for more? Dive into the perks at <a href='https://junelogistics.com'>junelogistics.com</a>. " +
+                "We can't wait to team up with you as you sail through life, shipping your lifestyle.<br><br>" +
+                "Cheers,<br>" +
+                "JUNE";
     }
 
     public static String getProductUpdateEmail(String name, ProductDetailsDTO productDetailsDTO, PackageStatus status) {
         return switch (status) {
-            case CREATED -> "Hi " + name + ",\n\nWe have received your package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + ", from " + productDetailsDTO.getSupplierName() +
-                    ", at our Florida warehouse. It is scheduled to arrive in " +
-                    "Jamaica on our next available shipment. Please upload your invoice to aid in a " +
-                    "speedy customs process." + "\n\nBest regards,\nJUNE";
+            case CREATED -> "Hey " + name + ",\n\nYour " +
+                    productDetailsDTO.getDescription() +
+                    "from " +
+                    productDetailsDTO.getSupplierName() +
+                    "has just arrived at our warehouse! It's ready for its next journey, heading to " +
+                    "Jamaica in our upcoming shipment.\n\n"
+                    +"To ensure smooth processing at the Jamaica Customs Agency, please provide us with your " +
+                    "invoice for this package." +
+                    "Your invoice is like the official receipt confirming your order details: " +
+                    "the item description, quantity, and final cost. It's usually sent to your " +
+                    "email after making an online purchase.\n\n"
+                    + "\n\nBest regards,\nJUNE";
 
-            case SHIPPED -> "Hi " + name + ",\n\nYour package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been shipped to " +
-                    "Jamaica. Please upload your invoice to aid in a " +
-                    "speedy customs process." + "\n\nBest regards,\nJUNE";
+            case SHIPPED -> "Hey " + name + ",\n\nExciting news! Your " +
+                    productDetailsDTO.getDescription() +
+                    "from " +
+                    productDetailsDTO.getSupplierName() +
+                    "is currently en route to our cargo partners, gearing up to be shipped to Jamaica.\n\n"
+                    +"For all the specifics about your package, hop into your June account dashboard. " +
+                    "Everything you need to know is waiting for you there.\n\n"
+                    +"To ensure smooth processing at the Jamaica Customs Agency, please provide us with your " +
+                    "invoice for this package." +
+                    "Your invoice is like the official receipt confirming your order details: " +
+                    "the item description, quantity, and final cost. It's usually sent to your " +
+                    "email after making an online purchase.\n\n"
+                    + "\n\nBest regards,\nJUNE";
 
-            case READY_FOR_PICKUP -> "Hi " + name + ",\n\nWe have received your package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    ", at our warehouse in Jamaica. Please visit our website to schedule delivery." +
-                    "\n\nBest regards,\nJUNE";
+            case READY_FOR_PICKUP -> "Hey " + name + ",\n\nExciting news! Your " +
+                    productDetailsDTO.getDescription() +
+                    "from " +
+                    productDetailsDTO.getSupplierName() +
+                    "is ready for pickup at our office in Kingston Jamaica. \n\n"
+                    + "\n\nBest regards,\nJUNE";
 
-            case DELIVERED -> "Hi " + name + ",\n\nYour package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    ", has been delivered" + ". We would love to hear your feedback. " +
-                    "Please use the link below to rate your experience" + ".\n\nBest regards,\nJUNE";
+            case DELIVERED -> "Hey " + name + ",\n\nExciting news! Your " +
+                    productDetailsDTO.getDescription() +
+                    "from " +
+                    productDetailsDTO.getSupplierName() +
+                    "was successfully delivered! \n\n"
+                    + "\n\nBest regards,\nJUNE";
 
-            case OUT_FOR_DELIVERY -> "Hi " + name + ",\n\nYour package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been delivered to " + productDetailsDTO.getSupplierName() + ".\n\nBest regards,\nJUNE";
+            case OUT_FOR_DELIVERY -> "Hey " + name + ",\n\nExciting news! Your " +
+                    productDetailsDTO.getDescription() +
+                    "from " +
+                    productDetailsDTO.getSupplierName() +
+                    "is currently out for delivery! \n\n"
+                    + "\n\nBest regards,\nJUNE";
 
-            case PICKED_UP -> "Hi " + name + ",\n\nYour package with tracking number "
-                    + productDetailsDTO.getTrackingNumber() + " from " + productDetailsDTO.getSupplierName() +
-                    " has been picked up.\n\nBest regards,\nJUNE";
+            case PICKED_UP -> "Hey " + name + ",\n\nExciting news! Your " +
+                    productDetailsDTO.getDescription() +
+                    "from " +
+                    productDetailsDTO.getSupplierName() +
+                    "was successfully picked-up! \n\n"
+                    + "\n\nBest regards,\nJUNE";
         };
     }
 

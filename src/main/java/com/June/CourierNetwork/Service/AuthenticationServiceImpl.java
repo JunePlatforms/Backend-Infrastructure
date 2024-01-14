@@ -84,6 +84,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .acceptedTermsAndConditions(request.getAcceptedTermsAndConditions())
                     .build();
             savedUserId = customerService.save(customer);
+            emailService.sendCustomerWelcomeMail(user.getFirstName(), user.getEmailAddress(),customerService.generateCustomerNumber(savedUserId));
+
         }
         else if (request.getRole().equals(Role.ADMIN)) {
             var admin = Administrator.builder()
@@ -95,7 +97,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUserId, jwtToken);
-        emailService.sendWelcomeMail(user.getFirstName(), user.getEmailAddress());
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)

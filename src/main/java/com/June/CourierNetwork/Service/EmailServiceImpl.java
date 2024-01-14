@@ -30,8 +30,12 @@ import static com.June.CourierNetwork.Utils.EmailUtils.*;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     public static final String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
-    public static final String CUSTOMER_PACKAGE_UPDATE = "Your Package Has Been Updated";
-    public static final String WELCOME_NEW_USER = "Welcome To The June Family";
+    public static final String CREATED_UPDATE = "We've Got It!";
+    public static final String SHIPPED_UPDATE = "Your Package Is On The Way!";
+    public static final String READY_FOR_PICKUP_UPDATE = "It's Here!";
+    public static final String OUT_FOR_DELIVERY_UPDATE = "It's On The Way!";
+    public static final String DELIVERED_UPDATE = "Thanks For Shipping!";
+    public static final String WELCOME_NEW_USER = "Welcome Email";
     public static final String UTF_8_ENCODING = "UTF-8";
     public static final String EMAIL_TEMPLATE = "emailtemplate";
     public static final String TEXT_HTML_ENCODING = "text/html";
@@ -63,13 +67,23 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     @Async
-    public void sendWelcomeMail(String name, String to) {
+    public void sendCustomerWelcomeMail(String name, String to, String customerNumber) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setSubject(WELCOME_NEW_USER);
-            message.setFrom(fromEmail);
-            message.setTo(to);
-            message.setText(getWelcomeMessage(name));
+//            SimpleMailMessage message = new SimpleMailMessage();
+//            message.setSubject(WELCOME_NEW_USER);
+//            message.setFrom(fromEmail);
+//            message.setTo(to);
+//            message.setText(getCustomerWelcomeMessage(name, customerNumber));
+//            emailSender.send(message);
+            String content = getCustomerWelcomeMessage(name, customerNumber);
+
+            MimeMessage message = getMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+            helper.setPriority(1);
+            helper.setSubject(WELCOME_NEW_USER);
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setText(content, true);  // Set the second parameter to true for HTML content
             emailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,9 +98,20 @@ public class EmailServiceImpl implements EmailService {
                 userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setSubject(CUSTOMER_PACKAGE_UPDATE);
+                switch (productDetailsDTO.getPackageStatus()) {
+                    case CREATED -> message.setSubject(CREATED_UPDATE);
+
+                    case SHIPPED -> message.setSubject(SHIPPED_UPDATE);
+
+                    case READY_FOR_PICKUP -> message.setSubject(READY_FOR_PICKUP_UPDATE);
+
+                    case DELIVERED, PICKED_UP -> message.setSubject(DELIVERED_UPDATE);
+
+                    case OUT_FOR_DELIVERY -> message.setSubject(OUT_FOR_DELIVERY_UPDATE);
+                }
                 message.setFrom(fromEmail);
                 message.setTo(user.getEmailAddress());
+                emailSender.send(message);
                 message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
                 emailSender.send(message);
             } catch (Exception e) {
