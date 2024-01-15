@@ -31,10 +31,13 @@ import static com.June.CourierNetwork.Utils.EmailUtils.*;
 public class EmailServiceImpl implements EmailService {
     public static final String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
     public static final String CREATED_UPDATE = "We've Got It!";
-    public static final String SHIPPED_UPDATE = "Your Package Is On The Way!";
+    public static final String SHIPPED_UPDATE = "Your Package Has Taken Off!";
     public static final String READY_FOR_PICKUP_UPDATE = "It's Here!";
     public static final String OUT_FOR_DELIVERY_UPDATE = "It's On The Way!";
     public static final String DELIVERED_UPDATE = "Thanks For Shipping!";
+    public static final String SENT_OFF_UPDATE = "Your Package Is On The Way!";
+    public static final String LANDED_UPDATE = "Your Package Has Landed in Jamaica!";
+    public static final String MISSING_INVOICE = "We Need Your Invoice!";
     public static final String WELCOME_NEW_USER = "Welcome Email";
     public static final String UTF_8_ENCODING = "UTF-8";
     public static final String EMAIL_TEMPLATE = "emailtemplate";
@@ -96,28 +99,47 @@ public class EmailServiceImpl implements EmailService {
     public void sendProductUpdateEmail(long productId) {
         productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
                 userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
-            try {
-                SimpleMailMessage message = new SimpleMailMessage();
-                switch (productDetailsDTO.getPackageStatus()) {
-                    case CREATED -> message.setSubject(CREATED_UPDATE);
-
-                    case SHIPPED -> message.setSubject(SHIPPED_UPDATE);
-
-                    case READY_FOR_PICKUP -> message.setSubject(READY_FOR_PICKUP_UPDATE);
-
-                    case DELIVERED, PICKED_UP -> message.setSubject(DELIVERED_UPDATE);
-
-                    case OUT_FOR_DELIVERY -> message.setSubject(OUT_FOR_DELIVERY_UPDATE);
-                }
-                message.setFrom(fromEmail);
-                message.setTo(user.getEmailAddress());
-                emailSender.send(message);
-                message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
-                emailSender.send(message);
-            } catch (Exception e) {
+                    try {
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        switch (productDetailsDTO.getPackageStatus()) {
+                            case CREATED -> message.setSubject(CREATED_UPDATE);
+                            case SHIPPED -> message.setSubject(SHIPPED_UPDATE);
+                            case READY_FOR_PICKUP -> message.setSubject(READY_FOR_PICKUP_UPDATE);
+                            case OUT_FOR_DELIVERY -> message.setSubject(OUT_FOR_DELIVERY_UPDATE);
+                            case DELIVERED -> message.setSubject(DELIVERED_UPDATE);
+                            case SENT_OFF -> message.setSubject(SENT_OFF_UPDATE);
+                            case LANDED -> message.setSubject(LANDED_UPDATE);
+                        }
+                        message.setFrom(fromEmail);
+                        message.setTo(user.getEmailAddress());
+                        message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
+                        emailSender.send(message);
+                    } catch (Exception e) {
                 e.printStackTrace();
             }
         }));
+
+    }
+
+    @Override
+    @Async
+    public void sendInvoiceReminderEmail(long productId) {
+        productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
+                userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
+                    if (productDetailsDTO.getPreAlertFileName() != null) {
+                        return;
+                    }
+                    try {
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        message.setSubject(MISSING_INVOICE);
+                        message.setFrom(fromEmail);
+                        message.setTo(user.getEmailAddress());
+                        message.setText(getInvoiceReminderEmail(user.getFirstName(), productDetailsDTO));
+                        emailSender.send(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
 
     }
 

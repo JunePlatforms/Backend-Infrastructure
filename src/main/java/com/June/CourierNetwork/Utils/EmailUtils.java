@@ -43,57 +43,73 @@ public class EmailUtils {
         return switch (status) {
             case CREATED -> "Hey " + name + ",\n\nYour " +
                     productDetailsDTO.getDescription() +
-                    "from " +
+                    " from " +
                     productDetailsDTO.getSupplierName() +
-                    "has just arrived at our warehouse! It's ready for its next journey, heading to " +
+                    " has just arrived at our warehouse! It's ready for its next journey, heading to " +
                     "Jamaica in our upcoming shipment.\n\n"
-                    +"To ensure smooth processing at the Jamaica Customs Agency, please provide us with your " +
-                    "invoice for this package." +
-                    "Your invoice is like the official receipt confirming your order details: " +
-                    "the item description, quantity, and final cost. It's usually sent to your " +
-                    "email after making an online purchase.\n\n"
+                    +"For all the specifics about your package, hop into your June account dashboard. " +
+                    "Everything you need to know is waiting for you there."
                     + "\n\nBest regards,\nJUNE";
 
             case SHIPPED -> "Hey " + name + ",\n\nExciting news! Your " +
                     productDetailsDTO.getDescription() +
-                    "from " +
+                    " from " +
                     productDetailsDTO.getSupplierName() +
-                    "is currently en route to our cargo partners, gearing up to be shipped to Jamaica.\n\n"
-                    +"For all the specifics about your package, hop into your June account dashboard. " +
-                    "Everything you need to know is waiting for you there.\n\n"
-                    +"To ensure smooth processing at the Jamaica Customs Agency, please provide us with your " +
-                    "invoice for this package." +
-                    "Your invoice is like the official receipt confirming your order details: " +
-                    "the item description, quantity, and final cost. It's usually sent to your " +
-                    "email after making an online purchase.\n\n"
+                    " is currently en route to our cargo partners, gearing up to be shipped to Jamaica.\n\n"
+                    +"For all the specifics about your package, hop into your June account dashboard."
                     + "\n\nBest regards,\nJUNE";
 
             case READY_FOR_PICKUP -> "Hey " + name + ",\n\nExciting news! Your " +
                     productDetailsDTO.getDescription() +
-                    "from " +
+                    " from " +
                     productDetailsDTO.getSupplierName() +
-                    "is ready for pickup at our office in Kingston Jamaica. \n\n"
+                    " is ready for pickup at our office in Kingston Jamaica."
                     + "\n\nBest regards,\nJUNE";
 
             case DELIVERED -> "Hey " + name + ",\n\nExciting news! Your " +
                     productDetailsDTO.getDescription() +
-                    "from " +
+                    " from " +
                     productDetailsDTO.getSupplierName() +
-                    "was successfully delivered! \n\n"
+                    " was successfully delivered!"
                     + "\n\nBest regards,\nJUNE";
 
             case OUT_FOR_DELIVERY -> "Hey " + name + ",\n\nExciting news! Your " +
                     productDetailsDTO.getDescription() +
-                    "from " +
+                    " from " +
                     productDetailsDTO.getSupplierName() +
-                    "is currently out for delivery! \n\n"
+                    " is currently out for delivery!"
                     + "\n\nBest regards,\nJUNE";
 
             case PICKED_UP -> "Hey " + name + ",\n\nExciting news! Your " +
                     productDetailsDTO.getDescription() +
-                    "from " +
+                    " from " +
                     productDetailsDTO.getSupplierName() +
-                    "was successfully picked-up! \n\n"
+                    " was successfully picked-up!"
+                    + "\n\nBest regards,\nJUNE";
+
+            case SENT_OFF -> "Hey "+name+", \n" +
+                    "\n" +
+                    "Exciting news! Your " +
+                    productDetailsDTO.getDescription() +
+                    " from " +
+                    productDetailsDTO.getSupplierName() +
+                    " is currently en route to our cargo partners, gearing up to be shipped to Jamaica.\n" +
+                    "\n" +
+                    "For all the specifics about your package, hop into your June account dashboard. " +
+                    "Everything you need to know is waiting for you there."
+                    + "\n\nBest regards,\nJUNE";
+
+            case LANDED -> "Hey "+name+",\n" +
+                    "\n" +
+                    "It’s here! Your " +
+                    productDetailsDTO.getDescription() +
+                    " from " +
+                    productDetailsDTO.getSupplierName() +
+                    " has just touched down in Jamaica and is currently making its way to the Jamaica Customs Agency " +
+                    "warehouse for inspection and valuation. \n" +
+                    "\n" +
+                    "For all the specifics about your package, hop into your June account dashboard. " +
+                    "Everything you need to know is waiting for you there."
                     + "\n\nBest regards,\nJUNE";
         };
     }
@@ -113,5 +129,24 @@ public class EmailUtils {
     public static String getNewCourierEmail(String name, User user) {
         return "Hi " + name + ",\n\nYour application for courier with June Courier has been approved." +
                 "\n\nBest regards,\nJUNE";
+    }
+
+    public static String getInvoiceReminderEmail(String name, ProductDetailsDTO productDetailsDTO) {
+        return "Hey "+name+",\n" +
+                "\n" +
+                "We'd love to get the invoice for your " +
+                productDetailsDTO.getDescription() +
+                " from " +
+                productDetailsDTO.getSupplierName() +
+                " to ensure smooth " +
+                "processing at the Jamaica Customs Agency. Your invoice is like the official receipt confirming " +
+                "your order details: the item description, quantity, and final cost. " +
+                "It's usually sent to your email after making an online purchase.\n" +
+                "\n" +
+                "You can easily share a screenshot or attach a PDF of this receipt.\n" +
+                "\n" +
+                "For any extra assistance, just click here to connect with a JUNE team member. " +
+                "We're here to ensure this process is a breeze for you!"
+                + "\n\nBest regards,\nJUNE";
     }
 }

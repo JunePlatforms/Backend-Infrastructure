@@ -141,6 +141,9 @@ public class ProductServiceImpl implements ProductService {
     public void updateProductStatus(Long productId, PackageStatus status) {
         productRepository.updateProductStatus(productId, status);
         emailService.sendProductUpdateEmail(productId);
+        if (status == PackageStatus.SENT_OFF || status == PackageStatus.SHIPPED || status == PackageStatus.LANDED) {
+            emailService.sendInvoiceReminderEmail(productId);
+        }
     }
 
     @Override
