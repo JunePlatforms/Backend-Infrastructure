@@ -55,7 +55,7 @@ public class EmailUtils {
                     productDetailsDTO.getDescription() +
                     " from " +
                     productDetailsDTO.getSupplierName() +
-                    " is currently en route to our cargo partners, gearing up to be shipped to Jamaica.\n\n"
+                    " is officially on its  way  to Jamaica!\n\n"
                     +"For all the specifics about your package, hop into your June account dashboard."
                     + "\n\nBest regards,\nJUNE";
 
