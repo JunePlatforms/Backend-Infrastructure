@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class ProductDetails {
   private ShipmentType shipmentType;
   private PackageStatus packageStatus;
   private byte[] preAlert;
+  private Date createdOn;
 
 
 }

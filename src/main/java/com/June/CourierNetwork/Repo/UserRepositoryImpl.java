@@ -68,6 +68,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findVerifiedUserByEmail(String email) {
+        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE email_address = :email AND is_verified = 1";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("email", email);
+
+        List<User> user = jdbcTemplate.query(sql, params, new UserMapper());
+
+        return user.isEmpty() ? Optional.empty() : Optional.of(user.get(0));
+    }
+
+    @Override
     public int updateUserPassword(Long id, UpdatePasswordRequest passwordRequest) {
         val sql = "UPDATE JuneCourierNetwork.`user` SET password = :password WHERE id = :userId";
 
@@ -99,6 +112,20 @@ public class UserRepositoryImpl implements UserRepository {
         params.addValue("customerNumber", customerNumber);
 
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new UserMapper()));
+    }
+
+    @Override
+    public void verifyUser(String token) {
+        val sql = "UPDATE JuneCourierNetwork.`user` u " +
+                "JOIN JuneCourierNetwork.token t ON t.user_id = u.id " +
+                "SET u.is_verified = 1 " +
+                "WHERE t.token = :token";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("token", token);
+
+        jdbcTemplate.update(sql, params);
     }
 
     @Override

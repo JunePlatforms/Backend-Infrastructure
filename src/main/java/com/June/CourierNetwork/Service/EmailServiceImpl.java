@@ -1,5 +1,6 @@
 package com.June.CourierNetwork.Service;
 
+import com.June.CourierNetwork.Model.User;
 import com.June.CourierNetwork.Repo.Contract.ProductRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.EmailService;
@@ -12,7 +13,6 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.io.File;
 import java.util.Map;
 
 import static com.June.CourierNetwork.Utils.EmailUtils.*;
@@ -50,19 +49,38 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
+    @Value("${spring.mail.properties.mail.smtp.from}")
+    private String personalName;
+
     @Value("${spring.mail.verify.email.host}")
     private String host;
 
     @Override
     @Async
-    public void sendVerificationMail(String name, String to, String token) {
+    public void sendVerificationMail(User user, String token) {
+//        try {
+//            SimpleMailMessage message = new SimpleMailMessage();
+//            message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+//            message.setFrom(fromEmail, personalName);
+//            message.setTo(user.getEmailAddress());
+//            message.setText(getEmailVerificationMessage(user, token));
+//            emailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            message.setFrom(fromEmail);
-            message.setTo(to);
-            message.setText(getEmailVerificationMessage(name, host, token));
+            String content = getEmailVerificationMessage(user, token);
+
+            MimeMessage message = getMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+            helper.setPriority(1);
+            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+            helper.setFrom(fromEmail, personalName);
+            helper.setTo(user.getEmailAddress());
+            helper.setText(content, true);  // Set the second parameter to true for HTML content
             emailSender.send(message);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,7 +102,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
             helper.setPriority(1);
             helper.setSubject(WELCOME_NEW_USER);
-            helper.setFrom(fromEmail);
+            helper.setFrom(fromEmail, personalName);
             helper.setTo(to);
             helper.setText(content, true);  // Set the second parameter to true for HTML content
             emailSender.send(message);
@@ -100,19 +118,20 @@ public class EmailServiceImpl implements EmailService {
         productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
                 userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
                     try {
-                        SimpleMailMessage message = new SimpleMailMessage();
+                        MimeMessage message = getMimeMessage();
+                        MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
                         switch (productDetailsDTO.getPackageStatus()) {
-                            case CREATED -> message.setSubject(CREATED_UPDATE);
-                            case SHIPPED -> message.setSubject(SHIPPED_UPDATE);
-                            case READY_FOR_PICKUP -> message.setSubject(READY_FOR_PICKUP_UPDATE);
-                            case OUT_FOR_DELIVERY -> message.setSubject(OUT_FOR_DELIVERY_UPDATE);
-                            case DELIVERED -> message.setSubject(DELIVERED_UPDATE);
-                            case SENT_OFF -> message.setSubject(SENT_OFF_UPDATE);
-                            case LANDED -> message.setSubject(LANDED_UPDATE);
+                            case CREATED -> helper.setSubject(CREATED_UPDATE);
+                            case SHIPPED -> helper.setSubject(SHIPPED_UPDATE);
+                            case READY_FOR_PICKUP -> helper.setSubject(READY_FOR_PICKUP_UPDATE);
+                            case OUT_FOR_DELIVERY -> helper.setSubject(OUT_FOR_DELIVERY_UPDATE);
+                            case DELIVERED -> helper.setSubject(DELIVERED_UPDATE);
+                            case SENT_OFF -> helper.setSubject(SENT_OFF_UPDATE);
+                            case LANDED -> helper.setSubject(LANDED_UPDATE);
                         }
-                        message.setFrom(fromEmail);
-                        message.setTo(user.getEmailAddress());
-                        message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
+                        helper.setFrom(fromEmail, personalName);
+                        helper.setTo(user.getEmailAddress());
+                        helper.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
                         emailSender.send(message);
                     } catch (Exception e) {
                 e.printStackTrace();
@@ -130,11 +149,12 @@ public class EmailServiceImpl implements EmailService {
                         return;
                     }
                     try {
-                        SimpleMailMessage message = new SimpleMailMessage();
-                        message.setSubject(MISSING_INVOICE);
-                        message.setFrom(fromEmail);
-                        message.setTo(user.getEmailAddress());
-                        message.setText(getInvoiceReminderEmail(user.getFirstName(), productDetailsDTO));
+                        MimeMessage message = getMimeMessage();
+                        MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+                        helper.setSubject(MISSING_INVOICE);
+                        helper.setFrom(fromEmail, personalName);
+                        helper.setTo(user.getEmailAddress());
+                        helper.setText(getInvoiceReminderEmail(user.getFirstName(), productDetailsDTO));
                         emailSender.send(message);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -143,106 +163,106 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
-    @Override
-    @Async
-    public void sendMimeMessageWithAttachments(String name, String to, String token) {
-        try {
-            MimeMessage message = getMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
-            helper.setPriority(1);
-            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            helper.setFrom(fromEmail);
-            helper.setTo(to);
-            helper.setText(getEmailVerificationMessage(name, host, token));
-            //Add attachments
-            FileSystemResource fort = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/fort.jpg"));
-            FileSystemResource dog = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/dog.jpg"));
-            FileSystemResource homework = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/homework.docx"));
-            helper.addAttachment(fort.getFilename(), fort);
-            helper.addAttachment(dog.getFilename(), dog);
-            helper.addAttachment(homework.getFilename(), homework);
-            emailSender.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    @Async
-    public void sendMimeMessageWithEmbeddedFiles(String name, String to, String token) {
-        try {
-            MimeMessage message = getMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
-            helper.setPriority(1);
-            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            helper.setFrom(fromEmail);
-            helper.setTo(to);
-            helper.setText(getEmailVerificationMessage(name, host, token));
-            //Add attachments
-            FileSystemResource fort = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/fort.jpg"));
-            FileSystemResource dog = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/dog.jpg"));
-            FileSystemResource homework = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/homework.docx"));
-            helper.addInline(getContentId(fort.getFilename()), fort);
-            helper.addInline(getContentId(dog.getFilename()), dog);
-            helper.addInline(getContentId(homework.getFilename()), homework);
-            emailSender.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    @Async
+//    public void sendMimeMessageWithAttachments(String name, String to, String token) {
+//        try {
+//            MimeMessage message = getMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+//            helper.setPriority(1);
+//            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+//            helper.setFrom(fromEmail);
+//            helper.setTo(to);
+//            helper.setText(getEmailVerificationMessage(name, host, token));
+//            //Add attachments
+//            FileSystemResource fort = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/fort.jpg"));
+//            FileSystemResource dog = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/dog.jpg"));
+//            FileSystemResource homework = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/homework.docx"));
+//            helper.addAttachment(fort.getFilename(), fort);
+//            helper.addAttachment(dog.getFilename(), dog);
+//            helper.addAttachment(homework.getFilename(), homework);
+//            emailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    @Override
+//    @Async
+//    public void sendMimeMessageWithEmbeddedFiles(String name, String to, String token) {
+//        try {
+//            MimeMessage message = getMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+//            helper.setPriority(1);
+//            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+//            helper.setFrom(fromEmail);
+//            helper.setTo(to);
+//            helper.setText(getEmailVerificationMessage(name, host, token));
+//            //Add attachments
+//            FileSystemResource fort = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/fort.jpg"));
+//            FileSystemResource dog = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/dog.jpg"));
+//            FileSystemResource homework = new FileSystemResource(new File(System.getProperty("user.home") + "/Downloads/images/homework.docx"));
+//            helper.addInline(getContentId(fort.getFilename()), fort);
+//            helper.addInline(getContentId(dog.getFilename()), dog);
+//            helper.addInline(getContentId(homework.getFilename()), homework);
+//            emailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     @Async
     public void sendHtmlEmail(String name, String to, String token) {
-        try {
-            Context context = new Context();
-            context.setVariables(Map.of("name", name, "url", getVerificationUrl(host, token)));
-            String text = templateEngine.process(EMAIL_TEMPLATE, context);
-            MimeMessage message = getMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
-            helper.setPriority(1);
-            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            helper.setFrom(fromEmail);
-            helper.setTo(to);
-            helper.setText(text, true);
-            emailSender.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Context context = new Context();
+//            context.setVariables(Map.of("name", name, "url", getVerificationUrl(host, token)));
+//            String text = templateEngine.process(EMAIL_TEMPLATE, context);
+//            MimeMessage message = getMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+//            helper.setPriority(1);
+//            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+//            helper.setFrom(fromEmail);
+//            helper.setTo(to);
+//            helper.setText(text, true);
+//            emailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     @Async
     public void sendHtmlEmailWithEmbeddedFiles(String name, String to, String token) {
-        try {
-            MimeMessage message = getMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
-            helper.setPriority(1);
-            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            helper.setFrom(fromEmail);
-            helper.setTo(to);
-            //helper.setText(text, true);
-            Context context = new Context();
-            context.setVariables(Map.of("name", name, "url", getVerificationUrl(host, token)));
-            String text = templateEngine.process(EMAIL_TEMPLATE, context);
-
-            // Add HTML email body
-            MimeMultipart mimeMultipart = new MimeMultipart("related");
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(text, TEXT_HTML_ENCODING);
-            mimeMultipart.addBodyPart(messageBodyPart);
-
-            // Add images to the email body
-            BodyPart imageBodyPart = new MimeBodyPart();
-            DataSource dataSource = new FileDataSource(System.getProperty("user.home") + "/Downloads/images/dog.jpg");
-            imageBodyPart.setDataHandler(new DataHandler(dataSource));
-            imageBodyPart.setHeader("Content-ID", "image");
-            mimeMultipart.addBodyPart(imageBodyPart);
-
-            emailSender.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            MimeMessage message = getMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+//            helper.setPriority(1);
+//            helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
+//            helper.setFrom(fromEmail);
+//            helper.setTo(to);
+//            //helper.setText(text, true);
+//            Context context = new Context();
+//            context.setVariables(Map.of("name", name, "url", getVerificationUrl(host, token)));
+//            String text = templateEngine.process(EMAIL_TEMPLATE, context);
+//
+//            // Add HTML email body
+//            MimeMultipart mimeMultipart = new MimeMultipart("related");
+//            BodyPart messageBodyPart = new MimeBodyPart();
+//            messageBodyPart.setContent(text, TEXT_HTML_ENCODING);
+//            mimeMultipart.addBodyPart(messageBodyPart);
+//
+//            // Add images to the email body
+//            BodyPart imageBodyPart = new MimeBodyPart();
+//            DataSource dataSource = new FileDataSource(System.getProperty("user.home") + "/Downloads/images/dog.jpg");
+//            imageBodyPart.setDataHandler(new DataHandler(dataSource));
+//            imageBodyPart.setHeader("Content-ID", "image");
+//            mimeMultipart.addBodyPart(imageBodyPart);
+//
+//            emailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
