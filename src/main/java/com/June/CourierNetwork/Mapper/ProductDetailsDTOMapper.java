@@ -22,6 +22,7 @@ public class ProductDetailsDTOMapper implements RowMapper<ProductDetailsDTO> {
                 .shipmentType(ShipmentType.valueOf(rs.getString("shipment_type")))
                 .packageStatus(PackageStatus.valueOf(rs.getString("status")))
                 .preAlertFileName(rs.getString("pre_alert"))
+                .createdOn(rs.getTimestamp("created_on"))
                 .build();
     }
 }

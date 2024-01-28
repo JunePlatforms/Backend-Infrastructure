@@ -77,6 +77,7 @@ public class ProductServiceImpl implements ProductService {
                     .shipmentType(productDTO.getShipmentType())
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(preAlertImage)
+                    .createdOn(productDTO.getCreatedOn())
                     .build());
         }
         return productDetailsList;
@@ -104,6 +105,7 @@ public class ProductServiceImpl implements ProductService {
                     .shipmentType(productDTO.getShipmentType())
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(preAlertImage)
+                    .createdOn(productDTO.getCreatedOn())
                     .build());
         }
         return productDetailsList;
@@ -174,6 +176,7 @@ public class ProductServiceImpl implements ProductService {
                     .shipmentType(productDTO.getShipmentType())
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(preAlertImage)
+                    .createdOn(productDTO.getCreatedOn())
                     .build());
         }
         return productDetailsList;

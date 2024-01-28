@@ -8,6 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import java.text.Normalizer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -122,7 +123,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
     }
 
-    private String uploadFile(MultipartFile file, String uploadDir, String oldFileName) throws IOException  {
+    private String uploadFile(MultipartFile file, String uploadDir, String oldFileName) throws IOException {
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Path uploadPath = Paths.get(uploadDir);
@@ -132,26 +133,46 @@ public class FileUploadServiceImpl implements FileUploadService {
             Files.createDirectories(uploadPath);
         }
 
+        String sanitizedFileName;
         try (InputStream inputStream = file.getInputStream()) {
             LocalDateTime currentDateTime = LocalDateTime.now();
 
 
-            newFileName =  currentDateTime + fileName;
-            Path filePath = uploadPath.resolve(newFileName);
+            newFileName = currentDateTime + fileName;
+            sanitizedFileName = sanitizeFileName(newFileName);
+
+            Path filePath = uploadPath.resolve(sanitizedFileName);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 
             if (oldFileName != null) {
                 Path oldFilePath = uploadPath.resolve(oldFileName);
-                if (Files.exists(oldFilePath)){
+                if (Files.exists(oldFilePath)) {
                     Files.delete(oldFilePath);
                 }
             }
 
-        }catch (IOException e) {
-        e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
 
-        return null;
+            return null;
         }
 
-        return newFileName;}
+        return sanitizedFileName;
+    }
+
+    public static String sanitizeFileName(String fileName) {
+        // Remove special characters
+        String sanitizedFileName = fileName.replaceAll("[\\\\/:\"*?<>|]", "_");
+
+        // Normalize the file name (remove diacritics)
+        sanitizedFileName = Normalizer.normalize(sanitizedFileName, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
+
+        // Add a timestamp to ensure uniqueness
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+//        String timestamp = currentDateTime.toString().replace(":", "_").replace(".", "_");
+//        sanitizedFileName = timestamp + "_" + sanitizedFileName;
+
+        return sanitizedFileName;
+    }
 }

@@ -49,6 +49,9 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
+    @Value("${spring.mail.properties.mail.smtp.from}")
+    private String personalName;
+
     @Value("${spring.mail.verify.email.host}")
     private String host;
 
@@ -58,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
 //        try {
 //            SimpleMailMessage message = new SimpleMailMessage();
 //            message.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-//            message.setFrom(fromEmail);
+//            message.setFrom(fromEmail, personalName);
 //            message.setTo(user.getEmailAddress());
 //            message.setText(getEmailVerificationMessage(user, token));
 //            emailSender.send(message);
@@ -73,7 +76,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
             helper.setPriority(1);
             helper.setSubject(NEW_USER_ACCOUNT_VERIFICATION);
-            helper.setFrom(fromEmail);
+            helper.setFrom(fromEmail, personalName);
             helper.setTo(user.getEmailAddress());
             helper.setText(content, true);  // Set the second parameter to true for HTML content
             emailSender.send(message);
@@ -99,7 +102,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
             helper.setPriority(1);
             helper.setSubject(WELCOME_NEW_USER);
-            helper.setFrom(fromEmail);
+            helper.setFrom(fromEmail, personalName);
             helper.setTo(to);
             helper.setText(content, true);  // Set the second parameter to true for HTML content
             emailSender.send(message);
@@ -115,19 +118,20 @@ public class EmailServiceImpl implements EmailService {
         productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
                 userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
                     try {
-                        SimpleMailMessage message = new SimpleMailMessage();
+                        MimeMessage message = getMimeMessage();
+                        MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
                         switch (productDetailsDTO.getPackageStatus()) {
-                            case CREATED -> message.setSubject(CREATED_UPDATE);
-                            case SHIPPED -> message.setSubject(SHIPPED_UPDATE);
-                            case READY_FOR_PICKUP -> message.setSubject(READY_FOR_PICKUP_UPDATE);
-                            case OUT_FOR_DELIVERY -> message.setSubject(OUT_FOR_DELIVERY_UPDATE);
-                            case DELIVERED -> message.setSubject(DELIVERED_UPDATE);
-                            case SENT_OFF -> message.setSubject(SENT_OFF_UPDATE);
-                            case LANDED -> message.setSubject(LANDED_UPDATE);
+                            case CREATED -> helper.setSubject(CREATED_UPDATE);
+                            case SHIPPED -> helper.setSubject(SHIPPED_UPDATE);
+                            case READY_FOR_PICKUP -> helper.setSubject(READY_FOR_PICKUP_UPDATE);
+                            case OUT_FOR_DELIVERY -> helper.setSubject(OUT_FOR_DELIVERY_UPDATE);
+                            case DELIVERED -> helper.setSubject(DELIVERED_UPDATE);
+                            case SENT_OFF -> helper.setSubject(SENT_OFF_UPDATE);
+                            case LANDED -> helper.setSubject(LANDED_UPDATE);
                         }
-                        message.setFrom(fromEmail);
-                        message.setTo(user.getEmailAddress());
-                        message.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
+                        helper.setFrom(fromEmail, personalName);
+                        helper.setTo(user.getEmailAddress());
+                        helper.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
                         emailSender.send(message);
                     } catch (Exception e) {
                 e.printStackTrace();
@@ -145,11 +149,12 @@ public class EmailServiceImpl implements EmailService {
                         return;
                     }
                     try {
-                        SimpleMailMessage message = new SimpleMailMessage();
-                        message.setSubject(MISSING_INVOICE);
-                        message.setFrom(fromEmail);
-                        message.setTo(user.getEmailAddress());
-                        message.setText(getInvoiceReminderEmail(user.getFirstName(), productDetailsDTO));
+                        MimeMessage message = getMimeMessage();
+                        MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+                        helper.setSubject(MISSING_INVOICE);
+                        helper.setFrom(fromEmail, personalName);
+                        helper.setTo(user.getEmailAddress());
+                        helper.setText(getInvoiceReminderEmail(user.getFirstName(), productDetailsDTO));
                         emailSender.send(message);
                     } catch (Exception e) {
                         e.printStackTrace();
