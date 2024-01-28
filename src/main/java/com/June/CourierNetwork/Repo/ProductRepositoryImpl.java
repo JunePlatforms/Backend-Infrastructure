@@ -29,8 +29,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Long createProduct(ProductDetailsRequest productDetailsRequest) {
         val sql = "INSERT INTO JuneCourierNetwork.customer_product_details " +
-                "(weight, shipment_type, status, description, supplier_name, tracking_number, was_deleted, user_id) " +
-                "VALUES(:weight, :shipmentType, :status, :description, :supplierName, :trackingNumber, 0, :userId);";
+                "(weight, shipment_type, status, description, supplier_name, tracking_number, was_deleted, user_id, " +
+                "created_on) " +
+                "VALUES(:weight, :shipmentType, :status, :description, :supplierName, :trackingNumber, 0, :userId, " +
+                ":createdOn);";
 
         val params = new MapSqlParameterSource();
         params.addValue("weight", productDetailsRequest.getWeight());
@@ -40,6 +42,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         params.addValue("supplierName", productDetailsRequest.getSupplierName());
         params.addValue("trackingNumber", productDetailsRequest.getTrackingNumber());
         params.addValue("userId", productDetailsRequest.getUserId());
+        params.addValue("createdOn", java.time.LocalDateTime.now());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
