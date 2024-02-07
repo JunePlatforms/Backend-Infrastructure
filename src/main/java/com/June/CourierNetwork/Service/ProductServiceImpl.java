@@ -62,10 +62,8 @@ public class ProductServiceImpl implements ProductService {
         val productDTOList = productRepository.findProductsByUserId(userId);
 
         List<ProductDetails> productDetailsList = new ArrayList<>();
-        byte[] preAlertImage = new byte[0];
 
         for (ProductDetailsDTO productDTO : productDTOList) {
-            preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
 
             productDetailsList.add(ProductDetails.builder()
                     .id(productDTO.getId())
@@ -76,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
                     .trackingNumber(productDTO.getTrackingNumber())
                     .shipmentType(productDTO.getShipmentType())
                     .packageStatus(productDTO.getPackageStatus())
-                    .preAlert(preAlertImage)
+                    .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
                     .build());
         }
@@ -89,11 +87,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductDetails> productDetailsList = new ArrayList<>();
 
-        byte[] preAlertImage = new byte[0];
-
-
         for (ProductDetailsDTO productDTO : productDTOList) {
-            preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
 
             productDetailsList.add(ProductDetails.builder()
                     .id(productDTO.getId())
@@ -104,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
                     .trackingNumber(productDTO.getTrackingNumber())
                     .shipmentType(productDTO.getShipmentType())
                     .packageStatus(productDTO.getPackageStatus())
-                    .preAlert(preAlertImage)
+                    .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
                     .build());
         }
@@ -115,12 +109,6 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetails findProductById(Long packageId) throws IOException {
         val productOptional = productRepository.findProductById(packageId).orElseThrow();
 
-        byte[] preAlertImage;
-        if (productOptional.getPreAlertFileName() != null){
-            preAlertImage = fileUploadService.getFile(productOptional.getPreAlertFileName(), preAlertImageUploadDirectory);
-        }else{
-            preAlertImage = new byte[0];
-        }
         return ProductDetails.builder()
                 .id(productOptional.getId())
                 .supplierName(productOptional.getSupplierName())
@@ -130,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
                 .trackingNumber(productOptional.getTrackingNumber())
                 .shipmentType(productOptional.getShipmentType())
                 .packageStatus(productOptional.getPackageStatus())
-                .preAlert(preAlertImage)
+                .preAlert(productOptional.getPreAlertFileName())
                 .build();
     }
 
@@ -158,14 +146,8 @@ public class ProductServiceImpl implements ProductService {
         val productDetailsDTOList = productRepository.findProductDetailsByShipmentId(shipmentId);
 
         List<ProductDetails> productDetailsList = new ArrayList<>();
-        byte[] preAlertImage;
 
         for (ProductDetailsDTO productDTO : productDetailsDTOList) {
-            if (productDTO.getPreAlertFileName() != null){
-                preAlertImage = fileUploadService.getFile(productDTO.getPreAlertFileName(), preAlertImageUploadDirectory);
-            }else {
-                preAlertImage = new byte[0];
-            }
             productDetailsList.add(ProductDetails.builder()
                     .id(productDTO.getId())
                     .supplierName(productDTO.getSupplierName())
@@ -175,10 +157,16 @@ public class ProductServiceImpl implements ProductService {
                     .trackingNumber(productDTO.getTrackingNumber())
                     .shipmentType(productDTO.getShipmentType())
                     .packageStatus(productDTO.getPackageStatus())
-                    .preAlert(preAlertImage)
+                    .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
                     .build());
         }
         return productDetailsList;
+    }
+
+    @Override
+    public void uploadPreAlert(Long productId, String downloadUrl) throws IOException {
+        findProductById(productId);
+        productRepository.uploadPreAlert(downloadUrl, productId);
     }
 }

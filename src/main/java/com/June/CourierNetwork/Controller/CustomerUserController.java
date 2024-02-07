@@ -55,10 +55,9 @@ public class CustomerUserController {
     }
 
     @PutMapping("/{productId}/upload/preAlert")
-    public ResponseEntity<String> uploadPreAlert(@PathVariable Long productId, MultipartFile file) throws IOException {
-        productService.findProductById(productId);
-        fileUploadService.uploadPreAlert(file, productId, preAlertImageUploadDirectory);
-        return ResponseEntity.ok("File uploaded successfully");
+    public ResponseEntity<String> uploadPreAlert(@PathVariable Long productId, String downloadUrl) throws IOException {
+        productService.uploadPreAlert(productId, downloadUrl);
+        return ResponseEntity.ok("Download url uploaded successfully");
     }
 
     @GetMapping("/get/all")

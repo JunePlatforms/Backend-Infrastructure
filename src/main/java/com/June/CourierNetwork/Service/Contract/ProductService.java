@@ -28,4 +28,6 @@ public interface ProductService {
     void addProductsToShipment(List<Long> productIds, Long shipmentId);
 
     List<ProductDetails> findProductDetailsByShipmentId(Long shipmentId) throws IOException;
+
+    void uploadPreAlert(Long productId, String downloadUrl) throws IOException;
 }

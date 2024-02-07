@@ -23,7 +23,7 @@ public class ProductDetails {
   private String trackingNumber;
   private ShipmentType shipmentType;
   private PackageStatus packageStatus;
-  private byte[] preAlert;
+  private String preAlert;
   private Date createdOn;
 
 
