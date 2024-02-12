@@ -55,6 +55,9 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.verify.email.host}")
     private String host;
 
+    @Value("${admin.email}")
+    private String adminEmail;
+
     @Override
     @Async
     public void sendVerificationMail(User user, String token) {
@@ -138,6 +141,25 @@ public class EmailServiceImpl implements EmailService {
             }
         }));
 
+    }
+
+    @Override
+    public void sendProductUpdateEmailToAdmin(long productId) {
+        productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
+                userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
+                    try {
+                        MimeMessage message = getMimeMessage();
+                        MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+                        helper.setSubject("New Package Received For Customer: " + productDetailsDTO.getCustomerNumber());
+                        helper.setFrom(fromEmail, personalName);
+                        helper.setTo(adminEmail);
+                        helper.setText(getProductUpdateEmailForAdmin(user.getFirstName(), user.getLastName(), productDetailsDTO));
+                        emailSender.send(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                })
+        );
     }
 
     @Override

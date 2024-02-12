@@ -11,6 +11,8 @@ public interface EmailService {
 
     void sendProductUpdateEmail(long productId);
 
+    void sendProductUpdateEmailToAdmin(long productId);
+
     @Async
     void sendInvoiceReminderEmail(long productId);
 
