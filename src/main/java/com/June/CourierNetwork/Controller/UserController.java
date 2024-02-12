@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://app.junelogistics.com")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
