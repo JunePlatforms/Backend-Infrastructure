@@ -41,6 +41,8 @@ public class ProductServiceImpl implements ProductService {
 
         emailService.sendProductUpdateEmail(productId);
 
+        emailService.sendProductUpdateEmailToAdmin(productId);
+
     }
 
     @Override

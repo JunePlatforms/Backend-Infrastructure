@@ -41,6 +41,17 @@ public class EmailUtils {
                 "JUNE";
     }
 
+    public static String getProductUpdateEmailForAdmin(String firstName, String lastName, ProductDetailsDTO productDetailsDTO) {
+        return "Hey Admin,\n\n" +
+                "Your warehouse partner just added the following package: \n" +
+                "Customer Name: " + firstName + " " + lastName + "\n" +
+                "Customer Number: " + productDetailsDTO.getCustomerNumber() + "\n" +
+                "Description: " + productDetailsDTO.getDescription() + "\n" +
+                "Supplier Name: " + productDetailsDTO.getSupplierName() + "\n" +
+                "Weight: " + productDetailsDTO.getWeight() + "\n" +
+                "\n\nBest regards,\nJUNE";
+    }
+
     public static String getProductUpdateEmail(String name, ProductDetailsDTO productDetailsDTO, PackageStatus status) {
         return switch (status) {
             case CREATED -> "Hey " + name + ",\n\nYour " +
