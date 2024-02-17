@@ -18,6 +18,8 @@ public class ProductDetailsDTOMapper implements RowMapper<ProductDetailsDTO> {
                 .description(rs.getString("description"))
                 .supplierName(rs.getString("supplier_name"))
                 .customerNumber(rs.getString("customer_number"))
+                .customerFirstName(rs.getString("first_name"))
+                .customerLastName(rs.getString("last_name"))
                 .trackingNumber(rs.getString("tracking_number"))
                 .shipmentType(ShipmentType.valueOf(rs.getString("shipment_type")))
                 .packageStatus(PackageStatus.valueOf(rs.getString("status")))
