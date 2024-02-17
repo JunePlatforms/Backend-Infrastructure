@@ -78,6 +78,7 @@ public class ProductServiceImpl implements ProductService {
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
+                    .JunId(productDTO.getJunId())
                     .build());
         }
         return productDetailsList;
@@ -102,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
+                    .JunId(productDTO.getJunId())
                     .build());
         }
         return productDetailsList;
@@ -121,6 +123,8 @@ public class ProductServiceImpl implements ProductService {
                 .shipmentType(productOptional.getShipmentType())
                 .packageStatus(productOptional.getPackageStatus())
                 .preAlert(productOptional.getPreAlertFileName())
+                .createdOn(productOptional.getCreatedOn())
+                .JunId(productOptional.getJunId())
                 .build();
     }
 
@@ -161,6 +165,7 @@ public class ProductServiceImpl implements ProductService {
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
+                    .JunId(productDTO.getJunId())
                     .build());
         }
         return productDetailsList;
