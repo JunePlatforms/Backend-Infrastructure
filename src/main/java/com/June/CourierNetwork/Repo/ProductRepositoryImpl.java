@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -48,7 +49,24 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"});
 
-        return keyHolder.getKey().longValue();
+        long id = keyHolder.getKey().longValue();
+
+        createJunId(id);
+
+        return id;
+    }
+
+    private void createJunId(long id)   {
+        val sql = "UPDATE JuneCourierNetwork.customer_product_details " +
+                "SET jun_id = :junId " +
+                "WHERE id = :id";
+
+        val params = new MapSqlParameterSource();
+
+        params.addValue("junId", "JUN" + id);
+        params.addValue("id", id);
+
+        jdbcTemplate.update(sql, params);
     }
 
     @Override

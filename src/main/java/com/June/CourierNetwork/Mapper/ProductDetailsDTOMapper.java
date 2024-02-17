@@ -23,6 +23,7 @@ public class ProductDetailsDTOMapper implements RowMapper<ProductDetailsDTO> {
                 .packageStatus(PackageStatus.valueOf(rs.getString("status")))
                 .preAlertFileName(rs.getString("pre_alert"))
                 .createdOn(rs.getTimestamp("created_on"))
+                .JunId(rs.getString("jun_id"))
                 .build();
     }
 }
