@@ -79,6 +79,8 @@ public class ProductServiceImpl implements ProductService {
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
                     .JunId(productDTO.getJunId())
+                    .customerFirstName(productDTO.getCustomerFirstName())
+                    .customerLastName(productDTO.getCustomerLastName())
                     .build());
         }
         return productDetailsList;
@@ -104,6 +106,8 @@ public class ProductServiceImpl implements ProductService {
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
                     .JunId(productDTO.getJunId())
+                    .customerFirstName(productDTO.getCustomerFirstName())
+                    .customerLastName(productDTO.getCustomerLastName())
                     .build());
         }
         return productDetailsList;
@@ -125,6 +129,8 @@ public class ProductServiceImpl implements ProductService {
                 .preAlert(productOptional.getPreAlertFileName())
                 .createdOn(productOptional.getCreatedOn())
                 .JunId(productOptional.getJunId())
+                .customerFirstName(productOptional.getCustomerFirstName())
+                .customerLastName(productOptional.getCustomerLastName())
                 .build();
     }
 
@@ -166,6 +172,8 @@ public class ProductServiceImpl implements ProductService {
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
                     .JunId(productDTO.getJunId())
+                    .customerFirstName(productDTO.getCustomerFirstName())
+                    .customerLastName(productDTO.getCustomerLastName())
                     .build());
         }
         return productDetailsList;
