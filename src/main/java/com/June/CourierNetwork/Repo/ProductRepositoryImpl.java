@@ -114,8 +114,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<ProductDetailsDTO> getAllProducts() {
-        val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
-                "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id WHERE cpd.was_deleted = false";
+        val sql = "SELECT cpd.*, cu.customer_number, u.first_name, u.last_name " +
+                "FROM JuneCourierNetwork.customer_product_details cpd " +
+                "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
+                "JOIN JuneCourierNetwork.user u ON cpd.user_id = u.id " +
+                "WHERE cpd.was_deleted = false";
 
         return jdbcTemplate.query(sql, new ProductDetailsDTOMapper());
     }

@@ -26,6 +26,8 @@ public class ProductDetails {
   private String preAlert;
   private Date createdOn;
   private String JunId;
+  private String customerFirstName;
+  private String customerLastName;
 
 
 }
