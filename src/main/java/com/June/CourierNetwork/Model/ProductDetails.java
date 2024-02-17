@@ -25,6 +25,7 @@ public class ProductDetails {
   private PackageStatus packageStatus;
   private String preAlert;
   private Date createdOn;
+  private String JunId;
 
 
 }

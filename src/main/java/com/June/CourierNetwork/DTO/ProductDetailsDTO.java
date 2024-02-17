@@ -25,6 +25,7 @@ public class ProductDetailsDTO {
   private PackageStatus packageStatus;
   private String preAlertFileName;
   private Date createdOn;
+  private String JunId;
 
 
 }

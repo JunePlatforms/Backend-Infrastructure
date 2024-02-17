@@ -49,3 +49,7 @@ s
 Csrc/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java,e\8\e822078557e77d817adef780172fe7d13fcb53cf
 x
 Hsrc/main/java/com/June/CourierNetwork/Service/Contract/EmailService.java,0\2\02bf5f2d0884210e77c4d577e3af49dbe9d4b637
+p
+@src/main/java/com/June/CourierNetwork/DTO/ProductDetailsDTO.java,f\6\f647c95fe8f14cf545f45bc33ead35a9186407fc
+y
+Isrc/main/java/com/June/CourierNetwork/Mapper/ProductDetailsDTOMapper.java,3\9\392b0d9e3cafbede8d6aab38d86949184e436416
