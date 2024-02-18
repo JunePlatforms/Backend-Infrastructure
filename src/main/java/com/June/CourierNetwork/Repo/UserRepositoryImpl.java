@@ -26,8 +26,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Long save(User user) {
         val sql = "INSERT INTO JuneCourierNetwork.`user` " +
-                "(first_name, last_name, email_address, password, phone_number, role, is_verified, is_active) " +
-                "VALUES(:firstName, :lastName, :emailAddress, :password, :phoneNumber, :role, 0, 1)";
+                "(first_name, last_name, email_address, password, phone_number, role, is_verified, is_active, created_on) " +
+                "VALUES(:firstName, :lastName, :emailAddress, :password, :phoneNumber, :role, 0, 1, :createdOn)";
 
         val params = new MapSqlParameterSource();
 
@@ -37,6 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
         params.addValue("password", user.getPassword());
         params.addValue("phoneNumber", user.getPhoneNumber());
         params.addValue("role", user.getRole().name());
+        params.addValue("createdOn", java.time.LocalDateTime.now());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

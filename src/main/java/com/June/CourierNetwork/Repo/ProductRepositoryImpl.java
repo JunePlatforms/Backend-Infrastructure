@@ -31,11 +31,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Long createProduct(ProductDetailsRequest productDetailsRequest) {
         val sql = "INSERT INTO JuneCourierNetwork.customer_product_details " +
                 "(weight, shipment_type, status, description, supplier_name, tracking_number, was_deleted, user_id, " +
-                "created_on) " +
+                "created_on, updated_on) " +
                 "VALUES(:weight, :shipmentType, :status, :description, :supplierName, :trackingNumber, 0, :userId, " +
-                ":createdOn);";
+                ":createdOn, :updatedOn);";
 
         val params = new MapSqlParameterSource();
+        val now = java.time.LocalDateTime.now();
         params.addValue("weight", productDetailsRequest.getWeight());
         params.addValue("shipmentType", ShipmentType.NULL.name());
         params.addValue("status", PackageStatus.CREATED.name());
@@ -43,7 +44,9 @@ public class ProductRepositoryImpl implements ProductRepository {
         params.addValue("supplierName", productDetailsRequest.getSupplierName());
         params.addValue("trackingNumber", productDetailsRequest.getTrackingNumber());
         params.addValue("userId", productDetailsRequest.getUserId());
-        params.addValue("createdOn", java.time.LocalDateTime.now());
+        params.addValue("createdOn", now);
+        params.addValue("updatedOn", now);
+
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -102,8 +105,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<ProductDetailsDTO> findProductsByUserId(Long userId) {
-        val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
+        val sql = "SELECT cpd.*, cu.customer_number, u.first_name, u.last_name " +
+                "FROM JuneCourierNetwork.customer_product_details cpd " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
+                "JOIN JuneCourierNetwork.user u ON cpd.user_id = u.id " +
                 "WHERE cpd.user_id = :userId AND cpd.was_deleted = false";
 
         val params = new MapSqlParameterSource();
@@ -125,8 +130,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Optional<ProductDetailsDTO> findProductById(Long packageId) {
-        val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
+        val sql = "SELECT cpd.*, cu.customer_number, u.first_name, u.last_name " +
+                "FROM JuneCourierNetwork.customer_product_details cpd " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
+                "JOIN JuneCourierNetwork.user u ON cpd.user_id = u.id " +
                 "WHERE cpd.id = :packageId";
 
         val params = new MapSqlParameterSource();
@@ -151,7 +158,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void updateProductStatus(Long productId, PackageStatus status) {
         val sql = "UPDATE JuneCourierNetwork.customer_product_details " +
-                "SET status = :status " +
+                "SET status = :status, updated_on = NOW() " +
                 "WHERE id = :productId";
 
         val params = new MapSqlParameterSource();
@@ -200,8 +207,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<ProductDetailsDTO> findProductDetailsByShipmentId(Long shipmentId) {
-        val sql = "SELECT cpd.*, cu.customer_number FROM JuneCourierNetwork.customer_product_details cpd " +
+        val sql = "SELECT cpd.*, cu.customer_number, u.first_name, u.last_name " +
+                "FROM JuneCourierNetwork.customer_product_details cpd " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
+                "JOIN JuneCourierNetwork.user u ON cpd.user_id = u.id " +
                 "WHERE cpd.shipment_id = :shipmentId";
 
         val params = new MapSqlParameterSource();

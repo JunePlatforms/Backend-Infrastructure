@@ -22,6 +22,8 @@ public class ShipmentDTOMapper implements RowMapper<ShipmentDTO> {
                 .arrivalDate(rs.getDate("arrival_date"))
                 .type(ShipmentType.valueOf(rs.getString("shipment_type")))
                 .status(ShipmentStatus.valueOf(rs.getString("status")))
+                .createdOn(rs.getTimestamp("created_on"))
+                .updatedOn(rs.getTimestamp("updated_on"))
                 .build();
     }
 }

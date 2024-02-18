@@ -4,13 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="get all products now contains customer first and last name">
+    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="deactivated users no longer being shown in system">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/migration/001/027_alter_customer_package_details_add_updated_on.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/migration/001/028_add_created_on_to_users.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/migration/001/029_add_created_on_to_shipments.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/migration/001/030_add_updated_on_to_shipments.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/CustomerRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/CustomerRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/DTO/ProductDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/DTO/ProductDetailsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/DTO/ShipmentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/DTO/ShipmentDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Mapper/ProductDetailsDTOMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Mapper/ProductDetailsDTOMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Mapper/ShipmentDTOMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Mapper/ShipmentDTOMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Model/ProductDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Model/ProductDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Model/Shipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Model/Shipment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/ProductRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/ProductRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/ShipmentRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/ShipmentRepositoryImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/UserRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/UserRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/DTO/ShipmentDTO$ShipmentDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/DTO/ShipmentDTO$ShipmentDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/DTO/ShipmentDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/DTO/ShipmentDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Mapper/ProductDetailsDTOMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Mapper/ProductDetailsDTOMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Mapper/ShipmentDTOMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Mapper/ShipmentDTOMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Mapper/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/ProductDetails$ProductDetailsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/ProductDetails$ProductDetailsBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/ProductDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/ProductDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/Shipment$ShipmentBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/Shipment$ShipmentBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/Shipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/Shipment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/User$UserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/CustomerRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/CustomerRepositoryImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/ProductRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/ProductRepositoryImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/ShipmentRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/ShipmentRepositoryImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/UserRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Repo/UserRepositoryImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/AuthenticationServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/ProductServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Service/ProductServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +50,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="add-customer-name-to-product-json" />
+        <entry key="$PROJECT_DIR$" value="deactivated-user-flow" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,7 +73,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "deactivated-user-flow",
+    "git-widget-placeholder": "add-date-column-to-tables",
     "last_opened_file_path": "C:/Users/lundy/Desktop/Backend-Infrastructure/src/main/resources/db/changelog/migration/001",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -297,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708200469751</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="deactivated users no longer being shown in system">
+      <option name="closed" value="true" />
+      <created>1708203814299</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1708203814300</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,14 +372,15 @@
     <MESSAGE value="updated with new storage" />
     <MESSAGE value="system now stores jun_id on product table" />
     <MESSAGE value="get all products now contains customer first and last name" />
-    <option name="LAST_COMMIT_MESSAGE" value="get all products now contains customer first and last name" />
+    <MESSAGE value="deactivated users no longer being shown in system" />
+    <option name="LAST_COMMIT_MESSAGE" value="deactivated users no longer being shown in system" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Repo/ProductRepositoryImpl.java</url>
-          <line>51</line>
+          <line>54</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
