@@ -28,6 +28,7 @@ public class ProductDetailsDTO {
   private String preAlertFileName;
   private Date createdOn;
   private String JunId;
+  private Date updatedOn;
 
 
 }

@@ -81,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
                     .JunId(productDTO.getJunId())
                     .customerFirstName(productDTO.getCustomerFirstName())
                     .customerLastName(productDTO.getCustomerLastName())
+                    .updatedOn(productDTO.getUpdatedOn())
                     .build());
         }
         return productDetailsList;
@@ -108,6 +109,7 @@ public class ProductServiceImpl implements ProductService {
                     .JunId(productDTO.getJunId())
                     .customerFirstName(productDTO.getCustomerFirstName())
                     .customerLastName(productDTO.getCustomerLastName())
+                    .updatedOn(productDTO.getUpdatedOn())
                     .build());
         }
         return productDetailsList;
@@ -131,6 +133,7 @@ public class ProductServiceImpl implements ProductService {
                 .JunId(productOptional.getJunId())
                 .customerFirstName(productOptional.getCustomerFirstName())
                 .customerLastName(productOptional.getCustomerLastName())
+                .updatedOn(productOptional.getUpdatedOn())
                 .build();
     }
 
@@ -174,6 +177,7 @@ public class ProductServiceImpl implements ProductService {
                     .JunId(productDTO.getJunId())
                     .customerFirstName(productDTO.getCustomerFirstName())
                     .customerLastName(productDTO.getCustomerLastName())
+                    .updatedOn(productDTO.getUpdatedOn())
                     .build());
         }
         return productDetailsList;
