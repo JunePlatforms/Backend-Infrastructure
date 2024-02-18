@@ -114,6 +114,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         var user = userRepository.findVerifiedUserByEmail(request.getEmail())
                 .orElseThrow( () -> new RuntimeException("Account Not Verified"));
+        if (!user.getIsActive()) {
+            throw new RuntimeException("This account has been deactivated. " +
+                    "Please contact administrator");
+        }
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
