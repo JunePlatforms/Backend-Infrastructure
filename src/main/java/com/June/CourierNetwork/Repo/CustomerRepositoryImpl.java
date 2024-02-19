@@ -79,7 +79,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public List<CustomerDTO> findAll() {
-        val sql = "SELECT * FROM JuneCourierNetwork.customer_user";
+        val sql = "SELECT * FROM JuneCourierNetwork.customer_user " +
+                "JOIN JuneCourierNetwork.user ON " +
+                "JuneCourierNetwork.user.id = JuneCourierNetwork.customer_user.user_id " +
+                "WHERE JuneCourierNetwork.user.is_active = true;";
 
         return jdbcTemplate.query(sql, new CustomerDTOMapper());
     }

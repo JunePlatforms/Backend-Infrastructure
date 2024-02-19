@@ -22,4 +22,6 @@ public class ShipmentDTO {
     private String airwayInvoiceFileName;
     private Date departureDate;
     private Date arrivalDate;
+    private Date createdOn;
+    private Date updatedOn;
 }

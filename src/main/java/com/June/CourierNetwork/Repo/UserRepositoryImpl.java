@@ -26,8 +26,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Long save(User user) {
         val sql = "INSERT INTO JuneCourierNetwork.`user` " +
-                "(first_name, last_name, email_address, password, phone_number, role, is_verified, is_active) " +
-                "VALUES(:firstName, :lastName, :emailAddress, :password, :phoneNumber, :role, 0, 1)";
+                "(first_name, last_name, email_address, password, phone_number, role, is_verified, is_active, created_on) " +
+                "VALUES(:firstName, :lastName, :emailAddress, :password, :phoneNumber, :role, 0, 1, :createdOn)";
 
         val params = new MapSqlParameterSource();
 
@@ -37,6 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
         params.addValue("password", user.getPassword());
         params.addValue("phoneNumber", user.getPhoneNumber());
         params.addValue("role", user.getRole().name());
+        params.addValue("createdOn", java.time.LocalDateTime.now());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -105,7 +106,8 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findUserByCustomerNumber(String customerNumber) {
         val sql = "SELECT * FROM JuneCourierNetwork.user " +
                 "JOIN JuneCourierNetwork.customer_user cu ON cu.user_id = user.id " +
-                "WHERE customer_number = :customerNumber";
+                "WHERE customer_number = :customerNumber" +
+                " AND user.is_active = 1";
 
         val params = new MapSqlParameterSource();
 
@@ -146,7 +148,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findUserByEmail(String email) {
 
-        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE email_address = :email";
+        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE email_address = :email" +
+                " AND is_active = 1";
 
         val params = new MapSqlParameterSource();
 
@@ -157,7 +160,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findUserById(Long userId) {
-        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE id = :userId";
+        val sql = "SELECT * FROM JuneCourierNetwork.user WHERE id = :userId" +
+                " AND is_active = 1";
 
         val params = new MapSqlParameterSource();
 

@@ -21,6 +21,7 @@ public class UserMapper implements RowMapper<User> {
                 .role(Role.valueOf(rs.getString("role")))
                 .isVerified(rs.getBoolean("is_verified"))
                 .isActive(rs.getBoolean("is_active"))
+                .createdOn(rs.getTimestamp("created_on"))
                 .build();
     }
 }

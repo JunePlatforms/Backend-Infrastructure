@@ -25,6 +25,10 @@ public class ProductDetails {
   private PackageStatus packageStatus;
   private String preAlert;
   private Date createdOn;
+  private String JunId;
+  private String customerFirstName;
+  private String customerLastName;
+  private Date updatedOn;
 
 
 }

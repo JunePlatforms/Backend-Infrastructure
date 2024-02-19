@@ -28,15 +28,17 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
     @Override
     public Long createShipment(ShipmentDTO shipmentDTO) {
         val sql = "INSERT INTO JuneCourierNetwork.shipment " +
-                "(shipment_type, status, departure_date, arrival_date) " +
-                "VALUES(:shipmentType, :status, :departureDate, :arrivalDate);";
+                "(shipment_type, status, departure_date, arrival_date, created_on, updated_on) " +
+                "VALUES(:shipmentType, :status, :departureDate, :arrivalDate, :createdOn, :updatedOn);";
 
         val params = new MapSqlParameterSource();
+        val now = java.time.LocalDateTime.now();
         params.addValue("shipmentType", shipmentDTO.getType().name());
         params.addValue("status", shipmentDTO.getStatus().name());
         params.addValue("departureDate", shipmentDTO.getDepartureDate());
         params.addValue("arrivalDate", shipmentDTO.getArrivalDate());
-
+        params.addValue("createdOn", now);
+        params.addValue("updatedOn", now);
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"});
@@ -95,12 +97,28 @@ public class ShipmentRepositoryImpl implements ShipmentRepository {
 
     @Override
     public void setShipmentType(Long shipmentId, ShipmentType shipmentType) {
+        val sql = "UPDATE JuneCourierNetwork.shipment " +
+                "SET shipment_type = :shipmentType " +
+                "WHERE id = :shipmentId";
 
+        val params = new MapSqlParameterSource();
+        params.addValue("shipmentType", shipmentType.name());
+        params.addValue("shipmentId", shipmentId);
+
+        jdbcTemplate.update(sql, params);
     }
 
     @Override
     public void updateShipmentStatus(Long shipmentId, ShipmentStatus status) {
+        val sql = "UPDATE JuneCourierNetwork.shipment " +
+                "SET status = :status, updated_on = NOW() " +
+                "WHERE id = :shipmentId";
 
+        val params = new MapSqlParameterSource();
+        params.addValue("status", status.name());
+        params.addValue("shipmentId", shipmentId);
+
+        jdbcTemplate.update(sql, params);
     }
 
     @Override

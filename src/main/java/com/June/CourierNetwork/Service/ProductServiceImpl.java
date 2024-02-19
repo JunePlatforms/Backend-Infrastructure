@@ -78,6 +78,10 @@ public class ProductServiceImpl implements ProductService {
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
+                    .JunId(productDTO.getJunId())
+                    .customerFirstName(productDTO.getCustomerFirstName())
+                    .customerLastName(productDTO.getCustomerLastName())
+                    .updatedOn(productDTO.getUpdatedOn())
                     .build());
         }
         return productDetailsList;
@@ -102,6 +106,10 @@ public class ProductServiceImpl implements ProductService {
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
+                    .JunId(productDTO.getJunId())
+                    .customerFirstName(productDTO.getCustomerFirstName())
+                    .customerLastName(productDTO.getCustomerLastName())
+                    .updatedOn(productDTO.getUpdatedOn())
                     .build());
         }
         return productDetailsList;
@@ -121,6 +129,11 @@ public class ProductServiceImpl implements ProductService {
                 .shipmentType(productOptional.getShipmentType())
                 .packageStatus(productOptional.getPackageStatus())
                 .preAlert(productOptional.getPreAlertFileName())
+                .createdOn(productOptional.getCreatedOn())
+                .JunId(productOptional.getJunId())
+                .customerFirstName(productOptional.getCustomerFirstName())
+                .customerLastName(productOptional.getCustomerLastName())
+                .updatedOn(productOptional.getUpdatedOn())
                 .build();
     }
 
@@ -161,6 +174,10 @@ public class ProductServiceImpl implements ProductService {
                     .packageStatus(productDTO.getPackageStatus())
                     .preAlert(productDTO.getPreAlertFileName())
                     .createdOn(productDTO.getCreatedOn())
+                    .JunId(productDTO.getJunId())
+                    .customerFirstName(productDTO.getCustomerFirstName())
+                    .customerLastName(productDTO.getCustomerLastName())
+                    .updatedOn(productDTO.getUpdatedOn())
                     .build());
         }
         return productDetailsList;

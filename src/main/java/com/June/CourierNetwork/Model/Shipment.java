@@ -24,4 +24,6 @@ public class Shipment {
     private Date departureDate;
     private Date arrivalDate;
     private List<ProductDetails> productDetails;
+    private Date createdOn;
+    private Date updatedOn;
 }

@@ -20,11 +20,15 @@ public class ProductDetailsDTO {
   private String weight;
   private String description;
   private String customerNumber;
+  private String customerFirstName;
+  private String customerLastName;
   private String trackingNumber;
   private ShipmentType shipmentType;
   private PackageStatus packageStatus;
   private String preAlertFileName;
   private Date createdOn;
+  private String JunId;
+  private Date updatedOn;
 
 
 }
