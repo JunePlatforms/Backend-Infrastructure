@@ -47,3 +47,5 @@ t
 Dsrc/main/java/com/June/CourierNetwork/Controller/UserController.java,0\7\07559970025b0b280d437bcb6f735b3192a425ec
 ‚
 Rsrc/main/java/com/June/CourierNetwork/Controller/TransactionDetailsController.java,c\a\ca727c8d0014ab64c668c470e3646a58d7436909
+s
+Csrc/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java,e\8\e822078557e77d817adef780172fe7d13fcb53cf
