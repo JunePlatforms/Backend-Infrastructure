@@ -171,8 +171,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var user = this.userRepository.findUserByEmail(userEmail)
-                    .orElseThrow();
+            var user = this.userRepository.findActiveUserByEmail(userEmail)
+                    .orElseThrow( () -> new IllegalStateException("User with email " + userEmail + " does not exist " +
+                            "or has been deactivated"));
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
@@ -189,8 +190,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void forgotPassword(String email, String Password, String retypePassword) {
-        var user = userRepository.findUserByEmail(email)
-                .orElseThrow();
+        var user = userRepository.findActiveUserByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("User with email " + email + " does not exist " +
+                        "or has been deactivated"));
         if (!Password.equals(retypePassword)) {
             throw new IllegalStateException("Passwords do not match");
         }

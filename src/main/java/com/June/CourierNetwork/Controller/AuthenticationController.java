@@ -30,7 +30,7 @@ public class AuthenticationController {
           @RequestPart MultipartFile policeRecord,
           @RequestPart MultipartFile driversLicense
           ) {
-    if (userRepository.findActiveUserByEmail(request.getEmail()).isEmpty()){
+    if (userRepository.findUserByEmail(request.getEmail()).isEmpty()){
         try {
           return ResponseEntity.ok(service.register(request, policeRecord, driversLicense));
         }catch (Exception e){

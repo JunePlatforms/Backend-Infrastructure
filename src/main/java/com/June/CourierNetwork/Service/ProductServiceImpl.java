@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveProductDetails(ProductDetailsRequest productDetailsRequest) {
-        val userId = userRepository.findUserByEmail(productDetailsRequest.getCustomerEmail()).get().getId();
+        val userId = userRepository.findActiveUserByEmail(productDetailsRequest.getCustomerEmail()).get().getId();
 
         productDetailsRequest.setUserId(userId);
 
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDetails> findProductsByEmail(String email) throws IOException {
-        val userId = userRepository.findUserByEmail(email).get().getId();
+        val userId = userRepository.findActiveUserByEmail(email).get().getId();
 
         val productDTOList = productRepository.findProductsByUserId(userId);
 
