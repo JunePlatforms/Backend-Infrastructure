@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -106,29 +107,31 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
         var user = userRepository.findVerifiedUserByEmail(request.getEmail())
-                .orElseThrow( () -> new RuntimeException("Account Not Verified"));
+                .orElseThrow(() -> new RuntimeException("This account is not verified."));
         if (!user.getIsActive()) {
-            throw new RuntimeException("This account has been deactivated. " +
-                    "Please contact administrator");
+            throw new RuntimeException("This account has been deactivated. Please contact the administrator");
         }
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new RuntimeException("Invalid username or password");
+        }
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
-//        deleteAllRevokedTokens(user);
         saveUserToken(user.getId(), jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
     }
-
     @Override
     public void saveUserToken(Long userId, String jwtToken) {
         var token = Token.builder()
