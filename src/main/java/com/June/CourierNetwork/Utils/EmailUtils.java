@@ -22,7 +22,7 @@ public class EmailUtils {
                 "Welcome to JUNE!<br><br>" +
                 "At JUNE, shipping isn't just about packages—it's about shipping your lifestyle, your essence, your vibe. " +
                 "Here's your shipping address:<br><br>" +
-                "<span class='bold'>6858 NW 75th Street, "+customerNumber+" Miami, FL, 33166</span><br><br>" +
+                "<span class='bold'>6858 NW 75th St STE 4 "+customerNumber+" Miami, FL, 33166-2562</span><br><br>" +
                 "Plug this address in at your favorite online checkout, and voila! Your packages are sent straight to us. " +
                 "Shop globally, ship effortlessly.<br><br>" +
                 "<span class='bold'>Why ship with JUNE?</span><br><br>" +
