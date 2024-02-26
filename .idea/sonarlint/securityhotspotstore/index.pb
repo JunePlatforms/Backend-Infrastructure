@@ -61,3 +61,9 @@ q
 Asrc/main/java/com/June/CourierNetwork/Auth/ApplicationConfig.java,9\5\9560aa541050fda88a3c488a0d54d359a50e5413
 r
 Bsrc/main/java/com/June/CourierNetwork/Service/UserServiceImpl.java,c\f\cf0d700b077cd3ede6eb69dcd6d63b1beebf90e2
+Å
+Qsrc/main/java/com/June/CourierNetwork/Service/Contract/AuthenticationService.java,3\d\3d700e3195e3777887cafee0f94d55078357364f
+v
+Fsrc/main/java/com/June/CourierNetwork/Model/AuthenticationRequest.java,2\9\291e5180f6f2d3e2cfe5be025232825c4130548d
+w
+Gsrc/main/java/com/June/CourierNetwork/Model/AuthenticationResponse.java,c\a\ca53350e4d18699b09a91ebcc718b742220446cf

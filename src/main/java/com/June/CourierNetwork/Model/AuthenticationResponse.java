@@ -13,4 +13,9 @@ public class AuthenticationResponse {
 
   private String accessToken;
   private String refreshToken;
+
+  public AuthenticationResponse(String message) {
+    this.accessToken = message;
+    this.refreshToken = message;
+  }
 }
