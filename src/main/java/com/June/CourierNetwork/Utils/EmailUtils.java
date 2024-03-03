@@ -13,7 +13,7 @@ public class EmailUtils {
     }
 
     public static String getVerificationUrl(String token) {
-        return "<a href='http://localhost:3000/verifyemail?token=" + token + "'>Verify Your Account</a>";
+        return "<a href='https://app.junelogistics.com/verifyemail?token=" + token + "'>Verify Your Account</a>";
 
     }
 
