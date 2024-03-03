@@ -13,8 +13,6 @@ x
 Hsrc/main/java/com/June/CourierNetwork/Service/FileUploadServiceImpl.java,2\9\291331178e7fedfa9da938d505c6563ada08adf0
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-q
-Asrc/main/java/com/June/CourierNetwork/Storage/FirebaseConfig.java,f\a\fa85386d690f1e51cf28c4e36657533a1cea4429
 |
 Lsrc/main/java/com/June/CourierNetwork/Controller/CustomerUserController.java,3\2\323ac17e08c6200b412b67845173a6498a5f5d82
 z
@@ -67,3 +65,13 @@ v
 Fsrc/main/java/com/June/CourierNetwork/Model/AuthenticationRequest.java,2\9\291e5180f6f2d3e2cfe5be025232825c4130548d
 w
 Gsrc/main/java/com/June/CourierNetwork/Model/AuthenticationResponse.java,c\a\ca53350e4d18699b09a91ebcc718b742220446cf
+|
+Lsrc/main/java/com/June/CourierNetwork/Service/WarehouseClerkServiceImpl.java,b\2\b2b9d574302828b9dcf845652109a8ea57d2d4f7
+x
+Hsrc/main/java/com/June/CourierNetwork/Service/Contract/EmailService.java,0\2\02bf5f2d0884210e77c4d577e3af49dbe9d4b637
+m
+=src/main/java/com/June/CourierNetwork/Enum/PackageStatus.java,2\2\227caf09fcb51145b75f8acd53c1ebbe8c67860c
+p
+@src/main/java/com/June/CourierNetwork/DTO/ProductDetailsDTO.java,f\6\f647c95fe8f14cf545f45bc33ead35a9186407fc
+y
+Isrc/main/java/com/June/CourierNetwork/Mapper/ProductDetailsDTOMapper.java,3\9\392b0d9e3cafbede8d6aab38d86949184e436416
