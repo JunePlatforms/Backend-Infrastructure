@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@CrossOrigin(origins = "https://app.junelogistics.com")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -56,10 +56,12 @@ public class AuthenticationController {
     return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
   }
   @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> authenticate(
-      @RequestBody AuthenticationRequest request
-  ) {
-    return ResponseEntity.ok(service.authenticate(request));
+  public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    try {
+      return ResponseEntity.ok(service.authenticate(request));
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthenticationResponse(e.getMessage()));
+    }
   }
 
   @PostMapping("/refresh-token")
