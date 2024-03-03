@@ -187,5 +187,6 @@ public class ProductServiceImpl implements ProductService {
     public void uploadPreAlert(Long productId, String downloadUrl) throws IOException {
         findProductById(productId);
         productRepository.uploadPreAlert(downloadUrl, productId);
+        emailService.sendInvoiceReceivedEmail(productId);
     }
 }

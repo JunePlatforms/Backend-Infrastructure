@@ -4,24 +4,14 @@ import com.June.CourierNetwork.Model.User;
 import com.June.CourierNetwork.Repo.Contract.ProductRepository;
 import com.June.CourierNetwork.Repo.Contract.UserRepository;
 import com.June.CourierNetwork.Service.Contract.EmailService;
-import jakarta.activation.DataHandler;
-import jakarta.activation.DataSource;
-import jakarta.activation.FileDataSource;
-import jakarta.mail.BodyPart;
-import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMultipart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-
-import java.util.Map;
 
 import static com.June.CourierNetwork.Utils.EmailUtils.*;
 
@@ -29,15 +19,19 @@ import static com.June.CourierNetwork.Utils.EmailUtils.*;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     public static final String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
-    public static final String CREATED_UPDATE = "We've Got It!";
+    public static final String CREATED_UPDATE = "We’ve Got It!";
     public static final String SHIPPED_UPDATE = "Your Package Has Taken Off!";
-    public static final String READY_FOR_PICKUP_UPDATE = "It's Here!";
-    public static final String OUT_FOR_DELIVERY_UPDATE = "It's On The Way!";
-    public static final String DELIVERED_UPDATE = "Thanks For Shipping!";
-    public static final String SENT_OFF_UPDATE = "Your Package Is On The Way!";
+    public static final String READY_FOR_DELIVERY_UPDATE = "Your Package is ready for delivery!";
+    public static final String OUT_FOR_DELIVERY_UPDATE = "Your Package is out for delivery!";
+    public static final String DELIVERED_UPDATE = "You got it!";
+    public static final String SENT_OFF_UPDATE = "Your package is on the way!";
     public static final String LANDED_UPDATE = "Your Package Has Landed in Jamaica!";
-    public static final String MISSING_INVOICE = "We Need Your Invoice!";
+    public static final String MISSING_INVOICE = "We want to ship your package but…";
     public static final String WELCOME_NEW_USER = "Welcome Email";
+    public static final String INVOICE_UPLOADED = "Your Invoice has been uploaded!";
+    public static final String PROCESSING_UPDATE = "Your Package is being processed";
+    public static final String TRANSIT_TO_LOCAL_WAREHOUSE_UPDATE = "Your Package is in transit to our local warehouse";
+    public static final String TAKEN_OFF_UPDATE = "Your Package Has Taken Off!";
     public static final String UTF_8_ENCODING = "UTF-8";
     public static final String EMAIL_TEMPLATE = "emailtemplate";
     public static final String TEXT_HTML_ENCODING = "text/html";
@@ -126,11 +120,14 @@ public class EmailServiceImpl implements EmailService {
                         switch (productDetailsDTO.getPackageStatus()) {
                             case CREATED -> helper.setSubject(CREATED_UPDATE);
                             case SHIPPED -> helper.setSubject(SHIPPED_UPDATE);
-                            case READY_FOR_PICKUP -> helper.setSubject(READY_FOR_PICKUP_UPDATE);
+                            case READY_FOR_DELIVERY -> helper.setSubject(READY_FOR_DELIVERY_UPDATE);
                             case OUT_FOR_DELIVERY -> helper.setSubject(OUT_FOR_DELIVERY_UPDATE);
                             case DELIVERED -> helper.setSubject(DELIVERED_UPDATE);
                             case SENT_OFF -> helper.setSubject(SENT_OFF_UPDATE);
                             case LANDED -> helper.setSubject(LANDED_UPDATE);
+                            case PROCESSING -> helper.setSubject(PROCESSING_UPDATE);
+                            case TRANSIT_TO_LOCAL_WAREHOUSE -> helper.setSubject(TRANSIT_TO_LOCAL_WAREHOUSE_UPDATE);
+                            case TAKEN_OFF -> helper.setSubject(TAKEN_OFF_UPDATE);
                         }
                         helper.setFrom(fromEmail, personalName);
                         helper.setTo(user.getEmailAddress());
@@ -160,6 +157,25 @@ public class EmailServiceImpl implements EmailService {
                     }
                 })
         );
+    }
+
+    @Override
+    @Async
+    public void sendInvoiceReceivedEmail(long productId) {
+        productRepository.findProductById(productId).ifPresent(productDetailsDTO ->
+                userRepository.findUserByCustomerNumber(productDetailsDTO.getCustomerNumber()).ifPresent(user -> {
+                    try {
+                        MimeMessage message = getMimeMessage();
+                        MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+                        helper.setSubject(INVOICE_UPLOADED);
+                        helper.setFrom(fromEmail, personalName);
+                        helper.setTo(user.getEmailAddress());
+                        helper.setText(getInvoiceReceivedEmail(user.getFirstName(), productDetailsDTO));
+                        emailSender.send(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
     }
 
     @Override

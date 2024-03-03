@@ -14,6 +14,9 @@ public interface EmailService {
     void sendProductUpdateEmailToAdmin(long productId);
 
     @Async
+    void sendInvoiceReceivedEmail(long productId);
+
+    @Async
     void sendInvoiceReminderEmail(long productId);
 
 //    void sendMimeMessageWithAttachments(String name, String to, String token);
