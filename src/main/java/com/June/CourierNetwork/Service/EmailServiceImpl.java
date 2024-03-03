@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
+import static com.June.CourierNetwork.Enum.PackageStatus.OUT_FOR_DELIVERY;
 import static com.June.CourierNetwork.Utils.EmailUtils.*;
 
 @Service
@@ -117,6 +118,7 @@ public class EmailServiceImpl implements EmailService {
                     try {
                         MimeMessage message = getMimeMessage();
                         MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCODING);
+                        helper.setPriority(1);
                         switch (productDetailsDTO.getPackageStatus()) {
                             case CREATED -> helper.setSubject(CREATED_UPDATE);
                             case SHIPPED -> helper.setSubject(SHIPPED_UPDATE);
@@ -131,7 +133,11 @@ public class EmailServiceImpl implements EmailService {
                         }
                         helper.setFrom(fromEmail, personalName);
                         helper.setTo(user.getEmailAddress());
-                        helper.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
+                        if (productDetailsDTO.getPackageStatus() == OUT_FOR_DELIVERY) {
+                            helper.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()), true);
+                        } else {
+                            helper.setText(getProductUpdateEmail(user.getFirstName(), productDetailsDTO, productDetailsDTO.getPackageStatus()));
+                        }
                         emailSender.send(message);
                     } catch (Exception e) {
                 e.printStackTrace();
