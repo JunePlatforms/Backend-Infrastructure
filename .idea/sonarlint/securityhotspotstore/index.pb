@@ -1,6 +1,6 @@
 
 e
-5src/main/java/com/June/CourierNetwork/MailConfig.java,c/8/c84d2bdb1224b177f30ea829b7b68d6abf5344a6
+5src/main/java/com/June/CourierNetwork/MailConfig.java,c\8\c84d2bdb1224b177f30ea829b7b68d6abf5344a6
 w
 Gsrc/main/java/com/June/CourierNetwork/Repo/Contract/UserRepository.java,3\9\39eb33f8af4bbc601404c4a597020145e1718db1
 p
