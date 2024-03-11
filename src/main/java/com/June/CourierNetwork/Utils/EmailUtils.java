@@ -107,7 +107,7 @@ public class EmailUtils {
                     + "\n\nCheers,\nJUNE";
 
             case OUT_FOR_DELIVERY -> "Hey " + name + ",<br><br>" +
-                    "We want to ship your " +
+                    "Your " +
                     productDetailsDTO.getDescription() +
                     " from " +
                     productDetailsDTO.getSupplierName() +
