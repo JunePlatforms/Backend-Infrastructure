@@ -4,9 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="updated email password">
+    <list default="true" id="9d429ff6-7828-4711-ad8d-c57e602b0405" name="Changes" comment="updated email">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdministratorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AdministratorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CourierUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CourierUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CustomerUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/CustomerUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/DeliveryDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/DeliveryDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/TransactionDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/TransactionDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/WarehouseClerkController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Controller/WarehouseClerkController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Enum/PackageStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Enum/PackageStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Service/EmailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Utils/EmailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/June/CourierNetwork/Utils/EmailUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AdministratorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/AuthenticationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CourierUserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/CustomerUserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/DeliveryDetailsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/DeliveryDetailsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/TransactionDetailsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/TransactionDetailsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Controller/WarehouseClerkController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Enum/PackageStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/June/CourierNetwork/Enum/PackageStatus.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +62,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "aws-hosting",
+    "git-widget-placeholder": "dev",
     "last_opened_file_path": "C:/Users/lundy/Desktop/Backend-Infrastructure/src/main/resources/db/changelog/migration/001",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -341,7 +364,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710105531721</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="updated email">
+      <option name="closed" value="true" />
+      <created>1710117792171</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1710117792171</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,6 +425,7 @@
     <MESSAGE value="added STE 4 to address in welcome email" />
     <MESSAGE value="updated email templates to match tickets exactly as outlined" />
     <MESSAGE value="updated email password" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated email password" />
+    <MESSAGE value="updated email" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated email" />
   </component>
 </project>

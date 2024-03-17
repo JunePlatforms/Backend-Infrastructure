@@ -23,6 +23,7 @@ public class EmailServiceImpl implements EmailService {
     public static final String CREATED_UPDATE = "We’ve Got It!";
     public static final String SHIPPED_UPDATE = "Your Package Has Taken Off!";
     public static final String READY_FOR_DELIVERY_UPDATE = "Your Package is ready for delivery!";
+    public static final String READY_FOR_PICKUP_UPDATE = "Your Package is ready for pickup!";
     public static final String OUT_FOR_DELIVERY_UPDATE = "Your Package is out for delivery!";
     public static final String DELIVERED_UPDATE = "You got it!";
     public static final String SENT_OFF_UPDATE = "Your package is on the way!";
@@ -33,6 +34,7 @@ public class EmailServiceImpl implements EmailService {
     public static final String PROCESSING_UPDATE = "Your Package is being processed";
     public static final String TRANSIT_TO_LOCAL_WAREHOUSE_UPDATE = "Your Package is in transit to our local warehouse";
     public static final String TAKEN_OFF_UPDATE = "Your Package Has Taken Off!";
+    public static final String PICKED_UP_UPDATE = "Your Package has been collected!";
     public static final String UTF_8_ENCODING = "UTF-8";
     public static final String EMAIL_TEMPLATE = "emailtemplate";
     public static final String TEXT_HTML_ENCODING = "text/html";
@@ -124,12 +126,14 @@ public class EmailServiceImpl implements EmailService {
                             case SHIPPED -> helper.setSubject(SHIPPED_UPDATE);
                             case READY_FOR_DELIVERY -> helper.setSubject(READY_FOR_DELIVERY_UPDATE);
                             case OUT_FOR_DELIVERY -> helper.setSubject(OUT_FOR_DELIVERY_UPDATE);
+                            case READY_FOR_PICKUP -> helper.setSubject(READY_FOR_PICKUP_UPDATE);
                             case DELIVERED -> helper.setSubject(DELIVERED_UPDATE);
                             case SENT_OFF -> helper.setSubject(SENT_OFF_UPDATE);
                             case LANDED -> helper.setSubject(LANDED_UPDATE);
                             case PROCESSING -> helper.setSubject(PROCESSING_UPDATE);
                             case TRANSIT_TO_LOCAL_WAREHOUSE -> helper.setSubject(TRANSIT_TO_LOCAL_WAREHOUSE_UPDATE);
                             case TAKEN_OFF -> helper.setSubject(TAKEN_OFF_UPDATE);
+                            case PICKED_UP -> helper.setSubject(PICKED_UP_UPDATE);
                         }
                         helper.setFrom(fromEmail, personalName);
                         helper.setTo(user.getEmailAddress());

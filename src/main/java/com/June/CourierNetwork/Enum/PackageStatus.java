@@ -4,6 +4,7 @@ public enum PackageStatus {
     CREATED,
     SHIPPED,
     READY_FOR_DELIVERY,
+    READY_FOR_PICKUP,
     DELIVERED,
     OUT_FOR_DELIVERY,
     PICKED_UP,

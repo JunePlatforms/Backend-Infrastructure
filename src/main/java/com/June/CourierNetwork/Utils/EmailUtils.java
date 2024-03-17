@@ -13,7 +13,7 @@ public class EmailUtils {
     }
 
     public static String getVerificationUrl(String token) {
-        return "<a href='http://localhost:3000/verifyemail?token=" + token + "'>Verify Your Account</a>";
+        return "<a href='https://app.junelogistics.com/verifyemail?token=" + token + "'>Verify Your Account</a>";
 
     }
 
@@ -99,6 +99,13 @@ public class EmailUtils {
                     " is ready for delivery!"
                     + "\n\nCheers,\nJUNE";
 
+            case READY_FOR_PICKUP -> "Hey " + name + ",\n\nYour " +
+                    productDetailsDTO.getDescription() +
+                    " from " +
+                    productDetailsDTO.getSupplierName() +
+                    " is ready for pickup!"
+                    + "\n\n Cheers,\nJUNE";
+
             case DELIVERED -> "Hey " + name + ",\n\nYay! Your " +
                     productDetailsDTO.getDescription() +
                     " from " +
@@ -118,12 +125,9 @@ public class EmailUtils {
                     "Cheers,<br>" +
                     "JUNE";
 
-            case PICKED_UP -> "Hey " + name + ",\n\nExciting news! Your " +
-                    productDetailsDTO.getDescription() +
-                    " from " +
-                    productDetailsDTO.getSupplierName() +
-                    " was successfully picked-up!"
-                    + "\n\nBest regards,\nJUNE";
+            case PICKED_UP -> "Hey " + name + ",\n\nYour package has been collected!" +
+                    " Thank you for shipping with JUNE."
+                    + "\n\nRegards,\nJUNE";
 
             case SENT_OFF -> "Hey "+name+", \n" +
                     "\n" +
