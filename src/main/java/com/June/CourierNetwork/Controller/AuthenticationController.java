@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://june-platforms.*")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor

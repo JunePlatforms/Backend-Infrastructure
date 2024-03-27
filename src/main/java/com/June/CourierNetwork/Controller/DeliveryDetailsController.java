@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://june-platforms.*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/delivery/details")
