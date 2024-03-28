@@ -38,4 +38,6 @@ public interface ProductRepository {
     Long findProductOwnerIdByProductId(Long productId);
 
     BigDecimal calculateTotalSpent(List<Long> productIds);
+
+    Optional<ProductDetailsDTO> findProductByTrackingNumber(String trackingNumber);
 }

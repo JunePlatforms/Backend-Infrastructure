@@ -103,3 +103,5 @@ m
 =src/main/java/com/June/CourierNetwork/Enum/PackageStatus.java,2\2\227caf09fcb51145b75f8acd53c1ebbe8c67860c
 t
 Dsrc/main/java/com/June/CourierNetwork/Controller/DemoController.java,6\2\6219cea35ecaab954135c07daa6b77e9abc48ef1
+{
+Ksrc/main/java/com/June/CourierNetwork/Exception/GlobalExceptionHandler.java,1\8\1893e095ac82707e53aaaff41d9bda489bebd050

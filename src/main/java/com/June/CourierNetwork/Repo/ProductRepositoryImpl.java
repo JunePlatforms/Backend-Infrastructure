@@ -241,4 +241,18 @@ public class ProductRepositoryImpl implements ProductRepository {
         return jdbcTemplate.queryForObject(sql, params, BigDecimal.class);
 
     }
+
+    @Override
+    public Optional<ProductDetailsDTO> findProductByTrackingNumber(String trackingNumber) {
+        val sql = "SELECT cpd.*, cu.customer_number, u.first_name, u.last_name " +
+                "FROM JuneCourierNetwork.customer_product_details cpd " +
+                "JOIN JuneCourierNetwork.customer_user cu ON cpd.user_id = cu.user_id " +
+                "JOIN JuneCourierNetwork.user u ON cpd.user_id = u.id " +
+                "WHERE cpd.tracking_number = :trackingNumber";
+
+        val params = new MapSqlParameterSource();
+        params.addValue("trackingNumber", trackingNumber);
+
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, params, new ProductDetailsDTOMapper()));
+    }
 }

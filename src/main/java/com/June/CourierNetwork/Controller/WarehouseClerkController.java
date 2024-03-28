@@ -6,12 +6,14 @@ import com.June.CourierNetwork.Model.ProductDetails;
 import com.June.CourierNetwork.Model.ProductDetailsRequest;
 import com.June.CourierNetwork.Model.Shipment;
 import com.June.CourierNetwork.Model.ShippingLabel;
+import com.June.CourierNetwork.Repo.Contract.ProductRepository;
 import com.June.CourierNetwork.Service.Contract.FileUploadService;
 import com.June.CourierNetwork.Service.Contract.ProductService;
 import com.June.CourierNetwork.Service.Contract.ShipmentService;
 import com.June.CourierNetwork.Service.Contract.WarehouseClerkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ public class WarehouseClerkController {
     private final ProductService productService;
     private final ShipmentService shipmentService;
     private final FileUploadService fileUploadService;
+    private final ProductRepository productRepository;
     @Value("${airway.invoice.upload.dir}")
     private String airWayInvoiceUploadDirectory;
 
@@ -39,10 +42,15 @@ public class WarehouseClerkController {
 
     @PostMapping("/create/product")
     public ResponseEntity<String> createProduct(@RequestBody ProductDetailsRequest productDetailsRequest) {
+        if (productRepository.findProductByTrackingNumber(productDetailsRequest.getTrackingNumber()).isPresent()) {
+            String errorMessage = "Error: Product already exists";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
         try {
             productService.saveProductDetails(productDetailsRequest);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            // Handle other general exceptions
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
